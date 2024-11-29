@@ -159,11 +159,30 @@ const CarRow: React.FC<CarRowProps> = ({
           <p className="text-lg font-semibold">
             {car.name} {car.type}
           </p>
-          <p>
-            <span className="text-2xl font-bold text-blue-950">
-              ¥{car.price.toLocaleString()}
+          <p className="text-right">
+            <span
+              className={`text-2xl font-bold ${
+                car.discount === 0 ? "text-blue-950" : "text-red-600"
+              }`}
+            >
+              ¥
+              {car.discount === 0
+                ? car.price.toLocaleString()
+                : (car.price - car.discount).toLocaleString()}
             </span>{" "}
-            <span className="font-normal text-gray-500">CIF</span>
+            <span
+              className={`font-normal ${
+                car.discount === 0 ? "text-blue-950" : "text-red-600"
+              }`}
+            >
+              CIF
+            </span>
+            <br />
+            {car.discount != 0 && (
+              <span className="ml-2 line-through text-gray-400">
+                {car.price.toLocaleString()}
+              </span>
+            )}
           </p>
         </div>
         <p>15S Touring L Package</p>
