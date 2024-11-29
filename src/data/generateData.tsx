@@ -64,6 +64,8 @@ export const highlightStatus: string[] = [
     "Welcab",
     "Coming soon",
     "Hybrid",
+    "Reduced",
+    "New",
     ""
 ]
 export const getRandomHighlightStatus = () => {

@@ -18,7 +18,7 @@ const CNetNav: React.FC<CNetNavProps> = ({
 }) => {
   navClass = `font-semibold px-2 ${navClass}`;
   activeNavClass = `h-full text-[#997435] font-bold ${activeNavClass}`;
-  
+
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -32,13 +32,13 @@ const CNetNav: React.FC<CNetNavProps> = ({
       {/* Logo and Nav links */}
       <div className="flex items-center justify-between w-full md:w-auto">
         <img className="h-9" src={CosmoLogo} alt="logo" />
-        
+
         {/* Hamburger Menu for Mobile */}
         <button
           onClick={toggleMenu}
           className="md:hidden p-2 focus:outline-none"
         >
-          <MdOutlineMenu size={28}/>
+          <MdOutlineMenu size={28} />
         </button>
       </div>
 

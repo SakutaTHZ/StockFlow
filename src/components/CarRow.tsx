@@ -1,25 +1,30 @@
 import React, { CSSProperties } from "react";
-import { FaWheelchair, FaRegCheckCircle, FaRegStar, FaRegPauseCircle } from "react-icons/fa";
+import {
+  FaWheelchair,
+  FaRegCheckCircle,
+  FaRegStar,
+  FaRegPauseCircle,
+} from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";
 import { BsThreeDots } from "react-icons/bs";
 import Vin from "../assets/vin.svg";
 import { TbFaceIdError, TbRoad } from "react-icons/tb";
 import { CarData } from "../data/types";
-import JapanFlag from "../assets/JP.svg"
-import UKFlag from "../assets/GB.svg"
+import JapanFlag from "../assets/JP.svg";
+import UKFlag from "../assets/GB.svg";
 import Hybrid from "../assets/hybrid.png";
-import { MdOutlineTimer, MdOutlineNewReleases } from "react-icons/md";
+import { MdOutlineNewReleases, MdOutlineTimer } from "react-icons/md";
 import { PiChartLineDownBold } from "react-icons/pi";
 
-interface CarCardProps {
+interface CarRowProps {
   customClass?: string;
   extraStatus?: boolean; //for Stock Offer
-  style?:CSSProperties;
+  style?: CSSProperties;
   car: CarData;
 }
 
-const CarCard: React.FC<CarCardProps> = ({
+const CarRow: React.FC<CarRowProps> = ({
   customClass,
   extraStatus = false,
   style,
@@ -40,12 +45,12 @@ const CarCard: React.FC<CarCardProps> = ({
       </span>
     ) : status === "In Japan" ? (
       <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
-        <img src={JapanFlag} alt="Jp flag" className="h-4"/>
+        <img src={JapanFlag} alt="Jp flag" className="h-4" />
         {status}
       </span>
     ) : status === "Clearance UK" ? (
       <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
-        <img src={UKFlag} alt="UK flag" className="h-4"/>
+        <img src={UKFlag} alt="UK flag" className="h-4" />
         {status}
       </span>
     ) : (
@@ -56,7 +61,6 @@ const CarCard: React.FC<CarCardProps> = ({
     );
   };
 
-  
   const highlightPill = (status: string) => {
     return status === "Welcab" ? (
       <span
@@ -111,22 +115,22 @@ const CarCard: React.FC<CarCardProps> = ({
 
   return (
     <div
-      className={`card opacity-0 animate-slideUp transition-all w-full h-fit min-h-32 shadow-md rounded-lg border-2 bg-white ${customClass} ${
+      className={`card opacity-0 animate-slideRight transition-all  flex w-full h-44 shadow-md rounded-lg border-2 bg-white ${customClass} ${
         extraStatus ? "border-[#FFC158]" : "border-gray-100"
-      } ${car.hold && "opacity-50 pointer-events-none"} transition-all`} 
+      } ${car.hold && "opacity-50 pointer-events-none"} transition-all`}
       style={style}
     >
-      <div className="head relative flex h-42">
+      <div className="head relative flex">
         <img
           src={car.image}
           alt="car Image"
-          className="rounded-t-md h-42"
+          className="rounded-s-md h-full"
           loading="lazy"
         />
         {car.hold && (
           <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-1 py-2">
-          <FaRegPauseCircle/>
-          On Hold
+            <FaRegPauseCircle />
+            On Hold
           </div>
         )}
         {car.highlightStatus != "" && <>{highlightPill(car.highlightStatus)}</>}
@@ -146,20 +150,23 @@ const CarCard: React.FC<CarCardProps> = ({
         >
           {car.id}
         </span>
-        <button className="option absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border">
-          <BsThreeDots />
+        <button className="option h-4 w-4 flex items-center justify-center absolute right-2 bottom-2 bg-white p-3 rounded-full shadow-md border">
+          <BsThreeDots size={12} className="absolute" />
         </button>
       </div>
-      <div className="body p-2">
-        <p className="text-lg font-semibold">
-          {car.name} {car.type}
-        </p>
-        <p>
-          <span className="text-2xl font-bold text-blue-950">
-            ¥{car.price.toLocaleString()}
-          </span>{" "}
-          <span className="font-normal text-gray-500">CIF</span>
-        </p>
+      <div className="body flex flex-col gap-1 w-full p-2 px-4">
+        <div className="flex justify-between">
+          <p className="text-lg font-semibold">
+            {car.name} {car.type}
+          </p>
+          <p>
+            <span className="text-2xl font-bold text-blue-950">
+              ¥{car.price.toLocaleString()}
+            </span>{" "}
+            <span className="font-normal text-gray-500">CIF</span>
+          </p>
+        </div>
+        <p>15S Touring L Package</p>
         <div className="flex flex-wrap gap-2 mt-2">
           {statusPill(car.status)}
           <span className={` ${pillClass}`}>
@@ -176,7 +183,7 @@ const CarCard: React.FC<CarCardProps> = ({
           </span>
         </div>
         <button
-          className={`w-full py-2 bg-gray-100 mt-3 rounded-md font-semibold`}
+          className={`w-fit px-4 py-2 bg-gray-100 mt-3 rounded-md font-semibold`}
         >
           Check Availability
         </button>
@@ -185,4 +192,4 @@ const CarCard: React.FC<CarCardProps> = ({
   );
 };
 
-export default CarCard;
+export default CarRow;

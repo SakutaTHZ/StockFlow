@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       <ScrollToTopButton customClass={""} />
-      <CNetNav customClass="my-custom-class" navClass="my-nav-class" />
+      <CNetNav/>
 
       <Routes>
         <Route path="/" element={<Home />} />
