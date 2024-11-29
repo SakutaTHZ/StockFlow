@@ -49,5 +49,6 @@ export interface CarData {
     milleage:number,
     vim:string,
     price:number,
-    hold:boolean
+    hold:boolean,
+    discount:number,
 }

@@ -20,7 +20,7 @@ export const carNames: string[] = [
   "CR-V",
 ];
 export const getRandomCarNames = () => {
-    return carNames[Math.floor(Math.random() * carNames.length)];
+  return carNames[Math.floor(Math.random() * carNames.length)];
 };
 
 // carTypes
@@ -32,7 +32,7 @@ export const carTypes: string[] = [
   "MiniVan",
 ];
 export const getRandomCarTypes = () => {
-    return carTypes[Math.floor(Math.random() * carTypes.length)];
+  return carTypes[Math.floor(Math.random() * carTypes.length)];
 };
 
 //carEngines
@@ -44,7 +44,7 @@ export const carEngines: string[] = [
   "EV engine",
 ];
 export const getRandomCarEngines = () => {
-    return carEngines[Math.floor(Math.random() * carEngines.length)];
+  return carEngines[Math.floor(Math.random() * carEngines.length)];
 };
 
 // imagelinks
@@ -56,56 +56,62 @@ export const imageLink: string[] = [
   "https://cosmo-images.azureedge.net/stock/original/our_51498_ec5f8b8d-7ca6-4eb7-a424-fd9ac0cf8403.jpg?preset=bigimage",
 ];
 export const getRandomImageLink = () => {
-    return imageLink[Math.floor(Math.random() * imageLink.length)];
+  return imageLink[Math.floor(Math.random() * imageLink.length)];
 };
 
 // highlightstatus
 export const highlightStatus: string[] = [
-    "Welcab",
-    "Coming soon",
-    "Hybrid",
-    "Reduced",
-    "New",
-    ""
-]
+  "Welcab",
+  "Coming soon",
+  "Hybrid",
+  "Reduced",
+  "New",
+  "",
+];
 export const getRandomHighlightStatus = () => {
-    return highlightStatus[Math.floor(Math.random() * highlightStatus.length)];
+  return highlightStatus[Math.floor(Math.random() * highlightStatus.length)];
 };
 
 export const getRandomMileage = () => {
-    return Math.floor(Math.random() * 10000000)
+  return Math.floor(Math.random() * 10000000);
 };
 export const getRandomPrice = () => {
-    return Math.round(Math.random() * (999999 - 100000 + 1) + 100000)
+  return Math.round(Math.random() * (999999 - 100000 + 1) + 100000);
 };
 export const getRandomVim = () => {
-    return `THZPT${Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000}`
+  return `THZPT${Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000}`;
 };
 export const getRandomCarId = () => {
-    return `#E${Math.floor(Math.random() * 1000000)}`
+  return `#E${Math.floor(Math.random() * 1000000)}`;
 };
-export const getTrueOrFalse = ()=>{
-    return Math.floor(Math.random() *10)/2 === 0 ? true : false
-}
+export const getTrueOrFalse = () => {
+  return Math.floor(Math.random() * 10) / 2 === 0 ? true : false;
+};
 export const getRandomRating = () => {
-    return `${Math.ceil((Math.floor(Math.random() * 5)) * 2) / 2}`
+  return `${Math.ceil(Math.floor(Math.random() * 5) * 2) / 2}`;
+};
+export const getDiscount = () => {
+  return Math.floor(Math.random() * 10) / 7 === 1
+    ? Math.round(Math.random() * (1000 - 50000 + 1) + 50000)
+    : 0;
 };
 
 export const generateCardData = (): CarData => {
   const cardData: CarData = {
-    id:getRandomCarId(),
+    id: getRandomCarId(),
     name: getRandomCarNames(),
     type: getRandomCarTypes(),
     image: getRandomImageLink(),
     status: getRandomCarStatus(),
     engine: getRandomCarEngines(),
     highlightStatus: getRandomHighlightStatus(),
-    showExtraStatus:getTrueOrFalse(),
+    showExtraStatus: getTrueOrFalse(),
     rating: getRandomRating(),
-    milleage:getRandomMileage(),
-    vim:getRandomVim(),
-    price:getRandomPrice(),
-    hold:getTrueOrFalse(),
+    milleage: getRandomMileage(),
+    vim: getRandomVim(),
+    price: getRandomPrice(),
+    hold: getTrueOrFalse(),
+    discount: getDiscount(),
   };
   console.log(cardData);
 
@@ -114,11 +120,11 @@ export const generateCardData = (): CarData => {
 
 // Sort Options
 export const sortOptions = [
-    "Most Relevant",
-    "Date Latest to Oldest",
-    "Date Oldest to Latest",
-    "Price Low to High",
-    "Price High to Low",
-    "Mileage Low to High",
-    "Mileage High to Low",
-]
+  "Most Relevant",
+  "Date Latest to Oldest",
+  "Date Oldest to Latest",
+  "Price Low to High",
+  "Price High to Low",
+  "Mileage Low to High",
+  "Mileage High to Low",
+];
