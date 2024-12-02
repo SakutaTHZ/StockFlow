@@ -47,6 +47,16 @@ export const getRandomCarEngines = () => {
   return carEngines[Math.floor(Math.random() * carEngines.length)];
 };
 
+// yardArea
+export const yardArea:string[] = [
+  "Kasai-K",
+  "Tokyo-T",
+  "KyuShu-Q",
+]
+export const getRandomYardArea = () => {
+  return yardArea[Math.floor(Math.random() * yardArea.length)];
+};
+
 // imagelinks
 export const imageLink: string[] = [
   "https://cosmo-images.azureedge.net/stock/original/our_78146_b49d9285-cc91-4b89-92a6-1e4d2a9e310b.jpg?preset=bigimage",
@@ -72,6 +82,19 @@ export const getRandomHighlightStatus = () => {
   return highlightStatus[Math.floor(Math.random() * highlightStatus.length)];
 };
 
+// exteriorColor
+export const exteriorColor: string[] = [
+  "black#000000",
+  "blue#0000ff",
+  "brown#a52a2a",
+  "beige#f5f5dc",
+  "gray#808080",
+  "green#008000",
+];
+export const getRandomExteriorColors = () => {
+  return exteriorColor[Math.floor(Math.random() * exteriorColor.length)];
+};
+
 export const getRandomMileage = () => {
   return Math.floor(Math.random() * 10000000);
 };
@@ -90,13 +113,18 @@ export const getTrueOrFalse = () => {
 export const getRandomRating = () => {
   return `${Math.ceil(Math.floor(Math.random() * 5) * 2) / 2}`;
 };
-export const getDiscount = () => {
-  return Math.floor(Math.random() * 10) / 7 === 1
+export const getDiscount = (newHighlightStatus:string) => {
+  return newHighlightStatus === "Reduced"
     ? Math.round(Math.random() * (1000 - 50000 + 1) + 50000)
     : 0;
 };
+export const getMarketType = ()=>{
+  return Math.random() < 0.3;
+}
 
 export const generateCardData = (): CarData => {
+  const newHighlightStatus = getRandomHighlightStatus();
+
   const cardData: CarData = {
     id: getRandomCarId(),
     name: getRandomCarNames(),
@@ -104,14 +132,17 @@ export const generateCardData = (): CarData => {
     image: getRandomImageLink(),
     status: getRandomCarStatus(),
     engine: getRandomCarEngines(),
-    highlightStatus: getRandomHighlightStatus(),
+    highlightStatus: newHighlightStatus,
     showExtraStatus: getTrueOrFalse(),
     rating: getRandomRating(),
     milleage: getRandomMileage(),
     vim: getRandomVim(),
     price: getRandomPrice(),
     hold: getTrueOrFalse(),
-    discount: getDiscount(),
+    discount: getDiscount(newHighlightStatus),
+    marketType: getMarketType(),
+    yardArea:getRandomYardArea(),
+    exteriorColor:getRandomExteriorColors(),
   };
   console.log(cardData);
 

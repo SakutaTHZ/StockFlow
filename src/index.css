@@ -15,3 +15,174 @@
 
 @media (prefers-color-scheme: light) {
 }
+
+.rangeSlider {
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  cursor: pointer;
+}
+.rangeSlider::-webkit-slider-runnable-track {
+  background: rgb(224, 224, 224);
+  border-radius: 20px;
+  height: 0.4rem;
+  z-index: 5;
+}
+.rangeSlider::-moz-range-track {
+  background: rgb(224, 224, 224);
+  border-radius: 20px;
+  height: 0.4rem;
+  z-index: 5;
+}
+.rangeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -3px;
+  background-color: var(--cosmo-yellow);
+  height: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  outline: 3px solid transparent;
+  z-index: 10;
+  transition: 0.5s ease-in-out;
+}
+.rangeSlider::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  background-color: var(--cosmo-yellow);
+  height: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.rangeSlider:focus {
+  outline: none;
+}
+.rangeSlider:focus::-webkit-slider-thumb,
+.rangeSlider:hover::-webkit-slider-thumb {
+  border: 1px solid white;
+  outline: 2px solid var(--cosmo-yellow);
+  outline-offset: 0.125rem;
+}
+
+.rangeSlider:focus::-moz-range-thumb,
+.rangeSlider:hover::-moz-range-thumb {
+  border: 1px solid white;
+  outline: 2px solid var(--cosmo-yellow);
+  outline-offset: 0.125rem;
+}
+
+.carDetailsBox {
+  .dataRow {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    .description::before {
+      content: "";
+      position: absolute;
+      left: -4.5px;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: grey;
+    }
+  }
+  .dataRow:first-of-type {
+    background: #00000005;
+    border-radius: 10px 10px 10px 0;
+  }
+  .dataRow:not(:first-of-type) {
+    color: #00000060;
+    p {
+      color: #00000060;
+    }
+  }
+  .dataRow::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    width: 2px;
+    height: 50%;
+    background: gray;
+  }
+  .dataRow:last-of-type::before {
+    display: none;
+  }
+  .dataRow::after {
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: 50%;
+    width: 2px;
+    height: 50%;
+    background: gray;
+  }
+  .dataRow:first-of-type::after {
+    display: none;
+  }
+}
+.comment:last-of-type {
+  border: 0;
+}
+.scrollBox {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollBox::-webkit-scrollbar {
+  display: none;
+}
+
+input[type="checkbox"] {
+  accent-color: #ffc158;
+}
+
+.w-fit-cus {
+  width: fit-content !important;
+}
+@media only screen and (max-width: 600px) {
+  .statusSeclection {
+    .status {
+      width: 48%;
+    }
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  transition: width 0.3s ease !important;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(209 213 219);
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(252 211 77);
+}
+
+/* @media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+} */

@@ -51,4 +51,7 @@ export interface CarData {
     price:number,
     hold:boolean,
     discount:number,
+    marketType:boolean,
+    yardArea:string,
+    exteriorColor:string,
 }

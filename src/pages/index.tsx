@@ -4,13 +4,17 @@ import { FaRegTrashAlt, FaSearch, FaListUl } from "react-icons/fa";
 import { MdTune, MdBorderAll } from "react-icons/md";
 import DropDown from "../components/DropDown";
 import CarCard from "../components/CarCard";
-import { sortOptions } from "../data/generateData";
+import { carStatus, exteriorColor, sortOptions, yardArea } from "../data/generateData";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
 import Pagination from "../components/Pagination";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaCarTunnel } from "react-icons/fa6";
 import CarRow from "../components/CarRow";
+import FilterOptionDropDown from "../components/FilterOptionDropDown";
+import { makeBrandData, Model } from "../data/arrayData";
+import FilterClearDropDown from "../components/FilterClearDropDown";
+import RangeSlider from "../components/RangeSlider";
 
 interface indexPageProps {
   customClass?: string;
@@ -46,6 +50,39 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
     setCurrentPage(page);
 
     return navigate(`/`, { state: { cars, page: page } });
+  };
+
+  const [filteredModels, setFilteredModels] = useState<Model[]>([]);
+
+  const market = [
+    { name: "All", count: cars.length },
+    {
+      name: "My Market",
+      count: cars.filter((car) => car.marketType === true).length,
+    },
+    {
+      name: "Other Market",
+      count: cars.filter((car) => car.marketType === false).length,
+    },
+  ];
+  const filteredCarStatus = carStatus.map((status) => {
+    const count = cars.filter((car) => car.status === status).length;
+    return { name: status, count };
+  });
+  const filteredYardArea = yardArea.map((area) => {
+    const count = cars.filter((car) => car.yardArea === area).length;
+    return { name: area, count };
+  });
+  const filteredExteriorColor = exteriorColor.map((color) => {
+    const count = cars.filter((car) => car.exteriorColor === color).length;
+    return { name: color, count };
+  });
+
+  const handleMakeSelection = (selectedOptions: string[]) => {
+    const models = makeBrandData
+      .filter((make) => selectedOptions.includes(make.name))
+      .flatMap((make) => make.models);
+    setFilteredModels(models);
   };
 
   return (
@@ -142,51 +179,133 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                 <FaRegTrashAlt />
               </button>
             </div>
+
+            <FilterClearDropDown
+              customClass={
+                "bg-slate-50 transmission border-b border-b-gray-200"
+              }
+              boxName="Market"
+              listData={market}
+            />
+
+            <FilterOptionDropDown
+              boxName="Make/Brand"
+              listData={makeBrandData.map((make) => ({
+                name: make.name,
+                count: make.count,
+              }))}
+              customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
+              placeholder={"Search Make/Brand"}
+              onSelectionChange={handleMakeSelection}
+            />
+
+            {filteredModels.length > 0 && (
+              <FilterOptionDropDown
+                boxName="Model"
+                listData={filteredModels.map((model) => ({
+                  name: model.name || "Unknown",
+                  count: model.count || 0,
+                }))}
+                customClass={
+                  "animate-slideRight bg-slate-50 model border-b border-b-gray-200"
+                }
+                placeholder={"Search Model"}
+              />
+            )}
+
+            <RangeSlider
+              min={1900}
+              max={2025}
+              boxName={"Registration Year"}
+              customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
+            />
+            <RangeSlider
+              min={0}
+              max={10000}
+              boxName={"Mileage km"}
+              customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
+            />
+            <RangeSlider
+              min={0}
+              max={99999}
+              boxName={"Price ¥"}
+              customClass={"bg-slate-50 price border-b border-b-gray-200"}
+            />
+
+            <FilterClearDropDown
+              customClass={
+                "bg-slate-50 transmission border-b border-b-gray-200"
+              }
+              boxName="Status"
+              listData={filteredCarStatus}
+            />
+
+            <FilterClearDropDown
+              customClass={
+                "bg-slate-50 transmission border-b border-b-gray-200"
+              }
+              boxName="Yard Area"
+              listData={filteredYardArea}
+            />
+            
+            <FilterClearDropDown
+              customClass={
+                "bg-slate-50 transmission border-b border-b-gray-200"
+              }
+              boxName="Exterior Color"
+              listData={filteredExteriorColor}
+              color={true}
+            />
           </div>
         )}
 
         {/* Right Scrollable Content */}
         <div className="flex-1 flex flex-wrap justify-evenly align-top gap-2 mt-6 lg:mt-0 transition-all">
-
           {cars.length == 0 ? (
-              <div className="w-full h-96 flex flex-col md:flex-row gap-2 md:gap-5 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
-                <FaCarTunnel size={30} className="text-gray-400" />
-                <p className="text-center text-gray-400 font-semibold">
-                  Looks like all the cars have zoomed off. Check back soon for
-                  new arrivals!
-                </p>
-              </div>
-            ) : isTableView ? (
-              <div className="rightBox flex flex-col gap-4 w-full h-full">
-                {cars
-                  .slice(20 * currentPage - 20, 20 * currentPage)
-                  .map((car, index: number) => (
-                    <CarRow
-                    key={index} car={car} extraStatus={car.showExtraStatus} 
+            <div className="w-full h-96 flex flex-col md:flex-row gap-2 md:gap-5 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
+              <FaCarTunnel size={30} className="text-gray-400" />
+              <p className="text-center text-gray-400 font-semibold">
+                Looks like all the cars have zoomed off. Check back soon for new
+                arrivals!
+              </p>
+            </div>
+          ) : isTableView ? (
+            <div className="rightBox flex flex-col gap-4 w-full h-full">
+              {cars
+                .slice(20 * currentPage - 20, 20 * currentPage)
+                .map((car, index: number) => (
+                  <CarRow
+                    key={index}
+                    car={car}
+                    extraStatus={car.showExtraStatus}
                     style={{
                       animationDelay: `${
                         index === 0 ? "0s" : `${index * 0.1}s`
                       }`,
                       animationFillMode: "forwards",
-                    }}/>
-                  ))}
-              </div>
-            ) : (
-              <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full h-full">
-                {cars
-                  .slice(20 * currentPage - 20, 20 * currentPage)
-                  .map((car, index: number) => (
-                    <CarCard
-                    key={index} car={car} extraStatus={car.showExtraStatus} 
+                    }}
+                  />
+                ))}
+            </div>
+          ) : (
+            <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full h-full">
+              {cars
+                .slice(20 * currentPage - 20, 20 * currentPage)
+                .map((car, index: number) => (
+                  <CarCard
+                    key={index}
+                    car={car}
+                    extraStatus={car.showExtraStatus}
                     style={{
                       animationDelay: `${
                         index === 0 ? "0s" : `${index * 0.1}s`
                       }`,
                       animationFillMode: "forwards",
-                    }}/>
-                  ))}
-              </div>
-            )}
+                    }}
+                  />
+                ))}
+            </div>
+          )}
 
           <Pagination
             totalPages={totalPages}
