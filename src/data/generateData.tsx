@@ -95,6 +95,34 @@ export const getRandomExteriorColors = () => {
   return exteriorColor[Math.floor(Math.random() * exteriorColor.length)];
 };
 
+// Yards
+export const yards:string[] = [
+  'Anowar',
+  'JAL Kisarazu',
+  'JAL Kobe',
+  'Kirin',
+  'NR Japan Nogoya',
+  'KLC Co.Ltd',
+  'Miky Frontier',
+  'M3LOGI Hakata',
+  'Kamigomi Nagoya',
+  'From-J Kobe',
+]
+export const getRandomYard = () => {
+  return yards[Math.floor(Math.random() * yards.length)];
+};
+
+// fuelType
+export const fuelType:string[] = [
+  'Petrol',
+  'Gas',
+  'Electric',
+  'Methol'
+]
+export const getFuelType = () => {
+  return fuelType[Math.floor(Math.random() * fuelType.length)];
+};
+
 export const getRandomMileage = () => {
   return Math.floor(Math.random() * 10000000);
 };
@@ -118,16 +146,53 @@ export const getDiscount = (newHighlightStatus:string) => {
     ? Math.round(Math.random() * (1000 - 50000 + 1) + 50000)
     : 0;
 };
+export const getEnginePower = () => {
+  return Math.round(Math.random() * (1000 - 50000 + 1) + 50000)
+};
 export const getMarketType = ()=>{
   return Math.random() < 0.3;
 }
+export const getRandomPackage = ()=>{
+  return `${Math.round(Math.random()*10)}L Touring Package`
+}
+
+export const getRandomDate = () => {
+  const startDate = new Date(2014, 0, 1); // January 1, 2014
+  const endDate = new Date(2024, 11, 31); // December 31, 2024
+  
+  const randomTimestamp = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+  const randomDate = new Date(randomTimestamp);
+  
+  const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' };
+  return randomDate.toLocaleDateString('en-GB', options); // Formats as "22 Jul 2024"
+};
+
+const generateFormattedDate = (): string => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.toLocaleString("default", { month: "long" }); // Get full month name
+  const day = date.getDate();
+
+  return `${year} ${month} ${day}`;
+};
+
+const generateFormattedDate2 = (): string => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.toLocaleString("default", { month: "long" }); // Get full month name
+  const day = date.getDate();
+
+  return `${day}-${month}-${year}`;
+};
 
 export const generateCardData = (): CarData => {
   const newHighlightStatus = getRandomHighlightStatus();
+  const date = getRandomDate();
 
   const cardData: CarData = {
     id: getRandomCarId(),
     name: getRandomCarNames(),
+    package: getRandomPackage(),
     type: getRandomCarTypes(),
     image: getRandomImageLink(),
     status: getRandomCarStatus(),
@@ -143,8 +208,20 @@ export const generateCardData = (): CarData => {
     marketType: getMarketType(),
     yardArea:getRandomYardArea(),
     exteriorColor:getRandomExteriorColors(),
+
+    soldDate:date,
+    vessel:getRandomYard(),
+    vesselFrom:getRandomYard(),
+    vesselTo:getRandomYard(),
+    
+    enginePower:getEnginePower(),
+    registerDate:generateFormattedDate(),
+    fuelType:getFuelType(),
+    seats:Math.round(Math.random() * (2 - 10 + 1) + 10),
+    extraParts:'No extra Parts',
+    picturesBaseDate:generateFormattedDate2(),
+    picturesExtraDate:generateFormattedDate2(),
   };
-  console.log(cardData);
 
   return cardData;
 };

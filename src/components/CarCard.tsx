@@ -19,12 +19,16 @@ import { PiChartLineDownBold } from "react-icons/pi";
 import { GoDotFill } from "react-icons/go";
 import Popup from "./Popup";
 import { IoIosArrowForward } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { carAtom } from "../data/atoms";
 
 interface CarCardProps {
   customClass?: string;
   extraStatus?: boolean; //for Stock Offer
   style?: CSSProperties;
   car: CarData;
+  onClick?: () => void;
 }
 
 const CarCard: React.FC<CarCardProps> = ({
@@ -32,6 +36,7 @@ const CarCard: React.FC<CarCardProps> = ({
   extraStatus = false,
   style,
   car,
+  onClick,
 }) => {
   const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 border-gray-300`;
 
@@ -126,19 +131,36 @@ const CarCard: React.FC<CarCardProps> = ({
   const openCheckPopup = () => setIsCheckPopupOpen(true);
   const closeCheckPopup = () => setIsCheckPopupOpen(false);
 
+  const navigate = useNavigate();
+
+  const [cars] = useAtom(carAtom);
+
+  const handleCardClick = (carData: CarData) => {
+    console.log("clicked" + carData.id);
+    navigate(`/detail/${carData.id.slice(1)}`, {
+      state: { card: carData, cars: cars },
+    });
+  };
+
   return (
     <>
       <div
-        className={`card animate-slideUp transition-all w-full h-fit min-h-32 shadow-md rounded-lg border-2 bg-white ${customClass} ${
+        className={`card relative animate-slideUp transition-all w-full h-fit min-h-32 shadow-md rounded-lg border-2 bg-white ${customClass} ${
           extraStatus ? "border-[#FFC158]" : "border-gray-100"
         } ${car.hold && "opacity-15 pointer-events-none"} transition-all`}
         style={style}
       >
+        <div
+          className="ClickArea absolute z-10 w-full h-full"
+          onClick={() => (onClick ? onClick() : handleCardClick(car))}
+        ></div>
         <div className="head relative flex h-42">
           <img
             src={car.image}
             alt="car Image"
-            className={`rounded-t-md h-42 ${car.hold && "opacity-50 pointer-events-none"}`}
+            className={`rounded-t-md h-42 ${
+              car.hold && "opacity-50 pointer-events-none"
+            }`}
             loading="lazy"
           />
           {car.hold && (
@@ -167,7 +189,7 @@ const CarCard: React.FC<CarCardProps> = ({
             {car.id}
           </span>
           <button
-            className="option absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border"
+            className="option z-20 absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border"
             onClick={openPopup}
           >
             <BsThreeDots />
@@ -217,7 +239,7 @@ const CarCard: React.FC<CarCardProps> = ({
             </span>
           </div>
           <button
-            className={`w-full py-2 bg-gray-100 mt-3 rounded-md font-semibold`}
+            className="w-full py-2 bg-gray-100 mt-3 rounded-md font-semibold z-20 relative"
             onClick={openCheckPopup}
           >
             Check Availability
@@ -299,7 +321,9 @@ const CarCard: React.FC<CarCardProps> = ({
             <p className="font-semibold mb-1">Ask Question</p>
             <textarea
               name="check"
-              className="w-full border resize-none rounded-md mb-3 p-2" cols={100} rows={5}
+              className="w-full border resize-none rounded-md mb-3 p-2"
+              cols={100}
+              rows={5}
               placeholder="Ask us something about the car"
             ></textarea>
             <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold">

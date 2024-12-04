@@ -39,6 +39,7 @@ export interface AuctionGrade {
 export interface CarData {
     id:string,
     name: string,
+    package:string,
     type: string,
     image: string,
     status: string,
@@ -54,4 +55,16 @@ export interface CarData {
     marketType:boolean,
     yardArea:string,
     exteriorColor:string,
+    soldDate:string,
+    vessel:string,
+    vesselFrom:string,
+    vesselTo:string,
+
+    enginePower:number,
+    registerDate:string,
+    fuelType:string,
+    seats:number,
+    extraParts:string,
+    picturesBaseDate:string,
+    picturesExtraDate:string,
 }

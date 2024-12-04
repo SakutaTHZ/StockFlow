@@ -19,12 +19,16 @@ import { PiChartLineDownBold } from "react-icons/pi";
 import Popup from "./Popup";
 import { GoDotFill } from "react-icons/go";
 import { IoIosArrowForward } from "react-icons/io";
+import { useAtom } from "jotai";
+import { carAtom } from "../data/atoms";
+import { useNavigate } from "react-router-dom";
 
 interface CarRowProps {
   customClass?: string;
   extraStatus?: boolean; //for Stock Offer
   style?: CSSProperties;
   car: CarData;
+  onClick?: () => void;
 }
 
 const CarRow: React.FC<CarRowProps> = ({
@@ -32,6 +36,7 @@ const CarRow: React.FC<CarRowProps> = ({
   extraStatus = false,
   style,
   car,
+  onClick,
 }) => {
   const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 border-gray-300`;
 
@@ -126,6 +131,16 @@ const CarRow: React.FC<CarRowProps> = ({
   const openCheckPopup = () => setIsCheckPopupOpen(true);
   const closeCheckPopup = () => setIsCheckPopupOpen(false);
 
+  const navigate = useNavigate();
+  const [cars] = useAtom(carAtom);
+
+  const handleCardClick = (carData: CarData) => {
+    console.log("clicked" + carData.id);
+    navigate(`/detail/${carData.id.slice(1)}`, {
+      state: { card: carData, cars: cars },
+    });
+  };
+
   return (
     <>
       <div
@@ -134,6 +149,10 @@ const CarRow: React.FC<CarRowProps> = ({
         } ${car.hold && "opacity-50 pointer-events-none"} transition-all`}
         style={style}
       >
+      <div
+        className="ClickArea absolute z-10 w-full h-full"
+        onClick={() => (onClick ? onClick() : handleCardClick(car))}
+      ></div>
         <div className="head relative flex">
           <img
             src={car.image}
@@ -166,7 +185,7 @@ const CarRow: React.FC<CarRowProps> = ({
           >
             {car.id}
           </span>
-          <button className="option h-4 w-4 flex items-center justify-center absolute right-2 bottom-2 bg-white p-3 rounded-full shadow-md border" onClick={openPopup}>
+          <button className="option z-20 h-4 w-4 flex items-center justify-center absolute right-2 bottom-2 bg-white p-3 rounded-full shadow-md border" onClick={openPopup}>
             <BsThreeDots size={12} className="absolute" />
           </button>
         </div>
@@ -218,7 +237,7 @@ const CarRow: React.FC<CarRowProps> = ({
             </span>
           </div>
           <button
-            className={`w-fit px-4 py-2 bg-gray-100 mt-3 rounded-md font-semibold`}
+            className={`w-fit px-4 py-2 bg-gray-100 mt-3 rounded-md font-semibold z-20 relative`}
             onClick={openCheckPopup}
           >
             Check Availability
