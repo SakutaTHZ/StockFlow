@@ -102,7 +102,7 @@ const Details: React.FC<DetailsProps> = () => {
   }
 
   return (
-    <div className="flex flex-col gap-6 px-32 py-8">
+    <div className="flex flex-col gap-6 px-32 py-8 ">
       {showGallery && (
         <Gallery
           customClass="animate-appear animate-slideUp"
@@ -227,7 +227,7 @@ const Details: React.FC<DetailsProps> = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 font-medium mt-2">
+            <div className="grid grid-cols-2 gap-4 mt-2">
               <p className="flex gap-2 items-center">
                 <PiCarProfile size={20} />
                 {cardData.exteriorColor.split("#")[0]}
@@ -305,7 +305,7 @@ const Details: React.FC<DetailsProps> = () => {
           </div>
         </div>
 
-        <div className="DataBox gap-4 flex flex-col">
+        <div className="DataBox gap-4 flex flex-col sticky top-2">
           <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
             <div className="head flex flex-col gap-1 text-right">
               <p className="text-[#CC9A46]">
