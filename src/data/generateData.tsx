@@ -185,6 +185,18 @@ const generateFormattedDate2 = (): string => {
   return `${day}-${month}-${year}`;
 };
 
+// Array of vehicle features
+const vehicleParts = ["AC", "PAS", "PW", "ABS", "AB", "R Key", "5-seater"];
+
+function getRandomVehicleParts() {
+  const randomCount = Math.floor(Math.random() * vehicleParts.length) + 1;
+    
+  const shuffled = vehicleParts.sort(() => 0.5 - Math.random());
+  const selectedParts = shuffled.slice(0, randomCount);
+  
+  return selectedParts.join(', ');
+}
+
 export const generateCardData = (): CarData => {
   const newHighlightStatus = getRandomHighlightStatus();
   const date = getRandomDate();
@@ -218,9 +230,14 @@ export const generateCardData = (): CarData => {
     registerDate:generateFormattedDate(),
     fuelType:getFuelType(),
     seats:Math.round(Math.random() * (2 - 10 + 1) + 10),
-    extraParts:'No extra Parts',
+    extraParts:getRandomVehicleParts(),
     picturesBaseDate:generateFormattedDate2(),
     picturesExtraDate:generateFormattedDate2(),
+    
+    ec:"DHL",
+    trackingNumber:getRandomPrice(),
+    sentDate:generateFormattedDate2(),
+    customer:`Customer${Math.floor(Math.random()*100000)}`,
   };
 
   return cardData;

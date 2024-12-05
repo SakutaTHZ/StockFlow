@@ -67,4 +67,9 @@ export interface CarData {
     extraParts:string,
     picturesBaseDate:string,
     picturesExtraDate:string,
+
+    ec:string,
+    trackingNumber:number,
+    sentDate:string,
+    customer:string,
 }

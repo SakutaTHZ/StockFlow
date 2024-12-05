@@ -2,19 +2,30 @@
 
 import { Link, useLocation } from "react-router-dom";
 import { CarData } from "../data/types";
-import { PiChartLineDownBold } from "react-icons/pi";
+import {
+  PiCalendarDots,
+  PiCarProfile,
+  PiChartLineDownBold,
+  PiGasCan,
+  PiGearFine,
+  PiStar,
+} from "react-icons/pi";
 import { FaWheelchair } from "react-icons/fa";
 import {
   MdOutlineTimer,
   MdOutlineNewReleases,
   MdOutlineRemoveRedEye,
+  MdAirlineSeatReclineNormal,
+  MdInsertPhoto,
 } from "react-icons/md";
-import { TbFaceIdError } from "react-icons/tb";
+import { TbFaceIdError, TbRoad } from "react-icons/tb";
 import Hybrid from "../assets/hybrid.png";
+import Engine from "../assets/EnginePower.svg";
 import { useState } from "react";
 import Gallery from "../components/Gallery";
 import { IoLanguage } from "react-icons/io5";
-import { IoMdInformationCircleOutline } from "react-icons/io";
+import { IoMdInformationCircleOutline, IoMdPhotos } from "react-icons/io";
+import Certificate from '../assets/images/certificate.png'
 
 interface DetailsProps {
   customClass?: string;
@@ -208,17 +219,89 @@ const Details: React.FC<DetailsProps> = () => {
               <p className="font-bold text-lg">Car Details</p>
               <div className="font-semibold flex gap-6">
                 <button className="flex gap-1 items-center text-[#CC9A46]">
-                <IoLanguage /> Translation
+                  <IoLanguage /> Translation
                 </button>
                 <button className="flex gap-1 items-center text-[#CC9A46]">
-                <IoMdInformationCircleOutline /> Auction Guide
+                  <IoMdInformationCircleOutline /> Auction Guide
                 </button>
               </div>
             </div>
 
-            <div>
-              <p>{cardData.exteriorColor}</p>
+            <div className="grid grid-cols-2 gap-4 font-medium mt-2">
+              <p className="flex gap-2 items-center">
+                <PiCarProfile size={20} />
+                {cardData.exteriorColor.split("#")[0]}
+              </p>
+              <p className="flex gap-2 items-center">
+                <PiCalendarDots size={20} />
+                {cardData.registerDate}
+              </p>
+              <p className="flex gap-2 items-center">
+                <img src={Engine} alt="engine" />
+                {cardData.enginePower}
+              </p>
+              <p className="flex gap-2 items-center">
+                <TbRoad size={20} />
+                {cardData.milleage}
+              </p>
+              <p className="flex gap-2 items-center">
+                <PiGasCan size={20} />
+                {cardData.fuelType}
+              </p>
+              <p className="flex gap-2 items-center">
+                <PiStar size={20} />
+                {cardData.rating}
+              </p>
+              <p className="flex gap-2 items-center">
+                <MdAirlineSeatReclineNormal size={20} />
+                {cardData.seats}
+              </p>
+              <p className="flex gap-2 items-center">
+                <PiGearFine size={20} />
+                {cardData.extraParts}
+              </p>
+              <p className="flex gap-2 items-center">
+                <MdInsertPhoto />
+                {cardData.picturesBaseDate}
+              </p>
+              <p className="flex gap-2 items-center">
+                <IoMdPhotos />
+                {cardData.picturesExtraDate}
+              </p>
             </div>
+          </div>
+          <div className="flex w-full gap-4">
+          <div className="flex flex-col align-top w-full border rounded-md py-6 px-4 gap-4 shadow-sm flex-grow-0">
+            <p className="font-bold text-lg">Certificate</p>
+            <div>
+            <img src={Certificate} alt="certificate" className="h-24 w-auto object-contain"/>
+            </div>
+          </div>
+          <div className="flex flex-col w-full border rounded-md py-6 px-4 gap-4 shadow-sm">
+            <p className="font-bold text-lg">Parcel</p>
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between">
+                <p className={labelClass}>EC:</p>
+                <p>{cardData.ec}</p>
+              </div>
+              <div className="flex justify-between">
+                <p className={labelClass}>Tracking Number:</p>
+                <p>{cardData.trackingNumber}</p>
+              </div>
+              <div className="flex justify-between">
+                <p className={labelClass}>Sent Date:</p>
+                <p>
+                  {cardData.soldDate}
+                </p>
+              </div>
+              <div className="flex justify-between">
+                <p className={labelClass}>Customer:</p>
+                <p>
+                  {cardData.customer}
+                </p>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
 
