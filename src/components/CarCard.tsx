@@ -14,14 +14,27 @@ import { CarData } from "../data/types";
 import JapanFlag from "../assets/JP.svg";
 import UKFlag from "../assets/GB.svg";
 import Hybrid from "../assets/hybrid.png";
-import { MdOutlineTimer, MdOutlineNewReleases } from "react-icons/md";
-import { PiChartLineDownBold } from "react-icons/pi";
-import { GoDotFill } from "react-icons/go";
+import {
+  MdOutlineTimer,
+  MdOutlineNewReleases,
+  MdAirlineSeatReclineNormal,
+} from "react-icons/md";
+import {
+  PiCalendarDots,
+  PiCar,
+  PiCarProfile,
+  PiChartLineDownBold,
+  PiGasCan,
+  PiStar,
+} from "react-icons/pi";
+import Engine from "../assets/EnginePower.svg";
 import Popup from "./Popup";
 import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
+import Trans from "../assets/transmission.png";
+import { LuMapPin } from "react-icons/lu";
 
 interface CarCardProps {
   customClass?: string;
@@ -258,51 +271,62 @@ const CarCard: React.FC<CarCardProps> = ({
               <img
                 src={car.image}
                 alt="car Image"
-                className="rounded-md h-full object-cover"
+                className="rounded-md w-full object-cover"
                 loading="lazy"
               />
             </div>
-            <div className="grid grid-cols-2 gap-x-4 md:gap-x-28 gap-y-5 py-6 px-0 md:px-2">
-              <div className="flex items-start gap-2">
-                <GoDotFill size={10} className="shrink-0 mt-2" />
-                <p>
-                  Serial number : <span>3448395218</span>
-                </p>
-              </div>
-              <div className="flex items-start gap-2">
-                <GoDotFill size={10} className="shrink-0 mt-2" />
-                <p>
-                  Seating capacity : <span>5</span>
-                </p>
-              </div>
-              <div className="flex items-start gap-2">
-                <GoDotFill size={10} className="shrink-0 mt-2" />
-                Right hand drive
-              </div>
-              <div className="flex items-start gap-2">
-                <GoDotFill size={10} className="shrink-0 mt-2" />
-                <p>
-                  Number of doors : <span>4</span>
-                </p>
-              </div>
-              <div className="flex items-start gap-2">
-                <GoDotFill size={10} className="shrink-0 mt-2" />
-                <p>
-                  Max loading : <span>500</span> kg
-                </p>
-              </div>
-              <div className="flex items-start gap-2">
-                <GoDotFill size={10} className="shrink-0 mt-2" />
-                <p>
-                  Total gears : <span>8</span>
-                </p>
-              </div>
-              <div className="flex items-start gap-2">
-                <GoDotFill size={10} className="shrink-0 mt-2" />
-                <p>
-                  Car dimension : <span>42L x 234W x 243H</span>
-                </p>
-              </div>
+            <div className="grid grid-cols-2 gap-4 my-4">
+              <p className="flex gap-2 items-center">
+                <PiCarProfile size={20} className="flex-shrink-0" />
+                {car.exteriorColor.split("#")[0]}
+              </p>
+              <p className="flex gap-2 items-center">
+                <img src={Vin} alt="" className="brightness-50" />
+                {car.vim}
+              </p>
+              <p className="flex gap-2 items-center">
+                <PiCalendarDots size={20} className="flex-shrink-0" />
+                {car.registerDate}
+              </p>
+              <p className="flex gap-2 items-center">
+                <PiCar size={20} className="flex-shrink-0" />
+                {car.package}
+              </p>
+              <p className="flex gap-2 items-center">
+                <img src={Engine} alt="engine" className="flex-shrink-0" />
+                {car.enginePower.toLocaleString()} cc
+              </p>
+              <p className="flex gap-2 items-center">
+                <TbRoad size={20} className="flex-shrink-0" />
+                {car.milleage.toLocaleString()} km
+              </p>
+              <p className="flex gap-2 items-center">
+                <PiGasCan size={20} className="flex-shrink-0" />
+                {car.fuelType}
+              </p>
+              <p className="flex gap-2 items-center">
+                <PiStar size={20} className="flex-shrink-0" />
+                {car.rating}
+              </p>
+              <p className="flex gap-2 items-center">
+                <img src={Trans} />
+                Automatic Transmission
+              </p>
+              <p className="flex gap-2 items-center">
+                <PiCarProfile size={20} className="flex-shrink-0" />
+                {car.status}
+              </p>
+              <p className="flex gap-2 items-center">
+                <MdAirlineSeatReclineNormal
+                  size={20}
+                  className="flex-shrink-0"
+                />
+                {car.seats} Seater
+              </p>
+              <p className="flex gap-2 items-center">
+                <LuMapPin size={20} className="flex-shrink-0" />
+                {car.vesselFrom}
+              </p>
             </div>
             <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold">
               View All Details <IoIosArrowForward />
