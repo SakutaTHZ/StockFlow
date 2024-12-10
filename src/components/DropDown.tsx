@@ -51,7 +51,7 @@ const DropDown: React.FC<DropDownProps> = ({
 
       {(noDropDown || isOpen) && (
         <div
-          className={`${noDropDown ? "block" : "absolute mt-2"} origin-top-right w-full h-64 rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
+          className={`${noDropDown ? "block" : "absolute mt-2"} origin-top-right w-full h-64 overflow-hidden overflow-y-scroll rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
         >
           <div className="py-1">
             {options.map((option) => (

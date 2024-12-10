@@ -14,9 +14,12 @@ import { CarData } from "../data/types";
 import JapanFlag from "../assets/JP.svg";
 import UKFlag from "../assets/GB.svg";
 import Hybrid from "../assets/hybrid.png";
+import Engine from "../assets/EnginePower.svg";
+import Trans from "../assets/transmission.png";
 import {
   MdOutlineTimer,
   MdOutlineNewReleases,
+  MdOutlinePinDrop,
   MdAirlineSeatReclineNormal,
 } from "react-icons/md";
 import {
@@ -27,28 +30,27 @@ import {
   PiGasCan,
   PiStar,
 } from "react-icons/pi";
-import Engine from "../assets/EnginePower.svg";
-import Popup from "./Popup";
-import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
-import Trans from "../assets/transmission.png";
+import { IoIosArrowForward } from "react-icons/io";
 import { LuMapPin } from "react-icons/lu";
+import Popup from "./Popup";
+import { IoCarOutline } from "react-icons/io5";
+import DropDown from "./DropDown";
+import { promotionText, yards } from "../data/generateData";
 
 interface CarCardProps {
   customClass?: string;
   extraStatus?: boolean; //for Stock Offer
   style?: CSSProperties;
   car: CarData;
-  isAdmin?:boolean;
   onClick?: () => void;
 }
 
-const CarCard: React.FC<CarCardProps> = ({
+const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   customClass,
   extraStatus = false,
-  isAdmin = false,
   style,
   car,
   onClick,
@@ -83,6 +85,16 @@ const CarCard: React.FC<CarCardProps> = ({
       </span>
     );
   };
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
+
+  const [isPromotionPopupOpen, setIsPromotionPopupOpen] = useState(false);
+
+  const openPromotionPopup = () => setIsPromotionPopupOpen(true);
+  const closePromotionPopup = () => setIsPromotionPopupOpen(false);
 
   const highlightPill = (status: string) => {
     return status === "Welcab" ? (
@@ -136,16 +148,6 @@ const CarCard: React.FC<CarCardProps> = ({
     );
   };
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const openPopup = () => setIsPopupOpen(true);
-  const closePopup = () => setIsPopupOpen(false);
-
-  const [isCheckPopupOpen, setIsCheckPopupOpen] = useState(false);
-
-  const openCheckPopup = () => setIsCheckPopupOpen(true);
-  const closeCheckPopup = () => setIsCheckPopupOpen(false);
-
   const navigate = useNavigate();
 
   const [cars] = useAtom(carAtom);
@@ -155,6 +157,18 @@ const CarCard: React.FC<CarCardProps> = ({
     navigate(`/detail/${carData.id.slice(1)}`, {
       state: { card: carData, cars: cars },
     });
+  };
+
+  const [cardOption, setcardOption] = useState(true);
+  const checkOption = () => {
+    if (cardOption === true) {
+      console.log("false");
+      setcardOption(false);
+    } else {
+      console.log("true");
+      setcardOption(true);
+    }
+    console.log("box stat - " + cardOption);
   };
 
   return (
@@ -203,12 +217,38 @@ const CarCard: React.FC<CarCardProps> = ({
           >
             {car.id}
           </span>
-          <button
-            className="option z-20 absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border"
-            onClick={openPopup}
-          >
-            <BsThreeDots />
-          </button>
+          <div className="relative">
+            <button
+              className="option z-20 absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border"
+              onClick={checkOption}
+            >
+              <BsThreeDots />
+            </button>
+            <div
+              className={`z-50 right-2 bottom-8 flex flex-col transition-all bg-white border rounded-md shadow-md ${
+                cardOption ? "hidden" : "absolute"
+              }`}
+            >
+              <button
+                onClick={openPopup}
+                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
+                Show Vehicle Overview
+              </button>
+              <button
+                onClick={openPromotionPopup}
+                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
+                Add Promotion
+              </button>
+              <button className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100">
+                Add Banner
+              </button>
+              <button className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100">
+                Customer View
+              </button>
+            </div>
+          </div>
         </div>
         <div className="body p-2">
           <p className="text-lg font-semibold">
@@ -253,12 +293,11 @@ const CarCard: React.FC<CarCardProps> = ({
               {car.vim}
             </span>
           </div>
-          <button
-            className={`w-full py-2 bg-gray-100 mt-3 rounded-md font-semibold z-20 relative ${isAdmin && 'hidden'}`}
-            onClick={openCheckPopup}
-          >
-            Check Availability
-          </button>
+
+          <span className={`${pillClass} mt-2`}>
+            <MdOutlinePinDrop />
+            {car.vesselFrom}
+          </span>
         </div>
       </div>
 
@@ -266,7 +305,7 @@ const CarCard: React.FC<CarCardProps> = ({
         isOpen={isPopupOpen}
         onClose={closePopup}
         title="Overview"
-        customClass="m-2"
+        customClass="m-2 w-1/3"
         content={
           <>
             <div className="imageContainer flex justify-center w-full h-80 overflow-hidden rounded-md">
@@ -338,23 +377,57 @@ const CarCard: React.FC<CarCardProps> = ({
       />
 
       <Popup
-        isOpen={isCheckPopupOpen}
-        onClose={closeCheckPopup}
-        title="Check Availability"
+        isOpen={isPromotionPopupOpen}
+        onClose={closePromotionPopup}
+        title="Add Promotion"
         customClass="m-2 w-1/3"
         content={
           <>
-            <p className="font-semibold mb-1">Ask Question</p>
-            <textarea
-              name="check"
-              className="w-full border resize-none rounded-md mb-3 p-2"
-              cols={100}
-              rows={5}
-              placeholder="Ask us something about the car"
-            ></textarea>
-            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold">
-              Submit
-            </button>
+            <div className="flex gap-2 items-center text-gray-500">
+              <IoCarOutline size={20} />
+              <p>
+                {car.name} {car.type} {car.package} ({car.id})
+              </p>
+            </div>
+
+            <div className="mt-4 flex flex-col gap-2">
+              <p className="font-semibold">Customer</p>
+
+              <DropDown
+                options={yards}
+                optionClass="w-full"
+                optionBoxClass="md:w-full right-0 z-50"
+                buttonClass="py-2"
+              />
+              <div className="flex items-center gap-2">
+                <input type="checkbox" name="" id="" />
+                <p>Include all customers in dropdown</p>
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-col gap-2">
+              <p className="font-semibold">Promotion text</p>
+
+              <DropDown
+                options={promotionText}
+                optionClass="w-full"
+                optionBoxClass="md:w-full right-0 z-50"
+                buttonClass="py-2"
+              />
+              <div className="flex items-center gap-2">
+                <input type="checkbox" name="" id="" />
+                <p>Visible to the selected customer</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 mt-4">
+                <button className="py-2 w-full bg-yellow-400 font-semibold rounded-md">
+                    Add
+                </button>
+                <button className="py-2 w-full bg-gray-200 font-semibold rounded-md">
+                    Cancel
+                </button>
+            </div>
           </>
         }
       />
@@ -362,4 +435,4 @@ const CarCard: React.FC<CarCardProps> = ({
   );
 };
 
-export default CarCard;
+export default StockFlowAdminCarCard;

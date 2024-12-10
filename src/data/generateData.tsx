@@ -119,6 +119,15 @@ export const fuelType:string[] = [
   'Electric',
   'Methol'
 ]
+
+export const promotionText:string[] = [
+  "Stock Offer",
+  "Offer For You",
+  "Special Offer!",
+  "New Stock",
+  "Stock Exclusive",
+  "Special Price"
+]
 export const getFuelType = () => {
   return fuelType[Math.floor(Math.random() * fuelType.length)];
 };

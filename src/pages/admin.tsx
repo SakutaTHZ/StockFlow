@@ -3,7 +3,6 @@ import { useState } from "react";
 import { FaRegTrashAlt, FaSearch, FaListUl } from "react-icons/fa";
 import { MdTune, MdBorderAll } from "react-icons/md";
 import DropDown from "../components/DropDown";
-import CarCard from "../components/CarCard";
 import { carStatus, exteriorColor, sortOptions, yardArea } from "../data/generateData";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
@@ -16,15 +15,16 @@ import { makeBrandData, Model } from "../data/arrayData";
 import FilterClearDropDown from "../components/FilterClearDropDown";
 import RangeSlider from "../components/RangeSlider";
 import CNetNav from "../components/CNetNav";
+import StockFlowAdminCarCard from "../components/StockFlowAdminCarCard";
 
-interface indexPageProps {
+interface adminPageProps {
   customClass?: string;
 }
 interface LocationState {
   page?: number; // Optional since it might not always exist
 }
 
-const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
+const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const [cars] = useAtom(carAtom);
 
   const [isFilterOn, setIsFilterOn] = useState(false);
@@ -35,7 +35,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
   };
 
   const handleClearAll = () => {
-    navigate(`/StockFlow`, { state: { cars, page: currentPage } });
+    navigate(`/StockFlowAdmin`, { state: { cars, page: currentPage } });
   };
 
   // Pagination
@@ -50,7 +50,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
 
-    return navigate(`/StockFlow`, { state: { cars, page: page } });
+    return navigate(`/StockFlowAdmin`, { state: { cars, page: page } });
   };
 
   const [filteredModels, setFilteredModels] = useState<Model[]>([]);
@@ -128,26 +128,26 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-2 w-full items-center justify-between transition-all">
+      <div className="flex gap-8 w-full items-center transition-all">
         <div className="flex items-center gap-2 transition-all">
           <button
-            className="flex items-center gap-2 border p-2 px-3 rounded-3xl bg-white border-gray-300"
+            className="flex items-center gap-2 border p-2 px-5 rounded-3xl bg-white border-gray-300"
             onClick={toggleFilter}
           >
             <MdTune size={18} />
             Filters
           </button>
         </div>
-        <div className="w-full md:w-auto flex flex-col md:flex-row gap-2 items-center">
-          <div className="relative w-full md:w-auto border rounded-md border-gray-300">
+        <div className="w-full flex flex-col md:flex-row gap-2 items-center">
+          <div className="relative w-full border rounded-md border-gray-300">
             <input
               type="text"
               placeholder="Search by Make or Model"
-              className="pl-10 pr-4 py-2 rounded-md w-full md:w-72 bg-white outline-none"
+              className="pl-10 pr-4 py-2 rounded-md w-full bg-white outline-none"
             />
             <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
           </div>
-          <div className="flex gap-2 items-center w-full">
+          <div className="flex gap-2 items-center w-fit">
             <DropDown
               options={sortOptions}
               customClass="my-custom-class"
@@ -295,7 +295,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               {cars
                 .slice(20 * currentPage - 20, 20 * currentPage)
                 .map((car, index: number) => (
-                  <CarCard
+                  <StockFlowAdminCarCard
                     key={index}
                     car={car}
                     extraStatus={car.showExtraStatus}
@@ -321,4 +321,4 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
   );
 };
 
-export default indexPage;
+export default adminPage;

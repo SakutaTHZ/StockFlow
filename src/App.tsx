@@ -9,6 +9,7 @@ import {
 import Home from "./pages/index";
 import Details from "./pages/details";
 import Login from "./pages/login";
+import Admin from "./pages/admin"
 import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/StockFlow/login" element={<Login />} />
         <Route path="/StockFlow" element={<Home />} />
         <Route path="/detail/:id" element={<Details />} />
+        <Route path="/StockFlowAdmin" element={<Admin />} />
       </Routes>
     </>
   );
