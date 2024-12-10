@@ -37,7 +37,7 @@ const ProfileDropDown: React.FC<ProfileDropDownProps> = ({username}) => {
           <div className="py-1">
             <Link
               className="flex items-center gap-1 w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-              to={"/"}
+              to={"/StockFlow/login"}
               onClick={toggleDropdown}
             >
               <MdLogout size={20} />

@@ -27,6 +27,7 @@ import { IoLanguage } from "react-icons/io5";
 import { IoMdInformationCircleOutline, IoMdPhotos } from "react-icons/io";
 import Certificate from "../assets/images/certificate.png";
 import Popup from "../components/Popup";
+import CNetNav from "../components/CNetNav";
 
 interface DetailsProps {
   customClass?: string;
@@ -113,6 +114,8 @@ const Details: React.FC<DetailsProps> = () => {
   const closeAuctionGradePopup = () => setIsAuctionGradePopupOpen(false);
 
   return (
+    <>
+    <CNetNav/>
     <div className="flex flex-col gap-6 px-4 md:px-32 py-8 ">
       <Popup
         isOpen={isTranslationPopupOpen}
@@ -418,7 +421,7 @@ const Details: React.FC<DetailsProps> = () => {
         />
       )}
       <div className="flex items-center gap-1 font-medium">
-        <Link to="/" className="text-gray-500">
+        <Link to="/StockFlow" className="text-gray-500">
           Car stock
         </Link>
         <p className="text-blue-950 font-semibold">/ Car Details</p>
@@ -689,6 +692,7 @@ const Details: React.FC<DetailsProps> = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

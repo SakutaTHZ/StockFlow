@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
+
 export default {
   content: [
     "./index.html",
@@ -27,6 +29,20 @@ export default {
           '0%': { transform: 'scale(.9)', opacity: 0 },
           '100%': { transform: 'scale(1)', opacity: 1 },
         },
+        move1: {
+          '0%': { transform: 'translate(0, 0)' },
+          '25%': { transform: 'translate(200px, -50px)' },
+          '50%': { transform: 'translate(-200px, 50px)' },
+          '75%': { transform: 'translate(50px, -200px)' },
+          '100%': { transform: 'translate(0, 0)' },
+        },
+        move2: {
+          '0%': { transform: 'translate(0, 0)' },
+          '25%': { transform: 'translate(-50px, 200px)' },
+          '50%': { transform: 'translate(200px, -200px)' },
+          '75%': { transform: 'translate(-200px, 50px)' },
+          '100%': { transform: 'translate(0, 0)' },
+        },
       },
       animation: {
         slideUp: 'slideUp 0.6s ease-out',
@@ -34,8 +50,16 @@ export default {
         slideRight: 'slideRight 0.6s ease-out',
         slideLeft: 'slideLeft 0.6s ease-out',
         appear: 'appear 0.6s ease-out',
+        moveCircle1: 'move1 15s infinite alternate ease-in-out',
+        moveCircle2: 'move2 25s infinite alternate ease-in-out',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ addUtilities }) {
+      addUtilities({
+        '.animation-alternate': { 'animation-direction': 'alternate' },
+      });
+    }),
+  ],
 }

@@ -50,7 +50,7 @@ const CNetNav: React.FC<CNetNavProps> = ({
       >
         <li>
           <NavLink
-            to="/home"
+            to="/StockFlow"
             className={({ isActive }) =>
               `${navClass} ${isActive ? activeNavClass : "text-gray-700"}`
             }
@@ -60,7 +60,7 @@ const CNetNav: React.FC<CNetNavProps> = ({
         </li>
         <li>
           <NavLink
-            to="/about"
+            to="/StockFlow"
             className={({ isActive }) =>
               `${navClass} ${isActive ? activeNavClass : "text-gray-700"}`
             }
@@ -70,7 +70,7 @@ const CNetNav: React.FC<CNetNavProps> = ({
         </li>
         <li>
           <NavLink
-            to="/contact"
+            to="/StockFlow"
             className={({ isActive }) =>
               `${navClass} ${isActive ? activeNavClass : "text-gray-700"}`
             }

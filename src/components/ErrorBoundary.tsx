@@ -1,22 +1,32 @@
-import React, { Component, ReactNode } from "react";
+import React, { ReactNode, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
-  state = { hasError: false };
+const ErrorBoundary: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [hasError, setHasError] = useState(false);
+  const navigate = useNavigate();
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, info: React.ErrorInfo) {
-    console.error("Error caught in ErrorBoundary:", error, info);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <div>Something went wrong. Please try again later.</div>;
+  useEffect(() => {
+    if (hasError) {
+      navigate("/StockFlow/login"); // Redirect to login page when error is detected
     }
-    return this.props.children;
+  }, [hasError, navigate]);
+
+  const handleError = () => {
+    setHasError(true);
+  };
+
+  try {
+    return (
+      <div>
+        {children}
+        <button onClick={handleError}>Simulate Error</button> {/* For testing */}
+      </div>
+    );
+  } catch (error) {
+    setHasError(true);
+    console.error("Error caught in ErrorBoundary:", error);
+    return <div>Something went wrong. Redirecting...</div>;
   }
-}
+};
 
 export default ErrorBoundary;
