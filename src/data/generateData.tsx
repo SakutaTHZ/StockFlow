@@ -72,6 +72,9 @@ export const getRandomImageLink = () => {
 // highlightstatus
 export const highlightStatus: string[] = [
   "Welcab",
+  "Sold",
+  "On Hold",
+  "E-power",
   "Coming soon",
   "Hybrid",
   "Reduced",

@@ -1,10 +1,5 @@
 import React, { CSSProperties, useState } from "react";
-import {
-  FaWheelchair,
-  FaRegCheckCircle,
-  FaRegStar,
-  FaRegPauseCircle,
-} from "react-icons/fa";
+import { FaWheelchair, FaRegCheckCircle, FaChevronDown } from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";
 import { BsThreeDots } from "react-icons/bs";
@@ -14,13 +9,11 @@ import { CarData } from "../data/types";
 import JapanFlag from "../assets/JP.svg";
 import UKFlag from "../assets/GB.svg";
 import Hybrid from "../assets/hybrid.png";
-import Engine from "../assets/EnginePower.svg";
-import Trans from "../assets/transmission.png";
 import {
-  MdOutlineTimer,
-  MdOutlineNewReleases,
-  MdOutlinePinDrop,
   MdAirlineSeatReclineNormal,
+  MdOutlineCalendarMonth,
+  MdOutlineNewReleases,
+  MdOutlineTimer,
 } from "react-icons/md";
 import {
   PiCalendarDots,
@@ -30,27 +23,27 @@ import {
   PiGasCan,
   PiStar,
 } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
+import Popup from "./Popup";
+import { IoIosArrowForward } from "react-icons/io";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
-import { IoIosArrowForward } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import Trans from "../assets/transmission.png";
+import Engine from "../assets/EnginePower.svg";
 import { LuMapPin } from "react-icons/lu";
-import Popup from "./Popup";
 import { IoCarOutline } from "react-icons/io5";
+import { yards, promotionText, highlightStatus } from "../data/generateData";
 import DropDown from "./DropDown";
-import { highlightStatus, promotionText, yards } from "../data/generateData";
 
-interface CarCardProps {
+interface StockFlowAdminTableRowProps {
   customClass?: string;
-  extraStatus?: boolean; //for Stock Offer
   style?: CSSProperties;
   car: CarData;
   onClick?: () => void;
 }
 
-const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
+const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   customClass,
-  extraStatus = false,
   style,
   car,
   onClick,
@@ -86,6 +79,58 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     );
   };
 
+  const highlightPill = (status: string) => {
+    return status === "Welcab" ? (
+      <span
+        className={`stat flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
+          car.hold && "hidden"
+        }`}
+      >
+        <FaWheelchair /> {car.highlightStatus}
+      </span>
+    ) : status === "Coming soon" ? (
+      <span
+        className={`stat flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
+          car.hold && "hidden"
+        }`}
+      >
+        <MdOutlineTimer /> {car.highlightStatus}
+      </span>
+    ) : status === "Hybrid" ? (
+      <span
+        className={`stat flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
+          car.hold && "hidden"
+        }`}
+      >
+        <img src={Hybrid} alt="Hybrid" /> {car.highlightStatus}
+      </span>
+    ) : status === "Reduced" ? (
+      <span
+        className={`stat2 flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-red-600 bg-red-200 ${
+          car.hold && "hidden"
+        }`}
+      >
+        <PiChartLineDownBold /> {car.highlightStatus}
+      </span>
+    ) : status === "New" ? (
+      <span
+        className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
+          car.hold && "hidden"
+        }`}
+      >
+        <MdOutlineNewReleases /> {car.highlightStatus}
+      </span>
+    ) : (
+      <span
+        className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
+          car.hold && "hidden"
+        }`}
+      >
+        <TbFaceIdError /> {car.highlightStatus}
+      </span>
+    );
+  };
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openPopup = () => setIsPopupOpen(true);
@@ -101,60 +146,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   const openBannerPopup = () => setIsBannerPopupOpen(true);
   const closeBannerPopup = () => setIsBannerPopupOpen(false);
 
-  const highlightPill = (status: string) => {
-    return status === "Welcab" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          car.hold && "hidden"
-        }`}
-      >
-        <FaWheelchair /> {car.highlightStatus}
-      </span>
-    ) : status === "Coming soon" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          car.hold && "hidden"
-        }`}
-      >
-        <MdOutlineTimer /> {car.highlightStatus}
-      </span>
-    ) : status === "Hybrid" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          car.hold && "hidden"
-        }`}
-      >
-        <img src={Hybrid} alt="Hybrid" /> {car.highlightStatus}
-      </span>
-    ) : status === "Reduced" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-red-600 bg-red-200 ${
-          car.hold && "hidden"
-        }`}
-      >
-        <PiChartLineDownBold /> {car.highlightStatus}
-      </span>
-    ) : status === "New" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
-          car.hold && "hidden"
-        }`}
-      >
-        <MdOutlineNewReleases /> {car.highlightStatus}
-      </span>
-    ) : (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          car.hold && "hidden"
-        }`}
-      >
-        <TbFaceIdError /> {car.highlightStatus}
-      </span>
-    );
-  };
-
   const navigate = useNavigate();
-
   const [cars] = useAtom(carAtom);
 
   const handleCardClick = (carData: CarData) => {
@@ -176,55 +168,100 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     console.log("box stat - " + cardOption);
   };
 
+  const [more, setMore] = useState(true);
+  const showMore = () => {
+    setMore(!more);
+  };
+
   return (
     <>
-      <div
-        className={`card pb-2 relative animate-slideUp transition-all w-full h-fit min-h-32 shadow-md rounded-lg border-2 bg-white ${customClass} ${
-          extraStatus ? "border-[#FFC158]" : "border-gray-100"
-        } ${car.hold && "opacity-15"} transition-all`}
-        style={style}
-      >
-        <div
-          className="ClickArea absolute z-10 w-full h-full"
-          onClick={() => (onClick ? onClick() : handleCardClick(car))}
-        ></div>
-        <div className="head relative flex h-42">
-          <img
-            src={car.image}
-            alt="car Image"
-            className={`rounded-t-md h-42 ${
-              car.hold && "opacity-50 pointer-events-none"
+      <tr className={`border ${customClass}`} style={style}>
+        <td className="border p-2" onClick={showMore}>
+            <div className="flex justify-center">
+          <FaChevronDown
+            size={12}
+            className={`text-gray-400 flex-shrink-0 transition-all ${
+              more && "rotate-180"
             }`}
-            loading="lazy"
           />
-          {car.hold && (
-            <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-1 py-2">
-              <FaRegPauseCircle />
-              On Hold
             </div>
-          )}
-          {car.highlightStatus != "" && (
-            <>{highlightPill(car.highlightStatus)}</>
-          )}
-          {extraStatus && (
+        </td>
+        <td
+          className="relative border w-48 p-2"
+          onClick={() => handleCardClick}
+        >
+          <div className="flex flex-col justify-center items-center">
+            <img
+              src={car.image}
+              alt="car Image"
+              className={`rounded-md w-44 h-28 object-cover object- ${
+                car.hold && "opacity-50 pointer-events-none"
+              }`}
+              loading="lazy"
+            />
             <span
-              className={`status absolute top-2 right-0 flex items-center gap-2 text-sm font-semibold border border-[#FFC158] rounded-s-full px-3 py-1 bg-gradient-to-r from-[#FFF3DE] to-[#FFC158] ${
+              className={`id absolute top-3 left-3 flex items-center gap-2 text-sm  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
                 car.hold && "hidden"
               }`}
             >
-              <RiDiscountPercentLine /> Stock Offer
+              {car.id}
             </span>
-          )}
-          <span
-            className={`id absolute bottom-2 left-2 flex items-center gap-2 text-sm  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-              car.hold && "hidden"
-            }`}
-          >
-            {car.id}
-          </span>
-          <div className="relative">
+            <p className="text-gray-500">In Stock: 3 days ago</p>
+          </div>
+        </td>
+        <td className="border px-4">
+          <div className="h-full flex flex-col justify-center items-start">
+            <p>
+              {car.name} {car.type}
+            </p>
+            <p>{car.package}</p>
+            <div className="flex gap-2 mt-2">
+              {car.highlightStatus != "" && (
+                <>{highlightPill(car.highlightStatus)}</>
+              )}
+              <span
+                className={`status flex items-center gap-2 text-sm font-semibold rounded-md bg-[#FFC158] px-3 py-1  ${
+                  car.hold && "hidden"
+                }`}
+              >
+                <RiDiscountPercentLine /> Stock Offer
+              </span>
+            </div>
+          </div>
+        </td>
+        <td className="border">
+          <div className="flex justify-center">{statusPill(car.status)}</div>
+        </td>
+        <td className="border px-4 leading-6">
+          <p>{car.registerDate}</p>
+          <p>
+            {car.milleage}, {car.exteriorColor.split("#")[0]}
+          </p>
+          <p>
+            {car.enginePower.toLocaleString()} cc, {car.fuelType}
+          </p>
+        </td>
+        <td className="border px-4 leading-6">
+          <p>{car.vim}</p>
+        </td>
+        <td className="border px-4 leading-6">
+          <p>{car.vesselFrom}</p>
+          <p className="flex items-center text-sm text-gray-500">
+            <MdOutlineCalendarMonth size={12} />
+            {car.sentDate}
+          </p>
+        </td>
+        <td className="border px-4 leading-6">
+          <p className="text-2xl font-bold">
+          ¥{car.price.toLocaleString()}{" "}
+            <span className="text-base font-normal">FOB</span>
+          </p>
+          <p className="text-sm text-gray-500">$6,000 UK duty/ VAT paid!</p>
+        </td>
+        <td className="border">
+          <div className="relative flex justify-center">
             <button
-              className="option z-20 absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border"
+              className="option z-20 bg-gray-200 p-3 rounded-md shadow-md border"
               onClick={checkOption}
             >
               <BsThreeDots />
@@ -246,66 +283,46 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
               >
                 Add Promotion
               </button>
-              <button onClick={openBannerPopup} className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100">
+              <button
+                onClick={openBannerPopup}
+                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
                 Add Banner
               </button>
-              <button 
-          onClick={() => (onClick ? onClick() : handleCardClick(car))} className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100">
+              <button
+                onClick={() => (onClick ? onClick() : handleCardClick(car))}
+                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
                 Customer View
               </button>
             </div>
           </div>
-        </div>
-        <div className="body p-2">
-          <p className="text-lg font-semibold">
-            {car.name} {car.type}
-          </p>
-          <p>
-            <span
-              className={`text-2xl font-bold ${
-                car.discount === 0 ? "text-blue-950" : "text-red-600"
-              }`}
-            >
-              ¥
-              {car.discount === 0
-                ? car.price.toLocaleString()
-                : (car.price - car.discount).toLocaleString()}
-            </span>{" "}
-            <span
-              className={`font-normal ${
-                car.discount === 0 ? "text-blue-950" : "text-red-600"
-              }`}
-            >
-              CIF
-            </span>
-            {car.discount != 0 && (
-              <span className="ml-2 line-through text-gray-400">
-                {car.price.toLocaleString()}
-              </span>
-            )}
-          </p>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {statusPill(car.status)}
-            <span className={` ${pillClass}`}>
-              <FaRegStar />
-              {car.rating}
-            </span>
-            <span className={` ${pillClass}`}>
-              <TbRoad />
-              {car.milleage.toLocaleString()} km
-            </span>
-            <span className={` ${pillClass}`}>
-              <img src={Vin} alt="" />
-              {car.vim}
-            </span>
-          </div>
+        </td>
+      </tr>
 
-          <span className={`${pillClass} mt-2`}>
-            <MdOutlinePinDrop />
-            {car.vesselFrom}
-          </span>
-        </div>
-      </div>
+      <tr className={`carDetails bg-gray-100 transition-all ${more&&'hidden'}`}>
+        <td colSpan={9} className=" border">
+          <div className={`${more?' h-0 overflow-hidden':'p-4 px-8'}`}>
+            <p>
+              <span className="w-28 text-gray-500">Customer Name:</span>{" "}
+              {car.customer}
+            </p>
+
+            <p>
+              <span className="w-28 text-gray-500">Vessel:</span> {car.vessel}
+            </p>
+
+            <p>
+              <span className="w-28 text-gray-500">ETD:</span> {car.sentDate}
+            </p>
+
+            <p>
+              <span className="w-28 text-gray-500">Destination:</span>{" "}
+              {car.vesselTo}
+            </p>
+          </div>
+        </td>
+      </tr>
 
       <Popup
         isOpen={isPopupOpen}
@@ -499,4 +516,4 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   );
 };
 
-export default StockFlowAdminCarCard;
+export default StockFlowAdminTableRow;
