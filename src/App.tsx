@@ -24,6 +24,8 @@ function App() {
         <Route path="/StockFlow" element={<Home />} />
         <Route path="/detail/:id" element={<Details />} />
         <Route path="/StockFlowAdmin" element={<Admin />} />
+
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   );

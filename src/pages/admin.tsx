@@ -18,9 +18,9 @@ import FilterOptionDropDown from "../components/FilterOptionDropDown";
 import { makeBrandData, Model } from "../data/arrayData";
 import FilterClearDropDown from "../components/FilterClearDropDown";
 import RangeSlider from "../components/RangeSlider";
-import CNetNav from "../components/CNetNav";
 import StockFlowAdminCarCard from "../components/StockFlowAdminCarCard";
 import StockFlowAdminTableRow from "../components/StockFlowAdminTableRow";
+import CNetAdminNav from "../components/CNetAdminNav";
 
 interface adminPageProps {
   customClass?: string;
@@ -93,7 +93,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
 
   return (
     <>
-      <CNetNav />
+      <CNetAdminNav />
       <div className={`px-12 py-10 flex flex-col gap-6 ${customClass}`}>
         <div className="flex items-center justify-between">
           <p className="text-3xl font-bold">Car For Sale</p>

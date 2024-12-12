@@ -177,14 +177,14 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
     <>
       <tr className={`border ${customClass}`} style={style}>
         <td className="border p-2" onClick={showMore}>
-            <div className="flex justify-center">
-          <FaChevronDown
-            size={12}
-            className={`text-gray-400 flex-shrink-0 transition-all ${
-              more && "rotate-180"
-            }`}
-          />
-            </div>
+          <div className="flex justify-center">
+            <FaChevronDown
+              size={12}
+              className={`text-gray-400 flex-shrink-0 transition-all ${
+                more && "rotate-180"
+              }`}
+            />
+          </div>
         </td>
         <td
           className="relative border w-48 p-2"
@@ -252,9 +252,30 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           </p>
         </td>
         <td className="border px-4 leading-6">
-          <p className="text-2xl font-bold">
-          ¥{car.price.toLocaleString()}{" "}
-            <span className="text-base font-normal">FOB</span>
+          <p className=" relative">
+            {car.discount != 0 && (
+              <span className="line-through text-gray-400">
+                ¥{car.price.toLocaleString()}
+              </span>
+            )}
+            <br />
+            <span
+              className={`text-2xl font-bold ${
+                car.discount === 0 ? "text-blue-950" : "text-red-600"
+              }`}
+            >
+              ¥
+              {car.discount === 0
+                ? car.price.toLocaleString()
+                : (car.price - car.discount).toLocaleString()}
+            </span>{" "}
+            <span
+              className={`font-normal ${
+                car.discount === 0 ? "text-blue-950" : "text-red-600"
+              }`}
+            >
+              CIF
+            </span>
           </p>
           <p className="text-sm text-gray-500">$6,000 UK duty/ VAT paid!</p>
         </td>
@@ -300,9 +321,11 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
         </td>
       </tr>
 
-      <tr className={`carDetails bg-gray-100 transition-all ${more&&'hidden'}`}>
+      <tr
+        className={`carDetails bg-gray-100 transition-all ${more && "hidden"}`}
+      >
         <td colSpan={9} className=" border">
-          <div className={`${more?' h-0 overflow-hidden':'p-4 px-8'}`}>
+          <div className={`${more ? " h-0 overflow-hidden" : "p-4 px-8"}`}>
             <p>
               <span className="w-28 text-gray-500">Customer Name:</span>{" "}
               {car.customer}

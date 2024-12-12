@@ -30,7 +30,7 @@ const CNetNav: React.FC<CNetNavProps> = ({
       className={`flex flex-col md:flex-row items-center justify-between w-full min-h-16 bg-[#F8F5EF] px-10 py-3 ${customClass}`}
     >
       {/* Logo and Nav links */}
-      <div className="flex items-center justify-between w-full md:w-auto">
+      <div className="flex items-center justify-between md:justify-normal w-full md:w-auto">
         <img className="h-9" src={CosmoLogo} alt="logo" />
 
         {/* Hamburger Menu for Mobile */}
@@ -46,13 +46,13 @@ const CNetNav: React.FC<CNetNavProps> = ({
       <ul
         className={`${
           isMenuOpen ? "flex" : "hidden"
-        } py-4 md:py-0 md:flex flex-col md:flex-row items-center gap-4 w-full md:w-auto`}
+        } pl-8 py-4 md:py-0 md:flex flex-col md:flex-row items-center gap-4 w-full md:w-full`}
       >
         <li>
           <NavLink
             to="/StockFlow"
             className={({ isActive }) =>
-              `${navClass} ${isActive ? activeNavClass : "text-gray-700"}`
+              `text-nowrap ${navClass} ${isActive ? activeNavClass : "text-gray-700"}`
             }
           >
             Car Stock
@@ -60,7 +60,7 @@ const CNetNav: React.FC<CNetNavProps> = ({
         </li>
         <li>
           <NavLink
-            to="/StockFlow"
+            to="/#"
             className={({ isActive }) =>
               `${navClass} ${isActive ? activeNavClass : "text-gray-700"}`
             }
@@ -70,7 +70,7 @@ const CNetNav: React.FC<CNetNavProps> = ({
         </li>
         <li>
           <NavLink
-            to="/StockFlow"
+            to="/#"
             className={({ isActive }) =>
               `${navClass} ${isActive ? activeNavClass : "text-gray-700"}`
             }
@@ -80,7 +80,7 @@ const CNetNav: React.FC<CNetNavProps> = ({
         </li>
 
         {/* Time and Profile in Hamburger */}
-        <div className="flex items-center gap-6 mt-4 md:mt-0">
+        <div className="w-full flex justify-end items-center gap-6 mt-4 md:mt-0">
           <div className="time flex items-center gap-2">
             <img src={JapanFlag} alt="flag" />
             {new Date().toLocaleTimeString()}
