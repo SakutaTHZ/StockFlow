@@ -159,7 +159,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
 
   const handleCardClick = (carData: CarData) => {
     console.log("clicked" + carData.id);
-    navigate(`/detail/${carData.id.slice(1)}`, {
+    navigate(`/StockDetail/${carData.id.slice(1)}`, {
       state: { card: carData, cars: cars },
     });
   };

@@ -151,7 +151,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
 
   const handleCardClick = (carData: CarData) => {
     console.log("clicked" + carData.id);
-    navigate(`/detail/${carData.id.slice(1)}`, {
+    navigate(`/StockDetail/${carData.id.slice(1)}`, {
       state: { card: carData, cars: cars },
     });
   };
@@ -186,11 +186,11 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             />
           </div>
         </td>
-        <td
-          className="relative border w-48 p-2"
-          onClick={() => handleCardClick}
-        >
-          <div className="flex flex-col justify-center items-center">
+        <td className="relative border w-48 p-2">
+          <div
+            className="flex flex-col justify-center items-center"
+            onClick={() => handleCardClick}
+          >
             <img
               src={car.image}
               alt="car Image"
@@ -211,6 +211,13 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
         </td>
         <td className="border px-4">
           <div className="h-full flex flex-col justify-center items-start">
+            
+          <button
+                onClick={() => (onClick ? onClick() : handleCardClick(car))}
+                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
+                Customer View
+              </button>
             <p>
               {car.name} {car.type}
             </p>
@@ -415,7 +422,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
                 {car.vesselFrom}
               </p>
             </div>
-            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold">
+            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold" onClick={()=>handleCardClick}>
               View All Details <IoIosArrowForward />
             </button>
           </>

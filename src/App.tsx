@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Home from "./pages/index";
 import Details from "./pages/details";
+import StockDetails from "./pages/adminCarStockDetails";
 import Login from "./pages/login";
 import Admin from "./pages/admin"
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -23,6 +24,7 @@ function App() {
         <Route path="/StockFlow/login" element={<Login />} />
         <Route path="/StockFlow" element={<Home />} />
         <Route path="/detail/:id" element={<Details />} />
+        <Route path="/StockDetail/:id" element={<StockDetails />} />
         <Route path="/StockFlowAdmin" element={<Admin />} />
 
         <Route path="/login" element={<Login />} />
