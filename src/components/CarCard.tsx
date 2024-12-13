@@ -41,7 +41,7 @@ interface CarCardProps {
   extraStatus?: boolean; //for Stock Offer
   style?: CSSProperties;
   car: CarData;
-  isAdmin?:boolean;
+  isAdmin?: boolean;
   onClick?: () => void;
 }
 
@@ -254,7 +254,9 @@ const CarCard: React.FC<CarCardProps> = ({
             </span>
           </div>
           <button
-            className={`w-full py-2 bg-gray-100 mt-3 rounded-md font-semibold z-20 relative ${isAdmin && 'hidden'}`}
+            className={`w-full py-2 bg-gray-100 mt-3 rounded-md font-semibold z-20 relative ${
+              isAdmin && "hidden"
+            }`}
             onClick={openCheckPopup}
           >
             Check Availability

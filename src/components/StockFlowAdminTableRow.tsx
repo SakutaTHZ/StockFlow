@@ -24,7 +24,7 @@ import {
   PiStar,
 } from "react-icons/pi";
 import Popup from "./Popup";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowForward, IoMdEye } from "react-icons/io";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
 import { useNavigate } from "react-router-dom";
@@ -149,9 +149,9 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   const navigate = useNavigate();
   const [cars] = useAtom(carAtom);
 
-  const handleCardClick = (carData: CarData) => {
+  const handleCardClick = (carData: CarData, toPath: string) => {
     console.log("clicked" + carData.id);
-    navigate(`/StockDetail/${carData.id.slice(1)}`, {
+    navigate(toPath, {
       state: { card: carData, cars: cars },
     });
   };
@@ -209,15 +209,18 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             <p className="text-gray-500">In Stock: 3 days ago</p>
           </div>
         </td>
-        <td className="border px-4">
-          <div className="h-full flex flex-col justify-center items-start">
-            
+        <td className="relative border px-4">
           <button
-                onClick={() => (onClick ? onClick() : handleCardClick(car))}
-                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
-              >
-                Customer View
-              </button>
+            onClick={() =>
+              onClick
+                ? onClick()
+                : handleCardClick(car, `/StockDetail/${car.id.slice(1)}`)
+            }
+            className="absolute top-2 right-2 font-semibold text-nowrap text-left p-2 rounded-md hover:bg-gray-100"
+          >
+            <IoMdEye className="text-gray-400" />
+          </button>
+          <div className="relative h-full flex flex-col justify-center items-start">
             <p>
               {car.name} {car.type}
             </p>
@@ -318,7 +321,11 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
                 Add Banner
               </button>
               <button
-                onClick={() => (onClick ? onClick() : handleCardClick(car))}
+                onClick={() =>
+                  onClick
+                    ? onClick()
+                    : handleCardClick(car, `/detail/${car.id.slice(1)}`)
+                }
                 className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
               >
                 Customer View
@@ -422,7 +429,12 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
                 {car.vesselFrom}
               </p>
             </div>
-            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold" onClick={()=>handleCardClick}>
+            <button
+              className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold"
+              onClick={() =>
+                handleCardClick(car, `/StockDetail/${car.id.slice(1)}`)
+              }
+            >
               View All Details <IoIosArrowForward />
             </button>
           </>
