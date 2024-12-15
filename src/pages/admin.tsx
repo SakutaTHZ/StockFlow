@@ -21,6 +21,7 @@ import RangeSlider from "../components/RangeSlider";
 import StockFlowAdminCarCard from "../components/StockFlowAdminCarCard";
 import StockFlowAdminTableRow from "../components/StockFlowAdminTableRow";
 import CNetAdminNav from "../components/CNetAdminNav";
+import { TiArrowSortedDown, TiArrowUnsorted } from "react-icons/ti";
 
 interface adminPageProps {
   customClass?: string;
@@ -282,14 +283,29 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                 <table className=" animate-slideUp transition-all table-auto border-collapse border border-gray-300 w-full">
                   <thead>
                     <tr className="border">
-                      <th className="border"></th>
+                      <th className="border h-16"></th>
                       <th className="border">Stock Number</th>
                       <th className="border">Model</th>
-                      <th className="border">Status</th>
+                      <th className="border">
+                        <p className="flex justify-center items-center gap-2">
+                          Status
+                          <TiArrowSortedDown />
+                        </p>
+                      </th>
                       <th className="border">Car Specs</th>
                       <th className="border">Chassis Number</th>
-                      <th className="border">ETY</th>
-                      <th className="border">Price</th>
+                      <th className="border">
+                        <p className="flex justify-center items-center gap-2">
+                          ETY
+                          <TiArrowSortedDown />
+                        </p>
+                      </th>
+                      <th className="border">
+                        <p className="flex justify-center items-center gap-2">
+                          Price
+                          <TiArrowUnsorted />
+                        </p>
+                      </th>
                       <th className="border"></th>
                     </tr>
                   </thead>
