@@ -48,11 +48,7 @@ export const getRandomCarEngines = () => {
 };
 
 // yardArea
-export const yardArea:string[] = [
-  "Kasai-K",
-  "Tokyo-T",
-  "KyuShu-Q",
-]
+export const yardArea: string[] = ["Kasai-K", "Tokyo-T", "KyuShu-Q"];
 export const getRandomYardArea = () => {
   return yardArea[Math.floor(Math.random() * yardArea.length)];
 };
@@ -99,38 +95,33 @@ export const getRandomExteriorColors = () => {
 };
 
 // Yards
-export const yards:string[] = [
-  'Anowar',
-  'JAL Kisarazu',
-  'JAL Kobe',
-  'Kirin',
-  'NR Japan Nogoya',
-  'KLC Co.Ltd',
-  'Miky Frontier',
-  'M3LOGI Hakata',
-  'Kamigomi Nagoya',
-  'From-J Kobe',
-]
+export const yards: string[] = [
+  "Anowar",
+  "JAL Kisarazu",
+  "JAL Kobe",
+  "Kirin",
+  "NR Japan Nogoya",
+  "KLC Co.Ltd",
+  "Miky Frontier",
+  "M3LOGI Hakata",
+  "Kamigomi Nagoya",
+  "From-J Kobe",
+];
 export const getRandomYard = () => {
   return yards[Math.floor(Math.random() * yards.length)];
 };
 
 // fuelType
-export const fuelType:string[] = [
-  'Petrol',
-  'Gas',
-  'Electric',
-  'Methol'
-]
+export const fuelType: string[] = ["Petrol", "Gas", "Electric", "Methol"];
 
-export const promotionText:string[] = [
+export const promotionText: string[] = [
   "Stock Offer",
   "Offer For You",
   "Special Offer!",
   "New Stock",
   "Stock Exclusive",
-  "Special Price"
-]
+  "Special Price",
+];
 export const getFuelType = () => {
   return fuelType[Math.floor(Math.random() * fuelType.length)];
 };
@@ -153,30 +144,36 @@ export const getTrueOrFalse = () => {
 export const getRandomRating = () => {
   return `${Math.ceil(Math.floor(Math.random() * 5) * 2) / 2}`;
 };
-export const getDiscount = (newHighlightStatus:string) => {
+export const getDiscount = (newHighlightStatus: string) => {
   return newHighlightStatus === "Reduced"
     ? Math.round(Math.random() * (1000 - 50000 + 1) + 50000)
     : 0;
 };
 export const getEnginePower = () => {
-  return Math.round(Math.random() * (1000 - 50000 + 1) + 50000)
+  return Math.round(Math.random() * (1000 - 50000 + 1) + 50000);
 };
-export const getMarketType = ()=>{
+export const getMarketType = () => {
   return Math.random() < 0.3;
-}
-export const getRandomPackage = ()=>{
-  return `${Math.round(Math.random()*10)}L Touring Package`
-}
+};
+export const getRandomPackage = () => {
+  return `${Math.round(Math.random() * 10)}L Touring Package`;
+};
 
 export const getRandomDate = () => {
   const startDate = new Date(2014, 0, 1); // January 1, 2014
   const endDate = new Date(2024, 11, 31); // December 31, 2024
-  
-  const randomTimestamp = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+
+  const randomTimestamp =
+    startDate.getTime() +
+    Math.random() * (endDate.getTime() - startDate.getTime());
   const randomDate = new Date(randomTimestamp);
-  
-  const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short', year: 'numeric' };
-  return randomDate.toLocaleDateString('en-GB', options); // Formats as "22 Jul 2024"
+
+  const options: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  };
+  return randomDate.toLocaleDateString("en-GB", options); // Formats as "22 Jul 2024"
 };
 
 const generateFormattedDate = (): string => {
@@ -197,16 +194,20 @@ const generateFormattedDate2 = (): string => {
   return `${day}-${month}-${year}`;
 };
 
+export const getRandomSize = () => {
+  return Math.round(Math.random() * (100 - 400 + 1) + 400);
+};
+
 // Array of vehicle features
 const vehicleParts = ["AC", "PAS", "PW", "ABS", "AB", "R Key", "5-seater"];
 
 function getRandomVehicleParts() {
   const randomCount = Math.floor(Math.random() * vehicleParts.length) + 1;
-    
+
   const shuffled = vehicleParts.sort(() => 0.5 - Math.random());
   const selectedParts = shuffled.slice(0, randomCount);
-  
-  return selectedParts.join(', ');
+
+  return selectedParts.join(", ");
 }
 
 export const generateCardData = (): CarData => {
@@ -230,26 +231,39 @@ export const generateCardData = (): CarData => {
     hold: getTrueOrFalse(),
     discount: getDiscount(newHighlightStatus),
     marketType: getMarketType(),
-    yardArea:getRandomYardArea(),
-    exteriorColor:getRandomExteriorColors(),
+    yardArea: getRandomYardArea(),
+    exteriorColor: getRandomExteriorColors(),
 
-    soldDate:date,
-    vessel:getRandomYard(),
-    vesselFrom:getRandomYard(),
-    vesselTo:getRandomYard(),
-    
-    enginePower:getEnginePower(),
-    registerDate:generateFormattedDate(),
-    fuelType:getFuelType(),
-    seats:Math.round(Math.random() * (2 - 10 + 1) + 10),
-    extraParts:getRandomVehicleParts(),
-    picturesBaseDate:generateFormattedDate2(),
-    picturesExtraDate:generateFormattedDate2(),
-    
-    ec:"DHL",
-    trackingNumber:getRandomPrice(),
-    sentDate:generateFormattedDate2(),
-    customer:`Customer${Math.floor(Math.random()*100000)}`,
+    soldDate: date,
+    vessel: getRandomYard(),
+    vesselFrom: getRandomYard(),
+    vesselTo: getRandomYard(),
+
+    enginePower: getEnginePower(),
+    registerDate: generateFormattedDate(),
+    fuelType: getFuelType(),
+    seats: Math.round(Math.random() * (2 - 10 + 1) + 10),
+    extraParts: getRandomVehicleParts(),
+    picturesBaseDate: generateFormattedDate2(),
+    picturesExtraDate: generateFormattedDate2(),
+
+    ec: "DHL",
+    trackingNumber: getRandomPrice(),
+    sentDate: generateFormattedDate2(),
+    customer: `Customer${Math.floor(Math.random() * 100000)}`,
+
+    auctionFee: getEnginePower(),
+    totalInlandCost: getEnginePower(),
+    inlandCost: getEnginePower(),
+    shippingYardCost: getEnginePower(),
+    extraCost: getEnginePower(),
+
+    size: getEnginePower() / 100,
+    length: getRandomSize(),
+    width: getRandomSize(),
+    height: getRandomSize(),
+    auctionNumber: getEnginePower(),
+    lotNumber: getEnginePower(),
   };
 
   return cardData;

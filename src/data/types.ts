@@ -37,39 +37,53 @@ export interface AuctionGrade {
 }
 
 export interface CarData {
-    id:string,
-    name: string,
-    package:string,
-    type: string,
-    image: string,
-    status: string,
-    engine: string,
-    highlightStatus: string,
-    showExtraStatus:boolean,
-    rating: string,
-    milleage:number,
-    vim:string,
-    price:number,
-    hold:boolean,
-    discount:number,
-    marketType:boolean,
-    yardArea:string,
-    exteriorColor:string,
-    soldDate:string,
-    vessel:string,
-    vesselFrom:string,
-    vesselTo:string,
+  id: string;
+  name: string;
+  package: string;
+  type: string;
+  image: string;
+  status: string;
+  engine: string;
+  highlightStatus: string;
+  showExtraStatus: boolean;
+  rating: string;
+  milleage: number;
+  vim: string;
+  price: number;
+  hold: boolean;
+  discount: number;
+  marketType: boolean;
+  yardArea: string;
+  exteriorColor: string;
+  soldDate: string;
+  vessel: string;
+  vesselFrom: string;
+  vesselTo: string;
 
-    enginePower:number,
-    registerDate:string,
-    fuelType:string,
-    seats:number,
-    extraParts:string,
-    picturesBaseDate:string,
-    picturesExtraDate:string,
+  enginePower: number;
+  registerDate: string;
+  fuelType: string;
+  seats: number;
+  extraParts: string;
+  picturesBaseDate: string;
+  picturesExtraDate: string;
 
-    ec:string,
-    trackingNumber:number,
-    sentDate:string,
-    customer:string,
+  ec: string;
+  trackingNumber: number;
+  sentDate: string;
+  customer: string;
+
+  auctionFee: number;
+  totalInlandCost: number;
+  inlandCost: number;
+  shippingYardCost: number;
+  extraCost: number;
+
+  size: number;
+  length: number;
+  width: number;
+  height: number;
+
+  auctionNumber: number;
+  lotNumber: number;
 }

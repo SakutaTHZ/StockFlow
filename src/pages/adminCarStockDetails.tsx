@@ -11,6 +11,7 @@ import {
   MdAirlineSeatReclineNormal,
   MdInsertPhoto,
   MdModeEditOutline,
+  MdCalendarMonth,
 } from "react-icons/md";
 import {
   PiCalendarDots,
@@ -43,6 +44,8 @@ import Popup from "../components/Popup";
 
 import Engine from "../assets/EnginePower.svg";
 import Certificate from "../assets/images/certificate.png";
+import DropDown from "../components/DropDown";
+import { promotionText, yards } from "../data/generateData";
 
 interface DetailsProps {
   customClass?: string;
@@ -203,13 +206,12 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   const openAuctionGradePopup = () => setIsAuctionGradePopupOpen(true);
   const closeAuctionGradePopup = () => setIsAuctionGradePopupOpen(false);
 
-
   const CommentBox = () => {
     const [editMode, setEditMode] = useState(false);
     const [editableContent, setEditableContent] = useState(
       "Lorem ipsum dolor sit amet consectetur. Maecenas ac purus sed ut proin risus enim. Cras pellentesque gravida rhoncus rhoncus ullamcorper auctor feugiat. Mattis tincidunt non purus risus ullamcorper. Non pulvinar sodales in ornare in congue cursus proin justo."
     );
-  
+
     return (
       <>
         <div className="border p-4 rounded-md">
@@ -222,7 +224,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               />
             )}
           </div>
-  
+
           <div className="body mt-4">
             {editMode ? (
               <textarea
@@ -234,7 +236,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               <p>{editableContent}</p>
             )}
           </div>
-  
+
           {editMode && (
             <div className="foot flex gap-4 justify-end">
               <button
@@ -255,13 +257,13 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
-  
+
   const SalesCommentBox = () => {
     const [editMode, setEditMode] = useState(false);
     const [editableContent, setEditableContent] = useState(
       "Lorem ipsum dolor sit amet consectetur. Maecenas ac purus sed ut proin risus enim. Cras pellentesque gravida rhoncus rhoncus ullamcorper auctor feugiat. Mattis tincidunt non purus risus ullamcorper. Non pulvinar sodales in ornare in congue cursus proin justo."
     );
-  
+
     return (
       <>
         <div className="border p-4 rounded-md">
@@ -274,7 +276,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               />
             )}
           </div>
-  
+
           <div className="body mt-4">
             {editMode ? (
               <textarea
@@ -286,7 +288,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               <p>{editableContent}</p>
             )}
           </div>
-  
+
           {editMode && (
             <div className="foot flex gap-4 justify-end">
               <button
@@ -307,11 +309,11 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
-  
+
   const SupplierInfo = () => {
     const [editMode, setEditMode] = useState(false);
     const [collapse, setCollapse] = useState(false);
-  
+
     return (
       <>
         <div className="border p-4 rounded-md bg-white">
@@ -324,25 +326,303 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                   onClick={() => setEditMode((prevMode) => !prevMode)}
                 />
               )}
-              {
-                collapse ? (
-                  <FaChevronDown className="rotate transition-all" onClick={() => setCollapse((prevMode) => !prevMode)}/>):(
-                  <FaChevronDown className="rotate-180 transition-all" onClick={() => setCollapse((prevMode) => !prevMode)}/>)
-              }
+              {collapse ? (
+                <FaChevronDown
+                  className="rotate transition-all"
+                  onClick={() => setCollapse((prevMode) => !prevMode)}
+                />
+              ) : (
+                <FaChevronDown
+                  className="rotate-180 transition-all"
+                  onClick={() => setCollapse((prevMode) => !prevMode)}
+                />
+              )}
             </div>
           </div>
-            
+
           {!collapse && (
-          <div className="body mt-4">
-            {editMode ? (
-              <div><p>Auction Name</p></div>
-            ) : (
-              <div className="flex justify-between"><p>Auction Name</p><p>{cardData.vesselFrom}</p></div>
-            )}
-          </div>
+            <div className="body mt-4">
+              {editMode ? (
+                <div>
+                  <>
+                    <div className="flex flex-col gap-3 py-2">
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Auction Name:</p>
+                        <p className="font-semibold text-blue-950">
+                          <DropDown
+                            options={yards}
+                            selected={cardData.vesselFrom}
+                            optionBoxClass="md:w-fit right-0 z-50"
+                            buttonClass=""
+                          />
+                        </p>
+                      </div>
+
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Bought Date:</p>
+                        <p className="border px-2 flex gap-2 items-center rounded-md shadow-sm font-semibold text-blue-950">
+                          {cardData.sentDate}
+                          <MdCalendarMonth />
+                        </p>
+                      </div>
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Bought Car Cost:</p>
+                        <p className="font-semibold text-blue-950">
+                          ¥ {cardData.auctionFee.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                    <hr />
+
+                    <div className="flex flex-col gap-3 py-2">
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Auction Number/Lot Number:</p>
+                        <p className="font-semibold text-blue-950">
+                          {cardData.auctionNumber}/{cardData.lotNumber}
+                        </p>
+                      </div>
+
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Auction Fee:</p>
+                        <p className="font-semibold text-blue-950">
+                          ¥ {cardData.auctionFee.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                    <hr />
+
+                    <div className="flex flex-col gap-3 py-2">
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Transporter Name:</p>
+                        <p className="font-semibold text-blue-950">
+                          {cardData.yardArea} (Standard)
+                        </p>
+                      </div>
+
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Trans Date:</p>
+                        <p className="font-semibold text-blue-950">
+                          {cardData.soldDate}
+                        </p>
+                      </div>
+
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Inland Cost:</p>
+                        <p className="font-semibold text-blue-950">
+                          ¥ {cardData.inlandCost.toLocaleString()}
+                        </p>
+                      </div>
+
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Total Inland Cost:</p>
+                        <p className="font-semibold text-blue-950">
+                          ¥ {cardData.totalInlandCost.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                    <hr />
+                    <div className="flex flex-col gap-3 py-2">
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Transporter Deal:</p>
+                        <p className="font-semibold text-blue-950">
+                          <DropDown
+                            options={yards}
+                            selected={cardData.yardArea}
+                            optionBoxClass="md:w-fit right-0 z-50"
+                            buttonClass=""
+                          />
+                        </p>
+                      </div>
+                    </div>
+                    <hr />
+
+                    <div className="flex flex-col gap-3 py-2">
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Shipping Yard:</p>
+                        <p className="font-semibold text-blue-950">
+                          {cardData.yardArea}
+                        </p>
+                      </div>
+                      <div className="flex justify-between">
+                        <p className={labelClass}>ETY:</p>
+                        <p className="border px-2 flex gap-2 items-center rounded-md shadow-sm font-semibold text-blue-950">
+                          {cardData.sentDate}
+                          <MdCalendarMonth />
+                        </p>
+                      </div>
+
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Shipping Yard Cost:</p>
+                        <p className="font-semibold text-blue-950">
+                          ¥ {cardData.shippingYardCost.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                    <hr />
+
+                    <div className="flex flex-col gap-3 py-2">
+                      <div className="flex justify-between">
+                        <p className={labelClass}>Est. extra Cost:</p>
+                        <p className="font-semibold text-blue-950">
+                          ¥ {cardData.extraCost.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                    <hr />
+
+                    <div className="flex flex-col gap-3 py-2">
+                      <div className="flex justify-between">
+                        <p className={labelClass}>FOB:</p>
+                        <p className="font-bold text-blue-950">
+                          ¥{" "}
+                          {(
+                            cardData.extraCost +
+                            cardData.shippingYardCost +
+                            cardData.totalInlandCost +
+                            cardData.auctionFee +
+                            cardData.auctionFee
+                          ).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                </div>
+              ) : (
+                <>
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Auction Name:</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.vesselFrom}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Bought Date:</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.sentDate}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Bought Car Cost:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.auctionFee.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Auction Number/Lot Number:</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.auctionNumber}/{cardData.lotNumber}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Auction Fee:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.auctionFee.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Transporter Name:</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.yardArea} (Standard)
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Trans Date:</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.soldDate}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Inland Cost:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.inlandCost.toLocaleString()}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Total Inland Cost:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.totalInlandCost.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Transporter Deal:</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.yardArea}
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Shipping Yard:</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.yardArea}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>ETY:</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.sentDate}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Shipping Yard Cost:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.shippingYardCost.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Est. extra Cost:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.extraCost.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={labelClass}>FOB:</p>
+                      <p className="font-bold text-blue-950">
+                        ¥{" "}
+                        {(
+                          cardData.extraCost +
+                          cardData.shippingYardCost +
+                          cardData.totalInlandCost +
+                          cardData.auctionFee +
+                          cardData.auctionFee
+                        ).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           )}
-  
-          {(editMode && !collapse)  && (
+
+          {editMode && !collapse && (
             <div className="foot flex gap-4 justify-end">
               <button
                 className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
@@ -362,6 +642,558 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
+
+  const PaymentsInfo = () => {
+    const [editMode, setEditMode] = useState(false);
+    const [collapse, setCollapse] = useState(false);
+
+    return (
+      <>
+        <div className="border p-4 rounded-md bg-white">
+          <div className="head flex justify-between items-center">
+            <p className="font-bold text-xl">Payments (HM23S)</p>
+            <div className="flex gap-4">
+              {!editMode && (
+                <MdModeEditOutline
+                  size={18}
+                  onClick={() => setEditMode((prevMode) => !prevMode)}
+                />
+              )}
+              {collapse ? (
+                <FaChevronDown
+                  className="rotate transition-all"
+                  onClick={() => setCollapse((prevMode) => !prevMode)}
+                />
+              ) : (
+                <FaChevronDown
+                  className="rotate-180 transition-all"
+                  onClick={() => setCollapse((prevMode) => !prevMode)}
+                />
+              )}
+            </div>
+          </div>
+
+          {!collapse && (
+            <div className="body mt-4">
+              {editMode ? (
+                <>
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between gap-2">
+                      <p className={`w-1/3 text-blue-500`}>Consignee:</p>
+
+                      <DropDown
+                        options={yards}
+                        selected={cardData.vesselFrom}
+                        optionBoxClass="md:w-fit right-0 z-50"
+                        buttonClass=""
+                      />
+                    </div>
+
+                    <div className="flex justify-between gap-2">
+                      <p className={`w-1/3 ${labelClass}`}>Sze: (L x W x H)</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.size.toLocaleString()} m<sup>2</sup> (
+                        {cardData.length.toLocaleString()} x{" "}
+                        {cardData.width.toLocaleString()} x{" "}
+                        {cardData.height.toLocaleString()})
+                      </p>
+                    </div>
+                    <div className="flex justify-between gap-2">
+                      <p className={`w-1/3 ${labelClass}`}>Deposit:</p>
+                      <input
+                        type="text"
+                        placeholder="¥ 0"
+                        className="w-1/3 px-2 border rounded-md shadow-sm"
+                      />
+                    </div>
+                    <div className="flex justify-between gap-2">
+                      <p className={`w-1/3 ${labelClass}`}>Container:</p>
+
+                      <DropDown
+                        options={yards}
+                        selected={"No Container"}
+                        optionBoxClass="md:w-fit lg:w-fit right-0 z-50"
+                        buttonClass=""
+                      />
+                    </div>
+                    <div className="flex justify-between gap-2">
+                      <p className={`w-1/3 ${labelClass}`}>Payment Deal:</p>
+                      <DropDown
+                        options={promotionText}
+                        selected={"No Payment Deal"}
+                        optionBoxClass="md:w-fit lg:w-fit right-0 z-50"
+                        buttonClass="w-fit"
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={`text-blue-600`}>Consignee:</p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Sze: (L x W x H)</p>
+                      <p className="font-semibold text-blue-950">
+                        {cardData.size.toLocaleString()} m<sup>2</sup> (
+                        {cardData.length.toLocaleString()} x{" "}
+                        {cardData.width.toLocaleString()} x{" "}
+                        {cardData.height.toLocaleString()})
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Deposit:</p>
+                      <p className="font-semibold text-blue-950">¥ 0</p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Container:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Payment Deal:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {editMode && !collapse && (
+            <div className="foot flex gap-4 justify-end">
+              <button
+                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
+                onClick={() => setEditMode((prevMode) => !prevMode)}
+              >
+                Save
+              </button>
+              <button
+                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
+                onClick={() => setEditMode((prevMode) => !prevMode)}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  };
+
+  const CalculatedCostsInfo = () => {
+    const [editMode, setEditMode] = useState(false);
+    const [collapse, setCollapse] = useState(false);
+
+    return (
+      <>
+        <div className="border p-4 rounded-md bg-white">
+          <div className="head flex justify-between items-center">
+            <p className="font-bold text-xl">Calculated Costs</p>
+            <div className="flex gap-4">
+              {!editMode && (
+                <MdModeEditOutline
+                  size={18}
+                  onClick={() => setEditMode((prevMode) => !prevMode)}
+                />
+              )}
+              {collapse ? (
+                <FaChevronDown
+                  className="rotate transition-all"
+                  onClick={() => setCollapse((prevMode) => !prevMode)}
+                />
+              ) : (
+                <FaChevronDown
+                  className="rotate-180 transition-all"
+                  onClick={() => setCollapse((prevMode) => !prevMode)}
+                />
+              )}
+            </div>
+          </div>
+
+          {!collapse && (
+            <div className="body mt-4">
+              {editMode ? (
+                <>
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>Days in UK:</p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        C-Net Price:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md"
+                          value={cardData.price}
+                        />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>FOB 90:</p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md"
+                          value={cardData.price - cardData.discount}
+                        />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>Margin 90:</p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md"
+                          value={cardData.extraCost}
+                        />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        FOB + MI + Comm:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md"
+                          value={
+                            cardData.extraCost +
+                            cardData.shippingYardCost +
+                            cardData.totalInlandCost +
+                            cardData.auctionFee +
+                            cardData.auctionFee
+                          }
+                        />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        Estimated Stoage:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        Invoiced Stoage:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        Actual Stoage:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        Used Stoage:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>C-Net Id:</p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md"
+                          value={cardData.extraCost}
+                        />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        C-Net Id/VAT:
+                      </p>
+
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md"
+                          value={cardData.extraCost}
+                        />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        Total Profit 90:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        Profit over 90:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        Est Sales Price:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>Est Profit:</p>
+
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md"
+                          value={
+                            cardData.price +
+                            cardData.extraCost +
+                            cardData.shippingYardCost +
+                            cardData.totalInlandCost +
+                            cardData.auctionFee +
+                            cardData.auctionFee
+                          }
+                        />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        Est Profit over:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md"
+                          value={
+                            cardData.price +
+                            cardData.extraCost +
+                            cardData.shippingYardCost +
+                            cardData.totalInlandCost +
+                            cardData.totalInlandCost +
+                            cardData.auctionFee +
+                            cardData.auctionFee
+                          }
+                        />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>C-Net JPY:</p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>JPY</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap ` + labelClass}>
+                        Display Landed:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-full">
+                        <input type="text" className="border px-2 rounded-md" />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-col gap-3 py-2">
+                    <div className="flex justify-between">
+                      <p className={labelClass}>EUR</p>
+                      <p className="font-semibold text-blue-950">121.81</p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>GBP:</p>
+                      <p className="font-semibold text-blue-950">186.81</p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>KS:</p>
+                      <p className="font-semibold text-blue-950">111.09</p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>THB:</p>
+                      <p className="font-semibold text-blue-950">146.45</p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Arrival Port:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Days in UK:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>C-Net Price:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.price.toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>FOB 90:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥{" "}
+                        {(cardData.price - cardData.discount).toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Margin 90:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.extraCost.toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>FOB + MI + Comm:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥{" "}
+                        {(
+                          cardData.extraCost +
+                          cardData.shippingYardCost +
+                          cardData.totalInlandCost +
+                          cardData.auctionFee +
+                          cardData.auctionFee
+                        ).toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Estimated Stoage:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Invoiced Stoage:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Actual Stoage:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Used Stoage:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>C-Net Id:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.extraCost.toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>C-Net Id/VAT:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥ {cardData.extraCost.toLocaleString()}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Total Profit 90:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Profit over 90:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Est Sales Price:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Est Profit:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥{" -"}
+                        {(
+                          cardData.price +
+                          cardData.extraCost +
+                          cardData.shippingYardCost +
+                          cardData.totalInlandCost +
+                          cardData.auctionFee +
+                          cardData.auctionFee
+                        ).toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>Est Profit over:</p>
+                      <p className="font-semibold text-blue-950">
+                        ¥{" -"}
+                        {(
+                          cardData.price +
+                          cardData.extraCost +
+                          cardData.shippingYardCost +
+                          cardData.totalInlandCost +
+                          cardData.totalInlandCost +
+                          cardData.auctionFee +
+                          cardData.auctionFee
+                        ).toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p className={labelClass}>C-Net JPY:</p>
+                      <p className="font-semibold text-blue-950"></p>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {editMode && !collapse && (
+            <div className="foot flex gap-4 justify-end">
+              <button
+                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
+                onClick={() => setEditMode((prevMode) => !prevMode)}
+              >
+                Save
+              </button>
+              <button
+                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
+                onClick={() => setEditMode((prevMode) => !prevMode)}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  };
+
   return (
     <>
       <CNetAdminNav />
@@ -671,6 +1503,8 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               </div>
 
               <SupplierInfo />
+              <PaymentsInfo />
+              <CalculatedCostsInfo />
             </div>
           </div>
         </div>
