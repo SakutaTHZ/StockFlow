@@ -126,6 +126,16 @@ export const getFuelType = () => {
   return fuelType[Math.floor(Math.random() * fuelType.length)];
 };
 
+export const types = ["Service", "Parts", "Labor", "Accessories", "Inspection"];
+
+export const descriptions = [
+  "Oil change",
+  "Brake pad replacement",
+  "Tire alignment",
+  "Car mats",
+  "Engine inspection",
+];
+
 export const getRandomMileage = () => {
   return Math.floor(Math.random() * 10000000);
 };

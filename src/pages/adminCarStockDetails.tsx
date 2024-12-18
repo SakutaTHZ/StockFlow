@@ -12,6 +12,7 @@ import {
   MdInsertPhoto,
   MdModeEditOutline,
   MdCalendarMonth,
+  MdStar,
 } from "react-icons/md";
 import {
   PiCalendarDots,
@@ -45,7 +46,12 @@ import Popup from "../components/Popup";
 import Engine from "../assets/EnginePower.svg";
 import Certificate from "../assets/images/certificate.png";
 import DropDown from "../components/DropDown";
-import { promotionText, yards } from "../data/generateData";
+import {
+  descriptions,
+  promotionText,
+  types,
+  yards,
+} from "../data/generateData";
 
 interface DetailsProps {
   customClass?: string;
@@ -197,15 +203,18 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   }
 
   const [isTranslationPopupOpen, setIsTranslationPopupOpen] = useState(false);
-
   const openTranslationPopup = () => setIsTranslationPopupOpen(true);
   const closeTranslationPopup = () => setIsTranslationPopupOpen(false);
 
   const [isAuctionGradePopupOpen, setIsAuctionGradePopupOpen] = useState(false);
-
   const openAuctionGradePopup = () => setIsAuctionGradePopupOpen(true);
   const closeAuctionGradePopup = () => setIsAuctionGradePopupOpen(false);
 
+  const [isCommentsPopupOpen, setIsCommentsPopupOpen] = useState(false);
+  const openCommentsePopup = () => setIsCommentsPopupOpen(true);
+  const closeCommentsPopup = () => setIsCommentsPopupOpen(false);
+
+  // Detail Info Boxes
   const CommentBox = () => {
     const [editMode, setEditMode] = useState(false);
     const [editableContent, setEditableContent] = useState(
@@ -218,10 +227,12 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           <div className="head flex justify-between items-center">
             <p className="font-bold text-xl">Comment</p>
             {!editMode && (
-              <MdModeEditOutline
-                size={18}
-                onClick={() => setEditMode((prevMode) => !prevMode)}
-              />
+              <button className="cursor">
+                <MdModeEditOutline
+                  size={18}
+                  onClick={() => setEditMode((prevMode) => !prevMode)}
+                />
+              </button>
             )}
           </div>
 
@@ -257,7 +268,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
-
   const SalesCommentBox = () => {
     const [editMode, setEditMode] = useState(false);
     const [editableContent, setEditableContent] = useState(
@@ -270,10 +280,12 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           <div className="head flex justify-between items-center">
             <p className="font-bold text-xl">Sales Comment</p>
             {!editMode && (
-              <MdModeEditOutline
-                size={18}
-                onClick={() => setEditMode((prevMode) => !prevMode)}
-              />
+              <button className="cursor">
+                <MdModeEditOutline
+                  size={18}
+                  onClick={() => setEditMode((prevMode) => !prevMode)}
+                />
+              </button>
             )}
           </div>
 
@@ -309,7 +321,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
-
   const SupplierInfo = () => {
     const [editMode, setEditMode] = useState(false);
     const [collapse, setCollapse] = useState(false);
@@ -321,21 +332,27 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             <p className="font-bold text-xl">Supplier Info</p>
             <div className="flex gap-4">
               {!editMode && (
-                <MdModeEditOutline
-                  size={18}
-                  onClick={() => setEditMode((prevMode) => !prevMode)}
-                />
+                <button className="cursor">
+                  <MdModeEditOutline
+                    size={18}
+                    onClick={() => setEditMode((prevMode) => !prevMode)}
+                  />
+                </button>
               )}
               {collapse ? (
-                <FaChevronDown
-                  className="rotate transition-all"
-                  onClick={() => setCollapse((prevMode) => !prevMode)}
-                />
+                <button className="cursor">
+                  <FaChevronDown
+                    className="rotate transition-all"
+                    onClick={() => setCollapse((prevMode) => !prevMode)}
+                  />
+                </button>
               ) : (
-                <FaChevronDown
-                  className="rotate-180 transition-all"
-                  onClick={() => setCollapse((prevMode) => !prevMode)}
-                />
+                <button className="cursor">
+                  <FaChevronDown
+                    className="rotate-180 transition-all"
+                    onClick={() => setCollapse((prevMode) => !prevMode)}
+                  />
+                </button>
               )}
             </div>
           </div>
@@ -642,7 +659,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
-
   const PaymentsInfo = () => {
     const [editMode, setEditMode] = useState(false);
     const [collapse, setCollapse] = useState(false);
@@ -654,21 +670,27 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             <p className="font-bold text-xl">Payments (HM23S)</p>
             <div className="flex gap-4">
               {!editMode && (
-                <MdModeEditOutline
-                  size={18}
-                  onClick={() => setEditMode((prevMode) => !prevMode)}
-                />
+                <button className="cursor">
+                  <MdModeEditOutline
+                    size={18}
+                    onClick={() => setEditMode((prevMode) => !prevMode)}
+                  />
+                </button>
               )}
               {collapse ? (
-                <FaChevronDown
-                  className="rotate transition-all"
-                  onClick={() => setCollapse((prevMode) => !prevMode)}
-                />
+                <button className="cursor">
+                  <FaChevronDown
+                    className="rotate transition-all"
+                    onClick={() => setCollapse((prevMode) => !prevMode)}
+                  />
+                </button>
               ) : (
-                <FaChevronDown
-                  className="rotate-180 transition-all"
-                  onClick={() => setCollapse((prevMode) => !prevMode)}
-                />
+                <button className="cursor">
+                  <FaChevronDown
+                    className="rotate-180 transition-all"
+                    onClick={() => setCollapse((prevMode) => !prevMode)}
+                  />
+                </button>
               )}
             </div>
           </div>
@@ -781,7 +803,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
-
   const CalculatedCostsInfo = () => {
     const [editMode, setEditMode] = useState(false);
     const [collapse, setCollapse] = useState(false);
@@ -793,21 +814,27 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             <p className="font-bold text-xl">Calculated Costs</p>
             <div className="flex gap-4">
               {!editMode && (
-                <MdModeEditOutline
-                  size={18}
-                  onClick={() => setEditMode((prevMode) => !prevMode)}
-                />
+                <button className="cursor">
+                  <MdModeEditOutline
+                    size={18}
+                    onClick={() => setEditMode((prevMode) => !prevMode)}
+                  />
+                </button>
               )}
               {collapse ? (
-                <FaChevronDown
-                  className="rotate transition-all"
-                  onClick={() => setCollapse((prevMode) => !prevMode)}
-                />
+                <button className="cursor">
+                  <FaChevronDown
+                    className="rotate transition-all"
+                    onClick={() => setCollapse((prevMode) => !prevMode)}
+                  />
+                </button>
               ) : (
-                <FaChevronDown
-                  className="rotate-180 transition-all"
-                  onClick={() => setCollapse((prevMode) => !prevMode)}
-                />
+                <button className="cursor">
+                  <FaChevronDown
+                    className="rotate-180 transition-all"
+                    onClick={() => setCollapse((prevMode) => !prevMode)}
+                  />
+                </button>
               )}
             </div>
           </div>
@@ -816,214 +843,218 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             <div className="body mt-4">
               {editMode ? (
                 <>
-                  <div className="flex flex-col gap-3 py-2">
+                  <div className="relative flex flex-col gap-3 py-2">
                     <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>Days in UK:</p>
-                      <div className="flex items-center justify-end gap-2 w-full">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Days in UK:
+                      </p>
+                      <div className="flex items-center justify-start gap-2 w-1/2">
                         <input type="text" className="border px-2 rounded-md" />
-                        <p>JPY</p>
+                        <p>{"   "}</p>
                       </div>
                     </div>
 
                     <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        C-Net Price:
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        C-Net Price Est:
                       </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
+                      <div className="flex items-center justify-start gap-2 w-1/2">
                         <input
                           type="text"
-                          className="border px-2 rounded-md"
-                          value={cardData.price}
-                        />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>FOB 90:</p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input
-                          type="text"
-                          className="border px-2 rounded-md"
-                          value={cardData.price - cardData.discount}
-                        />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>Margin 90:</p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input
-                          type="text"
-                          className="border px-2 rounded-md"
-                          value={cardData.extraCost}
-                        />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        FOB + MI + Comm:
-                      </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input
-                          type="text"
-                          className="border px-2 rounded-md"
-                          value={
-                            cardData.extraCost +
-                            cardData.shippingYardCost +
-                            cardData.totalInlandCost +
-                            cardData.auctionFee +
-                            cardData.auctionFee
-                          }
-                        />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        Estimated Stoage:
-                      </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input type="text" className="border px-2 rounded-md" />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        Invoiced Stoage:
-                      </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input type="text" className="border px-2 rounded-md" />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        Actual Stoage:
-                      </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input type="text" className="border px-2 rounded-md" />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        Used Stoage:
-                      </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input type="text" className="border px-2 rounded-md" />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>C-Net Id:</p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input
-                          type="text"
-                          className="border px-2 rounded-md"
-                          value={cardData.extraCost}
-                        />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        C-Net Id/VAT:
-                      </p>
-
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input
-                          type="text"
-                          className="border px-2 rounded-md"
-                          value={cardData.extraCost}
+                          className="border px-2 rounded-md w-full"
                         />
                         <p>JPY</p>
                       </div>
                     </div>
 
                     <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        Total Profit 90:
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Claims:
                       </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input type="text" className="border px-2 rounded-md" />
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
                         <p>JPY</p>
                       </div>
                     </div>
+
                     <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        Profit over 90:
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Discounts:
                       </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input type="text" className="border px-2 rounded-md" />
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
                         <p>JPY</p>
                       </div>
                     </div>
+
                     <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Actual Freights:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>Duty:</p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>THC:</p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        SLC Docs:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Clearence:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Entry VAT:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Other Costs:
+                      </p>
+
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Invoiced Storage:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Actual Storage:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Est Sales Price:
                       </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input type="text" className="border px-2 rounded-md" />
-                        <p>JPY</p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
+                        <p>GBP</p>
                       </div>
                     </div>
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>Est Profit:</p>
 
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input
-                          type="text"
-                          className="border px-2 rounded-md"
-                          value={
-                            cardData.price +
-                            cardData.extraCost +
-                            cardData.shippingYardCost +
-                            cardData.totalInlandCost +
-                            cardData.auctionFee +
-                            cardData.auctionFee
-                          }
-                        />
-                        <p>JPY</p>
-                      </div>
-                    </div>
                     <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
-                        Est Profit over:
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        Deal Rate:
                       </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
+
+                      <div className="flex items-center justify-end gap-2 w-1/2">
                         <input
                           type="text"
-                          className="border px-2 rounded-md"
-                          value={
-                            cardData.price +
-                            cardData.extraCost +
-                            cardData.shippingYardCost +
-                            cardData.totalInlandCost +
-                            cardData.totalInlandCost +
-                            cardData.auctionFee +
-                            cardData.auctionFee
-                          }
+                          className="border px-2 rounded-md w-full"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
+                        C-Net JPY:
+                      </p>
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
                         />
                         <p>JPY</p>
                       </div>
                     </div>
+
                     <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>C-Net JPY:</p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input type="text" className="border px-2 rounded-md" />
-                        <p>JPY</p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <p className={`text-nowrap ` + labelClass}>
+                      <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Display Landed:
                       </p>
-                      <div className="flex items-center justify-end gap-2 w-full">
-                        <input type="text" className="border px-2 rounded-md" />
+                      <div className="flex items-center justify-end gap-2 w-1/2">
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
                         <p>GBP</p>
                       </div>
                     </div>
@@ -1193,6 +1224,238 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
+  const ExtraCostsInfo = () => {
+    const [editMode, setEditMode] = useState(false);
+    const [collapse, setCollapse] = useState(false);
+
+    const extras = [];
+    for (let i = 0; i < types.length; i++) {
+      extras.push({
+        Type: types[i],
+        Description: descriptions[i],
+        Estimate: Math.round(Math.random() * (999999 - 100000 + 1) + 100000),
+        Actual: Math.round(Math.random() * (999999 - 100000 + 1) + 100000),
+      });
+    }
+    const colClass = `border p-2 px-4 text-left`;
+
+    return (
+      <>
+        <div className="border p-4 rounded-md bg-white">
+          <div className="head flex justify-between items-center">
+            <p className="font-bold text-xl">Extra Costs</p>
+            <div className="flex gap-4">
+              {!editMode && (
+                <button className="cursor">
+                  <MdModeEditOutline
+                    size={18}
+                    onClick={() => setEditMode((prevMode) => !prevMode)}
+                  />
+                </button>
+              )}
+              {collapse ? (
+                <button className="cursor">
+                  <FaChevronDown
+                    className="rotate transition-all"
+                    onClick={() => setCollapse((prevMode) => !prevMode)}
+                  />
+                </button>
+              ) : (
+                <button className="cursor">
+                  <FaChevronDown
+                    className="rotate-180 transition-all"
+                    onClick={() => setCollapse((prevMode) => !prevMode)}
+                  />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {!collapse && (
+            <div className="body mt-4">
+              <>
+                <table className="w-full">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className={`${colClass}`}>Type</th>
+                      <th className={`${colClass}`}>Description</th>
+                      <th className={`${colClass}`}>Estimate</th>
+                      <th className={`${colClass}`}>Actual</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {extras.map((extra, index) => (
+                      <tr
+                        key={index}
+                        className={`${index % 2 === 1 && "bg-gray-50"}`}
+                      >
+                        <td className={`${colClass}`}>
+                          {editMode ? (
+                            <>
+                              <DropDown
+                                options={types}
+                                selected={extra.Type}
+                                optionBoxClass="z-50 h-fit"
+                              />
+                            </>
+                          ) : (
+                            <>
+                              <p>{extra.Type}</p>
+                            </>
+                          )}
+                        </td>
+                        <td className={`${colClass}`}>
+                          {editMode ? (
+                            <>
+                              <input
+                                type="text"
+                                className="w-full border px-2 rounded-md"
+                                value={extra.Description}
+                              />
+                            </>
+                          ) : (
+                            <>
+                              <p>{extra.Description}</p>
+                            </>
+                          )}
+                        </td>
+                        <td className={`${colClass}`}>
+                          {editMode ? (
+                            <>
+                              <input
+                                type="text"
+                                className="w-full border px-2 rounded-md"
+                                value={extra.Estimate}
+                              />
+                            </>
+                          ) : (
+                            <>¥ {extra.Estimate.toLocaleString()}</>
+                          )}
+                        </td>
+                        <td className={`${colClass}`}>
+                          {editMode ? (
+                            <>
+                              <input
+                                type="text"
+                                className="w-full border px-2 rounded-md"
+                                value={extra.Actual}
+                              />
+                            </>
+                          ) : (
+                            <>¥ {extra.Actual.toLocaleString()}</>
+                          )}
+                        </td>
+                        <td></td>
+                      </tr>
+                    ))}
+
+                    <tr>
+                      <td className={`${colClass}`}></td>
+                      <td className={`${colClass}`}></td>
+                      <td className={`${colClass} font-semibold`}>
+                        ¥{" "}
+                        {extras
+                          .reduce((sum, item) => sum + item.Estimate, 0)
+                          .toLocaleString()}
+                      </td>
+                      <td className={`${colClass} font-semibold`}>
+                        ¥{" "}
+                        {extras
+                          .reduce((sum, item) => sum + item.Actual, 0)
+                          .toLocaleString()}
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </>
+            </div>
+          )}
+
+          {editMode && !collapse && (
+            <div className="foot flex gap-4 justify-end mt-4">
+              <button
+                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
+                onClick={() => setEditMode((prevMode) => !prevMode)}
+              >
+                Save
+              </button>
+              <button
+                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
+                onClick={() => setEditMode((prevMode) => !prevMode)}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  };
+  const YardTaskBox = () => {
+    return (
+      <>
+        <div className="w-1/2 border p-4 rounded-md bg-white">
+          <div className="head flex justify-between items-center">
+            <p className="font-bold text-xl">Yard Task</p>
+            <button className="flex items-center gap-1 font-semibold text-[#997435]">
+              <MdStar />
+              Add Task
+            </button>
+          </div>
+
+          <div className="statuses bg-gray-50 p-4 flex flex-col gap-2 mt-4">
+            <ul className="ml-4 list-disc">
+              <li>Car Check</li>
+              <li>Car Check</li>
+              <li>Car Check</li>
+            </ul>
+          </div>
+
+          <textarea
+            rows={3}
+            className="w-full resize-none border rounded-md mt-4 p-2"
+            placeholder="Comment"
+          ></textarea>
+
+          <div className="flex justify-end mt-4">
+            <button className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md">
+              Save
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  };
+  const BuyingTaskBox = () => {
+    return (
+      <>
+        <div className="w-1/2 h-fit border p-4 rounded-md bg-white">
+          <div className="head flex justify-between items-center">
+            <p className="font-bold text-xl">Buying Task</p>
+            <button className="flex items-center gap-1 font-semibold text-[#997435]">
+              <MdStar />
+              Add Task
+            </button>
+          </div>
+
+          <div className="statuses bg-gray-50 p-4 flex flex-col gap-2 mt-4">
+            <ul className="ml-4 list-disc">
+              <li>Car Check</li>
+              <li>Car Check</li>
+              <li>Car Check</li>
+            </ul>
+          </div>
+
+          <div className="flex justify-end mt-4">
+            <button className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md">
+              Save
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  };
 
   return (
     <>
@@ -1245,7 +1508,10 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               <BiImages size={20} />
               <p className="font-semibold">Images</p>
             </button>
-            <button className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md">
+            <button
+              className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
+              onClick={openCommentsePopup}
+            >
               <FaRegCommentDots size={20} />
               <p className="font-semibold">Comments</p>
             </button>
@@ -1436,6 +1702,11 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                   </div>
                 </div>
               </div>
+            </div>
+            <ExtraCostsInfo />
+            <div className="flex gap-4">
+              <YardTaskBox />
+              <BuyingTaskBox />
             </div>
           </div>
           <div className="col-2 flex flex-col gap-4">
@@ -1803,6 +2074,124 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 <p className={`w-24`}>純 AW</p>
                 <p className="w-full md:w-40">Standard Alloys</p>
               </div>
+            </div>
+          </div>
+        }
+      />
+
+      <Popup
+        isOpen={isCommentsPopupOpen}
+        onClose={closeCommentsPopup}
+        title="Comments"
+        customClass="m-2 w-full md:w-1/2 h-screen md:h-auto overflow-y-scroll custom-scrollbar"
+        content={
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Comments</p>
+                <textarea
+                  rows={2}
+                  placeholder="Comment"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Inner Cargo</p>
+                <textarea
+                  rows={2}
+                  placeholder="Inner Cargo"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Administrator</p>
+                <textarea
+                  rows={2}
+                  placeholder="Administrator"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Sales</p>
+                <textarea
+                  rows={2}
+                  placeholder="Sales"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Payment</p>
+                <textarea
+                  rows={2}
+                  placeholder="Payment"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Jibai</p>
+                <textarea
+                  rows={2}
+                  placeholder="Jibai"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Recycle Fee</p>
+                <textarea
+                  rows={2}
+                  placeholder="Comment"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Vehicle Tax</p>
+                <textarea
+                  rows={2}
+                  placeholder="Vehicle Tax"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Yard</p>
+                <textarea
+                  rows={2}
+                  placeholder="Yard"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Shipping</p>
+                <textarea
+                  rows={2}
+                  placeholder="Shipping"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Accessories</p>
+                <textarea
+                  rows={2}
+                  placeholder="Accessories"
+                  className="border rounded-md p-2 resize-none"
+                />
+              </div>
+            </div>
+
+            <div className="foot flex gap-4 justify-end">
+              <button
+                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
+                onClick={closeCommentsPopup}
+              >
+                Save
+              </button>
+              <button
+                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
+                onClick={closeCommentsPopup}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         }

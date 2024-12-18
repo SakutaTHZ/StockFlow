@@ -173,7 +173,7 @@ const CarCard: React.FC<CarCardProps> = ({
           <img
             src={car.image}
             alt="car Image"
-            className={`rounded-t-md h-42 ${
+            className={`rounded-t-md min-h-42 bg-gray-50 ${
               car.hold && "opacity-50 pointer-events-none"
             }`}
             loading="lazy"

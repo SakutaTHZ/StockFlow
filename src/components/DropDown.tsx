@@ -43,7 +43,9 @@ const DropDown: React.FC<DropDownProps> = ({
     <div className={`relative inline-block w-full text-left ${customClass}`}>
       <button
         onClick={toggleDropdown}
-        className={`${noDropDown && "hidden"} inline-flex justify-between gap-2 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
+        className={`${
+          noDropDown && "hidden"
+        } inline-flex justify-between gap-2 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
       >
         {selectedOption}
         <FaChevronDown size={12} className="text-gray-400 flex-shrink-0" />
@@ -51,7 +53,9 @@ const DropDown: React.FC<DropDownProps> = ({
 
       {(noDropDown || isOpen) && (
         <div
-          className={`${noDropDown ? "block" : "absolute mt-2"} origin-top-right w-full h-64 overflow-hidden overflow-y-scroll rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
+          className={`${
+            noDropDown ? "block" : "absolute mt-2"
+          } origin-top-right w-full h-64 overflow-hidden overflow-y-scroll rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
         >
           <div className="py-1">
             {options.map((option) => (
