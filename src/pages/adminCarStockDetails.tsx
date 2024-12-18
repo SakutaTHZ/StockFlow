@@ -45,6 +45,7 @@ import Popup from "../components/Popup";
 
 import Engine from "../assets/EnginePower.svg";
 import Certificate from "../assets/images/certificate.png";
+import Vin from "../assets/vin.svg";
 import DropDown from "../components/DropDown";
 import {
   descriptions,
@@ -1720,20 +1721,28 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                   {cardData.exteriorColor.split("#")[0]}
                 </p>
                 <p className="flex gap-2 items-center">
-                  <PiCalendarDots size={20} className="flex-shrink-0" />
-                  {cardData.registerDate}
+                  <img
+                    src={Vin}
+                    alt="engine"
+                    className="brightness-0 flex-shrink-0"
+                  />
+                  {cardData.vim}
                 </p>
                 <p className="flex gap-2 items-center">
                   <img src={Engine} alt="engine" className="flex-shrink-0" />
                   {cardData.enginePower.toLocaleString()} cc
                 </p>
                 <p className="flex gap-2 items-center">
-                  <TbRoad size={20} className="flex-shrink-0" />
-                  {cardData.milleage.toLocaleString()} km
+                  <PiCalendarDots size={20} className="flex-shrink-0" />
+                  {cardData.registerDate}
                 </p>
                 <p className="flex gap-2 items-center">
                   <PiGasCan size={20} className="flex-shrink-0" />
                   {cardData.fuelType}
+                </p>
+                <p className="flex gap-2 items-center">
+                  <TbRoad size={20} className="flex-shrink-0" />
+                  {cardData.milleage.toLocaleString()} km
                 </p>
                 <p className="flex gap-2 items-center">
                   <PiStar size={20} className="flex-shrink-0" />
