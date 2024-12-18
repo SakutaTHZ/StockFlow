@@ -39,7 +39,7 @@ import {
 import { HiOutlineChartBar } from "react-icons/hi";
 import { useState } from "react";
 import { BsBoxSeam } from "react-icons/bs";
-import { IoLanguage, IoPersonCircleOutline } from "react-icons/io5";
+import { IoClose, IoLanguage, IoPersonCircleOutline } from "react-icons/io5";
 import Gallery from "../components/Gallery";
 import Popup from "../components/Popup";
 
@@ -1224,174 +1224,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
-  const ExtraCostsInfo = () => {
-    const [editMode, setEditMode] = useState(false);
-    const [collapse, setCollapse] = useState(false);
-
-    const extras = [];
-    for (let i = 0; i < types.length; i++) {
-      extras.push({
-        Type: types[i],
-        Description: descriptions[i],
-        Estimate: Math.round(Math.random() * (999999 - 100000 + 1) + 100000),
-        Actual: Math.round(Math.random() * (999999 - 100000 + 1) + 100000),
-      });
-    }
-    const colClass = `border p-2 px-4 text-left`;
-
-    return (
-      <>
-        <div className="border p-4 rounded-md bg-white">
-          <div className="head flex justify-between items-center">
-            <p className="font-bold text-xl">Extra Costs</p>
-            <div className="flex gap-4">
-              {!editMode && (
-                <button className="cursor">
-                  <MdModeEditOutline
-                    size={18}
-                    onClick={() => setEditMode((prevMode) => !prevMode)}
-                  />
-                </button>
-              )}
-              {collapse ? (
-                <button className="cursor">
-                  <FaChevronDown
-                    className="rotate transition-all"
-                    onClick={() => setCollapse((prevMode) => !prevMode)}
-                  />
-                </button>
-              ) : (
-                <button className="cursor">
-                  <FaChevronDown
-                    className="rotate-180 transition-all"
-                    onClick={() => setCollapse((prevMode) => !prevMode)}
-                  />
-                </button>
-              )}
-            </div>
-          </div>
-
-          {!collapse && (
-            <div className="body mt-4">
-              <>
-                <table className="w-full">
-                  <thead>
-                    <tr className="bg-gray-50">
-                      <th className={`${colClass}`}>Type</th>
-                      <th className={`${colClass}`}>Description</th>
-                      <th className={`${colClass}`}>Estimate</th>
-                      <th className={`${colClass}`}>Actual</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {extras.map((extra, index) => (
-                      <tr
-                        key={index}
-                        className={`${index % 2 === 1 && "bg-gray-50"}`}
-                      >
-                        <td className={`${colClass}`}>
-                          {editMode ? (
-                            <>
-                              <DropDown
-                                options={types}
-                                selected={extra.Type}
-                                optionBoxClass="z-50 h-fit"
-                              />
-                            </>
-                          ) : (
-                            <>
-                              <p>{extra.Type}</p>
-                            </>
-                          )}
-                        </td>
-                        <td className={`${colClass}`}>
-                          {editMode ? (
-                            <>
-                              <input
-                                type="text"
-                                className="w-full border px-2 rounded-md"
-                                value={extra.Description}
-                              />
-                            </>
-                          ) : (
-                            <>
-                              <p>{extra.Description}</p>
-                            </>
-                          )}
-                        </td>
-                        <td className={`${colClass}`}>
-                          {editMode ? (
-                            <>
-                              <input
-                                type="text"
-                                className="w-full border px-2 rounded-md"
-                                value={extra.Estimate}
-                              />
-                            </>
-                          ) : (
-                            <>¥ {extra.Estimate.toLocaleString()}</>
-                          )}
-                        </td>
-                        <td className={`${colClass}`}>
-                          {editMode ? (
-                            <>
-                              <input
-                                type="text"
-                                className="w-full border px-2 rounded-md"
-                                value={extra.Actual}
-                              />
-                            </>
-                          ) : (
-                            <>¥ {extra.Actual.toLocaleString()}</>
-                          )}
-                        </td>
-                        <td></td>
-                      </tr>
-                    ))}
-
-                    <tr>
-                      <td className={`${colClass}`}></td>
-                      <td className={`${colClass}`}></td>
-                      <td className={`${colClass} font-semibold`}>
-                        ¥{" "}
-                        {extras
-                          .reduce((sum, item) => sum + item.Estimate, 0)
-                          .toLocaleString()}
-                      </td>
-                      <td className={`${colClass} font-semibold`}>
-                        ¥{" "}
-                        {extras
-                          .reduce((sum, item) => sum + item.Actual, 0)
-                          .toLocaleString()}
-                      </td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </>
-            </div>
-          )}
-
-          {editMode && !collapse && (
-            <div className="foot flex gap-4 justify-end mt-4">
-              <button
-                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
-                onClick={() => setEditMode((prevMode) => !prevMode)}
-              >
-                Save
-              </button>
-              <button
-                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
-                onClick={() => setEditMode((prevMode) => !prevMode)}
-              >
-                Cancel
-              </button>
-            </div>
-          )}
-        </div>
-      </>
-    );
-  };
   const YardTaskBox = () => {
     return (
       <>
@@ -1454,6 +1286,264 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           </div>
         </div>
       </>
+    );
+  };
+  const ExtraCostsInfo = () => {
+    const [editMode, setEditMode] = useState(false);
+    const [collapse, setCollapse] = useState(false);
+    const [extras, setExtras] = useState(() =>
+      types.map((type, index) => ({
+        Type: type,
+        Description: descriptions[index],
+        Estimate: Math.round(Math.random() * (999999 - 100000) + 100000),
+        Actual: Math.round(Math.random() * (999999 - 100000) + 100000),
+      }))
+    );
+
+    const [newRow, setNewRow] = useState({
+      Type: "",
+      Description: "",
+      Estimate: 0,
+      Actual: 0,
+    });
+
+    const colClass = `border p-2 px-4 text-left`;
+
+    // Handle input changes
+    const handleInputChange = (
+      index: number,
+      key: string,
+      value: string | number
+    ) => {
+      const updatedExtras = [...extras];
+      updatedExtras[index] = { ...updatedExtras[index], [key]: value };
+      setExtras(updatedExtras);
+    };
+
+    // Handle new row input
+    const handleNewRowChange = (key: string, value: string | number) => {
+      setNewRow((prev) => ({ ...prev, [key]: value }));
+    };
+
+    // Add new row to the table
+    const handleAddNewRow = () => {
+      if (newRow.Type && newRow.Description) {
+        setExtras((prev) => [...prev, { ...newRow }]);
+        setNewRow({ Type: "", Description: "", Estimate: 0, Actual: 0 });
+      }
+    };
+
+    // Delete a row
+    const handleDeleteRow = (index: number) => {
+      const updatedExtras = extras.filter((_, i) => i !== index);
+      setExtras(updatedExtras);
+    };
+
+    return (
+      <div className="border p-4 rounded-md bg-white">
+        <div className="head flex justify-between items-center">
+          <p className="font-bold text-xl">Extra Costs</p>
+          <div className="flex gap-4">
+            {!editMode && (
+              <button onClick={() => setEditMode((prevMode) => !prevMode)}>
+                <MdModeEditOutline size={18} />
+              </button>
+            )}
+            <button onClick={() => setCollapse((prevMode) => !prevMode)}>
+              <FaChevronDown
+                className={`transition-all ${collapse ? "" : "rotate-180"}`}
+              />
+            </button>
+          </div>
+        </div>
+
+        {!collapse && (
+          <div className="body mt-4">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className={`${colClass}`}>Type</th>
+                  <th className={`${colClass}`}>Description</th>
+                  <th className={`${colClass}`}>Estimate</th>
+                  <th className={`${colClass}`}>Actual</th>
+                  {editMode && <th className={`${colClass}`}></th>}
+                </tr>
+              </thead>
+              <tbody>
+                {extras.map((extra, index) => (
+                  <tr
+                    key={index}
+                    className={`${index % 2 === 1 && "bg-gray-50"}`}
+                  >
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <DropDown
+                          options={types}
+                          selected={extra.Type}
+                          onSelectionChange={(selected) =>
+                            handleInputChange(index, "Type", selected)
+                          }
+                          optionBoxClass="z-50 h-fit"
+                        />
+                      ) : (
+                        <p>{extra.Type}</p>
+                      )}
+                    </td>
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <input
+                          type="text"
+                          className="w-full border px-2 rounded-md"
+                          value={extra.Description}
+                          onChange={(e) =>
+                            handleInputChange(
+                              index,
+                              "Description",
+                              e.target.value
+                            )
+                          }
+                        />
+                      ) : (
+                        <p>{extra.Description}</p>
+                      )}
+                    </td>
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <input
+                          type="number"
+                          className="w-full border px-2 rounded-md"
+                          value={extra.Estimate}
+                          onChange={(e) =>
+                            handleInputChange(
+                              index,
+                              "Estimate",
+                              Number(e.target.value)
+                            )
+                          }
+                        />
+                      ) : (
+                        <>¥ {extra.Estimate.toLocaleString()}</>
+                      )}
+                    </td>
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <input
+                          type="number"
+                          className="w-full border px-2 rounded-md"
+                          value={extra.Actual}
+                          onChange={(e) =>
+                            handleInputChange(
+                              index,
+                              "Actual",
+                              Number(e.target.value)
+                            )
+                          }
+                        />
+                      ) : (
+                        <>¥ {extra.Actual.toLocaleString()}</>
+                      )}
+                    </td>
+                    {editMode && (
+                      <td className={`${colClass} text-center`}>
+                        <button onClick={() => handleDeleteRow(index)}>
+                          <IoClose size={20} />
+                        </button>
+                      </td>
+                    )}
+                  </tr>
+                ))}
+                {editMode && (
+                  <tr className="bg-gray-100">
+                    <td className={`${colClass}`}>
+                      <DropDown
+                        options={types}
+                        selected={newRow.Type}
+                        onSelectionChange={(selected) =>
+                          handleNewRowChange("Type", selected)
+                        }
+                        optionBoxClass="z-50 h-fit"
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <input
+                        type="text"
+                        className="w-full border px-2 rounded-md"
+                        value={newRow.Description}
+                        onChange={(e) =>
+                          handleNewRowChange("Description", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <input
+                        type="number"
+                        className="w-full border px-2 rounded-md"
+                        value={newRow.Estimate}
+                        onChange={(e) =>
+                          handleNewRowChange("Estimate", Number(e.target.value))
+                        }
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <input
+                        type="number"
+                        className="w-full border px-2 rounded-md"
+                        value={newRow.Actual}
+                        onChange={(e) =>
+                          handleNewRowChange("Actual", Number(e.target.value))
+                        }
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <button
+                        onClick={handleAddNewRow}
+                        className="font-semibold"
+                      >
+                        Add
+                      </button>
+                    </td>
+                  </tr>
+                )}
+                <tr>
+                  <td colSpan={2} className={`${colClass} font-semibold`}>
+                    Total
+                  </td>
+                  <td className={`${colClass} font-semibold`}>
+                    ¥{" "}
+                    {extras
+                      .reduce((sum, item) => sum + item.Estimate, 0)
+                      .toLocaleString()}
+                  </td>
+                  <td className={`${colClass} font-semibold`}>
+                    ¥{" "}
+                    {extras
+                      .reduce((sum, item) => sum + item.Actual, 0)
+                      .toLocaleString()}
+                  </td>
+                  {editMode && <td className={`${colClass}`}></td>}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {editMode && !collapse && (
+          <div className="foot flex gap-4 justify-end mt-4">
+            <button
+              className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
+              onClick={() => setEditMode(false)}
+            >
+              Save
+            </button>
+            <button
+              className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
+              onClick={() => setEditMode(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+      </div>
     );
   };
 
