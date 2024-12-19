@@ -209,7 +209,15 @@ export const getRandomSize = () => {
 };
 
 // Array of vehicle features
-const vehicleParts = ["AC", "PAS", "PW", "ABS", "AB", "R Key", "5-seater"];
+export const vehicleParts = [
+  "AC",
+  "PAS",
+  "PW",
+  "ABS",
+  "AB",
+  "R Key",
+  "5-seater",
+];
 
 function getRandomVehicleParts() {
   const randomCount = Math.floor(Math.random() * vehicleParts.length) + 1;
@@ -219,6 +227,11 @@ function getRandomVehicleParts() {
 
   return selectedParts.join(", ");
 }
+
+export const transmissions = ["Automatic", "Manual"];
+export const getTransmission = () => {
+  return transmissions[Math.floor(Math.random() * transmissions.length)];
+};
 
 export const generateCardData = (): CarData => {
   const newHighlightStatus = getRandomHighlightStatus();
@@ -243,6 +256,7 @@ export const generateCardData = (): CarData => {
     marketType: getMarketType(),
     yardArea: getRandomYardArea(),
     exteriorColor: getRandomExteriorColors(),
+    transmission: getTransmission(),
 
     soldDate: date,
     vessel: getRandomYard(),

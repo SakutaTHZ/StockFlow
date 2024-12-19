@@ -43,6 +43,7 @@ import { IoClose, IoLanguage, IoPersonCircleOutline } from "react-icons/io5";
 import Gallery from "../components/Gallery";
 import Popup from "../components/Popup";
 
+import Transmission from "../assets/transmission.png";
 import Engine from "../assets/EnginePower.svg";
 import Certificate from "../assets/images/certificate.png";
 import Vin from "../assets/vin.svg";
@@ -1744,6 +1745,15 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                   <TbRoad size={20} className="flex-shrink-0" />
                   {cardData.milleage.toLocaleString()} km
                 </p>
+
+                <p className="flex gap-2 items-center">
+                  <img
+                    src={Transmission}
+                    alt="engine"
+                    className="flex-shrink-0"
+                  />
+                  {cardData.transmission}
+                </p>
                 <p className="flex gap-2 items-center">
                   <PiStar size={20} className="flex-shrink-0" />
                   {cardData.rating}
@@ -1761,11 +1771,11 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 </p>
                 <p className="flex gap-2 items-center">
                   <MdInsertPhoto className="flex-shrink-0" />
-                  {cardData.picturesBaseDate}
+                  Base: <span>{cardData.picturesBaseDate}</span>
                 </p>
                 <p className="flex gap-2 items-center">
                   <IoMdPhotos className="flex-shrink-0" />
-                  {cardData.picturesExtraDate}
+                  Extra: <span>{cardData.picturesExtraDate}</span>
                 </p>
               </div>
             </div>

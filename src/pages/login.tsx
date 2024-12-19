@@ -12,31 +12,31 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = () => {
-    const [, setCarData] = useAtom(carAtom);
-    const navigate = useNavigate();
-  
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-  
-    useEffect(() => {
-      // Initialize card data
-      const totalCards = Math.floor(Math.random() * 300);
-      const cards = Array.from({ length: totalCards }, generateCardData);
-      setCarData(cards);
-    }, [setCarData]);
-  
-    const checkUser = () => {
-      if (!username || !password) {
-        alert("Please enter both username and password.");
-        return;
-      }
-  
-      if (username === "admin" && password === "admin") {
-        navigate("/StockFlowAdmin"); // Admin page
-      } else {
-        navigate("/StockFlow"); // Redirect to home or another page
-      }
-    };
+  const [, setCarData] = useAtom(carAtom);
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    // Initialize card data
+    const totalCards = Math.floor(Math.random() * 300);
+    const cards = Array.from({ length: totalCards }, generateCardData);
+    setCarData(cards);
+  }, [setCarData]);
+
+  const checkUser = () => {
+    if (!username || !password) {
+      alert("Please enter both username and password.");
+      return;
+    }
+
+    if (username === "admin" && password === "admin") {
+      navigate("/StockFlowAdmin"); // Admin page
+    } else {
+      navigate("/StockFlow"); // Redirect to home or another page
+    }
+  };
 
   return (
     <section className="w-screen h-screen p-5 flex items-center justify-center">
@@ -62,7 +62,7 @@ const Login: React.FC<LoginProps> = () => {
           <MdPassword size={20} className="text-blue-900" />
           <input
             type="password"
-            placeholder="Username"
+            placeholder="Password"
             className="border w-full p-2 px-4 rounded-full"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

@@ -59,6 +59,7 @@ export interface CarData {
   vessel: string;
   vesselFrom: string;
   vesselTo: string;
+  transmission: string;
 
   enginePower: number;
   registerDate: string;
