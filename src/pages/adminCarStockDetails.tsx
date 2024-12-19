@@ -70,62 +70,16 @@ interface DetailsProps {
 }
 
 interface LocationState {
-  card: CarData; // Define the expected type for 'card'
+  card: CarData;
   cars: CarData[];
 }
 
 const colClass = `border p-2 px-4 text-left`;
-
-const LogsDropDown = () => {
-  const [dropDownOpen, setDropDownOpen] = useState(false);
-  const buttonClass =
-    "flex items-center gap-2 p-2 px-4 text-left hover:bg-gray-100";
-
-  const toggle = () => {
-    setDropDownOpen(!dropDownOpen);
-  };
-  return (
-    <div className="relative">
-      <button
-        className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
-        onClick={toggle}
-      >
-        <MdOutlineInsertLink size={20} />
-        <p className="flex items-center gap-1 font-semibold">
-          Logs <FaChevronDown size={10} className="translate-y-0.5" />
-        </p>
-      </button>
-      {dropDownOpen && (
-        <div
-          className={`border bg-white shadow-sm absolute right-0 translate-y-2 flex flex-col text-nowrap rounded-md`}
-        >
-          <button className={buttonClass}>
-            <RiTimerLine size={18} />
-            Stock Log
-          </button>
-          <button className={buttonClass}>
-            <BsBoxSeam size={18} />
-            Bids
-          </button>
-          <button className={buttonClass}>
-            <RiLineChartLine size={18} />
-            Price Changes
-          </button>
-          <button className={buttonClass}>
-            <IoPersonCircleOutline size={18} />
-            Visitor Log
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
+const labelClass = `text-gray-500`;
 
 const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   const location = useLocation();
   const cardData = (location.state as LocationState)?.card;
-
-  const labelClass = `text-gray-500`;
 
   const highlightPill = (status: string) => {
     return status === "Welcab" ? (
@@ -201,7 +155,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   const openInnerCargoPopup = () => setIsInnerCargoPopupOpen(true);
   const closeInnerCargoPopup = () => setIsInnerCargoPopupOpen(false);
 
-  // Detail Info Boxes
   const CommentBox = () => {
     const [editMode, setEditMode] = useState(false);
     const [editableContent, setEditableContent] = useState(
@@ -1294,7 +1247,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       Actual: 0,
     });
 
-    // Handle input changes
     const handleInputChange = (
       index: number,
       key: string,
@@ -1305,12 +1257,10 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       setExtras(updatedExtras);
     };
 
-    // Handle new row input
     const handleNewRowChange = (key: string, value: string | number) => {
       setNewRow((prev) => ({ ...prev, [key]: value }));
     };
 
-    // Add new row to the table
     const handleAddNewRow = () => {
       if (newRow.Type && newRow.Description) {
         setExtras((prev) => [...prev, { ...newRow }]);
@@ -1318,7 +1268,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       }
     };
 
-    // Delete a row
     const handleDeleteRow = (index: number) => {
       const updatedExtras = extras.filter((_, i) => i !== index);
       setExtras(updatedExtras);
@@ -1560,7 +1509,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       Weight: 0,
       Value: 0,
     });
-    // Handle input changes
     const handleInputChange = (
       index: number,
       key: string,
@@ -1571,12 +1519,10 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       setExtras(updatedExtras);
     };
 
-    // Handle new row input
     const handleNewRowChange = (key: string, value: string | number) => {
       setNewRow((prev) => ({ ...prev, [key]: value }));
     };
 
-    // Add new row to the table
     const handleAddNewRow = () => {
       if (newRow.Manufacture && newRow.Description) {
         setExtras((prev) => [...prev, { ...newRow }]);
@@ -1591,7 +1537,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       }
     };
 
-    // Delete a row
     const handleDeleteRow = (index: number) => {
       const updatedExtras = extras.filter((_, i) => i !== index);
       setExtras(updatedExtras);
@@ -1608,7 +1553,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           <div className="w-full flex items-center justify-between mb-4">
             <p className="text-2xl font-bold">Inner Cargo</p>
 
-            {/* Close button */}
+            {}
             <button
               className="text-lg bg-gray-100 hover:bg-gray-200 text-gray-800 p-1 rounded-full transition-all"
               onClick={closeInnerCargoPopup}
@@ -1616,7 +1561,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               <AiOutlineClose />
             </button>
           </div>
-          {/* Popup content */}
+          {}
           <div>
             <div className="w-full">
               <p className="text-sm mb-2">Inner Cargo comment</p>
@@ -1870,27 +1815,26 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     );
   };
   const SalesDropDown = () => {
-    
-      const navigate = useNavigate();
-    
-      const [cars] = useAtom(carAtom);
-    
-      const handleCardClick = (carData: CarData) => {
-        console.log("clicked" + carData.id);
-        navigate(`/detail/${carData.id.slice(1)}`, {
-          state: { card: carData, cars: cars },
-        });
-      };
-      
+    const navigate = useNavigate();
+
+    const [cars] = useAtom(carAtom);
+
+    const handleCardClick = (carData: CarData) => {
+      console.log("clicked" + carData.id);
+      navigate(`/detail/${carData.id.slice(1)}`, {
+        state: { card: carData, cars: cars },
+      });
+    };
+
     const [dropDownOpen, setDropDownOpen] = useState(false);
     const buttonClass = "p-2 px-4 text-left hover:bg-gray-100";
 
     const [isPromotionPopupOpen, setIsPromotionPopupOpen] = useState(false);
 
-    const openPromotionPopup = () =>{
-      console.log('open')
-      setIsPromotionPopupOpen(true)
-    } ;
+    const openPromotionPopup = () => {
+      console.log("open");
+      setIsPromotionPopupOpen(true);
+    };
     const closePromotionPopup = () => setIsPromotionPopupOpen(false);
 
     const [isBannerPopupOpen, setIsBannerPopupOpen] = useState(false);
@@ -1903,33 +1847,36 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     };
     return (
       <>
-      <div className="relative">
-        <button
-          className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
-          onClick={toggle}
-        >
-          <HiOutlineChartBar size={20} />
-          <p className="flex items-center gap-1 font-semibold">
-            Sales <FaChevronDown size={10} className="translate-y-0.5" />
-          </p>
-        </button>
-        {dropDownOpen && (
-          <div
-            className={`border bg-white shadow-sm absolute right-0 translate-y-2 flex flex-col text-nowrap rounded-md`}
+        <div className="relative">
+          <button
+            className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
+            onClick={toggle}
           >
-            <button className={buttonClass} onClick={openPromotionPopup}>
-              Add Promotion
-            </button>
-            <button className={buttonClass} onClick={openBannerPopup}>
-              Update Banner
-            </button>
-            <button className={buttonClass} 
-          onClick={() => handleCardClick(cardData)}>Customer View</button>
-          </div>
-        )}
-        
-      </div>
-      <Popup
+            <HiOutlineChartBar size={20} />
+            <p className="flex items-center gap-1 font-semibold">
+              Sales <FaChevronDown size={10} className="translate-y-0.5" />
+            </p>
+          </button>
+          {dropDownOpen && (
+            <div
+              className={`border bg-white shadow-sm absolute right-0 translate-y-2 flex flex-col text-nowrap rounded-md`}
+            >
+              <button className={buttonClass} onClick={openPromotionPopup}>
+                Add Promotion
+              </button>
+              <button className={buttonClass} onClick={openBannerPopup}>
+                Update Banner
+              </button>
+              <button
+                className={buttonClass}
+                onClick={() => handleCardClick(cardData)}
+              >
+                Customer View
+              </button>
+            </div>
+          )}
+        </div>
+        <Popup
           isOpen={isPromotionPopupOpen}
           onClose={closePromotionPopup}
           title="Add Promotion"
@@ -2045,7 +1992,77 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           }
         />
       </>
-      
+    );
+  };
+  const LogsDropDown = () => {
+    const [dropDownOpen, setDropDownOpen] = useState(false);
+    const buttonClass =
+      "flex items-center gap-2 p-2 px-4 text-left hover:bg-gray-100";
+
+    const toggle = () => {
+      setDropDownOpen(!dropDownOpen);
+    };
+    
+  const [isVisitorLogPopupOpen, setIsVisitorLogPopupOpen] = useState(false);
+  const openVisitorLogPopup = () => setIsVisitorLogPopupOpen(true);
+  const closeVisitorLogPopup = () => setIsVisitorLogPopupOpen(false);
+  
+    return (
+      <>
+      <div className="relative">
+        <button
+          className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
+          onClick={toggle}
+        >
+          <MdOutlineInsertLink size={20} />
+          <p className="flex items-center gap-1 font-semibold">
+            Logs <FaChevronDown size={10} className="translate-y-0.5" />
+          </p>
+        </button>
+        {dropDownOpen && (
+          <div
+            className={`border bg-white shadow-sm absolute right-0 translate-y-2 flex flex-col text-nowrap rounded-md`}
+          >
+            <button className={buttonClass}>
+              <RiTimerLine size={18} />
+              Stock Log
+            </button>
+            <button className={buttonClass}>
+              <BsBoxSeam size={18} />
+              Bids
+            </button>
+            <button className={buttonClass}>
+              <RiLineChartLine size={18} />
+              Price Changes
+            </button>
+            <button className={buttonClass} onClick={openVisitorLogPopup}>
+              <IoPersonCircleOutline size={18} />
+              Visitor Log
+            </button>
+          </div>
+        )}
+      </div>
+      <Popup
+        isOpen={isVisitorLogPopupOpen}
+        onClose={closeVisitorLogPopup}
+        title="Visitor Log"
+        customClass="m-2 w-1/3"
+        content={
+          <>
+            <p className="">
+              Left mirror cover has some touch up marks <br /> Front window has
+              some cracks Body has some scratches and dents
+              <br /> Audio doesn't work well
+              <br />
+              Push start
+              <br /> Standard alloy wheels
+              <br /> HID head lamps Fog lamps
+              <br /> Trade in vehicle Interior has some scratches
+            </p>
+          </>
+        }
+      />
+      </>
     );
   };
 
@@ -2123,7 +2140,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
         <div className="grid grid-cols-[2.5fr_1.5fr_1.5fr] gap-4">
           <div className="col-1 flex flex-col gap-4">
             <div className="imagesContainer h-fit relative flex flex-col md:flex-row gap-4">
-              {/* Main Image */}
+              {}
               <div className="animate-slideRight mainImage w-full">
                 <img
                   src={cardData.image}
@@ -2132,7 +2149,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 />
               </div>
 
-              {/* Secondary Images */}
+              {}
               <div className="secondaryImages w-full h-full md:w-8/12 grid grid-cols-3 md:grid-cols-2 gap-2">
                 <img
                   src={cardData.image}
@@ -2190,7 +2207,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 />
               </div>
 
-              {/* Toggle Button */}
+              {}
               <button
                 className="absolute flex gap-2 items-center bg-white bg-opacity-75 hover:bg-opacity-100 shadow-md px-2 py-1 rounded-md right-2 md:right-2 bottom-2 md:bottom-2 transition-all"
                 onClick={toggleGallery}
