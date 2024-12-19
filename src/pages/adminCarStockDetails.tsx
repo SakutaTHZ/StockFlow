@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import CNetAdminNav from "../components/CNetAdminNav";
 import { CarData } from "../data/types";
 import { FaChevronDown, FaRegCommentDots, FaWheelchair } from "react-icons/fa";
@@ -39,7 +39,12 @@ import {
 import { HiOutlineChartBar } from "react-icons/hi";
 import { useState } from "react";
 import { BsBoxSeam } from "react-icons/bs";
-import { IoClose, IoLanguage, IoPersonCircleOutline } from "react-icons/io5";
+import {
+  IoCarOutline,
+  IoClose,
+  IoLanguage,
+  IoPersonCircleOutline,
+} from "react-icons/io5";
 import Gallery from "../components/Gallery";
 import Popup from "../components/Popup";
 
@@ -51,11 +56,14 @@ import DropDown from "../components/DropDown";
 import {
   carTypes,
   descriptions,
+  highlightStatus,
   promotionText,
   types,
   yards,
 } from "../data/generateData";
 import { AiOutlineClose } from "react-icons/ai";
+import { carAtom } from "../data/atoms";
+import { useAtom } from "jotai";
 
 interface DetailsProps {
   customClass?: string;
@@ -67,37 +75,6 @@ interface LocationState {
 }
 
 const colClass = `border p-2 px-4 text-left`;
-
-const SalesDropDown = () => {
-  const [dropDownOpen, setDropDownOpen] = useState(false);
-  const buttonClass = "p-2 px-4 text-left hover:bg-gray-100";
-
-  const toggle = () => {
-    setDropDownOpen(!dropDownOpen);
-  };
-  return (
-    <div className="relative">
-      <button
-        className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
-        onClick={toggle}
-      >
-        <HiOutlineChartBar size={20} />
-        <p className="flex items-center gap-1 font-semibold">
-          Sales <FaChevronDown size={10} className="translate-y-0.5" />
-        </p>
-      </button>
-      {dropDownOpen && (
-        <div
-          className={`border bg-white shadow-sm absolute right-0 translate-y-2 flex flex-col text-nowrap rounded-md`}
-        >
-          <button className={buttonClass}>Add Promotion</button>
-          <button className={buttonClass}>Update Banner</button>
-          <button className={buttonClass}>Customer View</button>
-        </div>
-      )}
-    </div>
-  );
-};
 
 const LogsDropDown = () => {
   const [dropDownOpen, setDropDownOpen] = useState(false);
@@ -1892,6 +1869,185 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </div>
     );
   };
+  const SalesDropDown = () => {
+    
+      const navigate = useNavigate();
+    
+      const [cars] = useAtom(carAtom);
+    
+      const handleCardClick = (carData: CarData) => {
+        console.log("clicked" + carData.id);
+        navigate(`/detail/${carData.id.slice(1)}`, {
+          state: { card: carData, cars: cars },
+        });
+      };
+      
+    const [dropDownOpen, setDropDownOpen] = useState(false);
+    const buttonClass = "p-2 px-4 text-left hover:bg-gray-100";
+
+    const [isPromotionPopupOpen, setIsPromotionPopupOpen] = useState(false);
+
+    const openPromotionPopup = () =>{
+      console.log('open')
+      setIsPromotionPopupOpen(true)
+    } ;
+    const closePromotionPopup = () => setIsPromotionPopupOpen(false);
+
+    const [isBannerPopupOpen, setIsBannerPopupOpen] = useState(false);
+
+    const openBannerPopup = () => setIsBannerPopupOpen(true);
+    const closeBannerPopup = () => setIsBannerPopupOpen(false);
+
+    const toggle = () => {
+      setDropDownOpen(!dropDownOpen);
+    };
+    return (
+      <>
+      <div className="relative">
+        <button
+          className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
+          onClick={toggle}
+        >
+          <HiOutlineChartBar size={20} />
+          <p className="flex items-center gap-1 font-semibold">
+            Sales <FaChevronDown size={10} className="translate-y-0.5" />
+          </p>
+        </button>
+        {dropDownOpen && (
+          <div
+            className={`border bg-white shadow-sm absolute right-0 translate-y-2 flex flex-col text-nowrap rounded-md`}
+          >
+            <button className={buttonClass} onClick={openPromotionPopup}>
+              Add Promotion
+            </button>
+            <button className={buttonClass} onClick={openBannerPopup}>
+              Update Banner
+            </button>
+            <button className={buttonClass} 
+          onClick={() => handleCardClick(cardData)}>Customer View</button>
+          </div>
+        )}
+        
+      </div>
+      <Popup
+          isOpen={isPromotionPopupOpen}
+          onClose={closePromotionPopup}
+          title="Add Promotion"
+          customClass="m-2 w-1/3"
+          content={
+            <>
+              <div className="flex gap-2 items-center text-gray-500">
+                <IoCarOutline size={20} />
+                <p>
+                  {cardData.name} {cardData.type} {cardData.package} (
+                  {cardData.id})
+                </p>
+              </div>
+
+              <div className="mt-4 flex flex-col gap-2">
+                <p className="font-semibold">Customer</p>
+
+                <DropDown
+                  options={yards}
+                  optionClass="w-full"
+                  optionBoxClass="md:w-full right-0 z-50"
+                  buttonClass="py-2"
+                />
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" name="" id="" />
+                  <p>Include all customers in dropdown</p>
+                </div>
+              </div>
+
+              <div className="mt-4 flex flex-col gap-2">
+                <p className="font-semibold">Promotion text</p>
+
+                <DropDown
+                  options={promotionText}
+                  optionClass="w-full"
+                  optionBoxClass="md:w-full right-0 z-50"
+                  buttonClass="py-2"
+                />
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" name="" id="" />
+                  <p>Visible to the selected customer</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 mt-4">
+                <button
+                  onClick={closePromotionPopup}
+                  className="py-2 w-full bg-yellow-400 font-semibold rounded-md"
+                >
+                  Add
+                </button>
+                <button
+                  onClick={closePromotionPopup}
+                  className="py-2 w-full bg-gray-200 font-semibold rounded-md"
+                >
+                  Cancel
+                </button>
+              </div>
+            </>
+          }
+        />
+
+        <Popup
+          isOpen={isBannerPopupOpen}
+          onClose={closeBannerPopup}
+          title="Update Banner"
+          customClass="m-2 w-1/3"
+          content={
+            <>
+              <div className="flex gap-2 items-center text-gray-500">
+                <IoCarOutline size={20} />
+                <p>
+                  {cardData.name} {cardData.type} {cardData.package} (
+                  {cardData.id})
+                </p>
+              </div>
+
+              <div className="mt-4 flex flex-col gap-2">
+                <p className="font-semibold">Banner</p>
+
+                <DropDown
+                  options={highlightStatus}
+                  optionClass="w-full"
+                  optionBoxClass="md:w-full right-0 z-50"
+                  buttonClass="py-2"
+                />
+              </div>
+
+              <div className="mt-4 flex flex-col gap-2">
+                <p className="font-semibold">Previous Price</p>
+                <input
+                  type="text"
+                  className="border p-2 rounded-md border-gray-300"
+                  placeholder="Enter previous Price"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 mt-8">
+                <button
+                  onClick={closeBannerPopup}
+                  className="py-2 w-full bg-yellow-400 font-semibold rounded-md"
+                >
+                  Add
+                </button>
+                <button
+                  onClick={closeBannerPopup}
+                  className="py-2 w-full bg-gray-200 font-semibold rounded-md"
+                >
+                  Cancel
+                </button>
+              </div>
+            </>
+          }
+        />
+      </>
+      
+    );
+  };
 
   return (
     <>
@@ -2535,7 +2691,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           </div>
         }
       />
-
       <Popup
         isOpen={isCommentsPopupOpen}
         onClose={closeCommentsPopup}
