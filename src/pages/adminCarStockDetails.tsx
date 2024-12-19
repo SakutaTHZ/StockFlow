@@ -49,11 +49,13 @@ import Certificate from "../assets/images/certificate.png";
 import Vin from "../assets/vin.svg";
 import DropDown from "../components/DropDown";
 import {
+  carTypes,
   descriptions,
   promotionText,
   types,
   yards,
 } from "../data/generateData";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface DetailsProps {
   customClass?: string;
@@ -63,6 +65,8 @@ interface LocationState {
   card: CarData; // Define the expected type for 'card'
   cars: CarData[];
 }
+
+const colClass = `border p-2 px-4 text-left`;
 
 const SalesDropDown = () => {
   const [dropDownOpen, setDropDownOpen] = useState(false);
@@ -213,8 +217,12 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   const closeAuctionGradePopup = () => setIsAuctionGradePopupOpen(false);
 
   const [isCommentsPopupOpen, setIsCommentsPopupOpen] = useState(false);
-  const openCommentsePopup = () => setIsCommentsPopupOpen(true);
+  const openCommentsPopup = () => setIsCommentsPopupOpen(true);
   const closeCommentsPopup = () => setIsCommentsPopupOpen(false);
+
+  const [isInnerCargoPopupOpen, setIsInnerCargoPopupOpen] = useState(false);
+  const openInnerCargoPopup = () => setIsInnerCargoPopupOpen(true);
+  const closeInnerCargoPopup = () => setIsInnerCargoPopupOpen(false);
 
   // Detail Info Boxes
   const CommentBox = () => {
@@ -1309,8 +1317,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       Actual: 0,
     });
 
-    const colClass = `border p-2 px-4 text-left`;
-
     // Handle input changes
     const handleInputChange = (
       index: number,
@@ -1548,10 +1554,349 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </div>
     );
   };
+  const InnerCargoPopup = () => {
+    const handleBackgroundClick = (
+      e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+      if (e.target === e.currentTarget) {
+        closeInnerCargoPopup();
+      }
+    };
+
+    const [editMode, setEditMode] = useState(false);
+    const [extras, setExtras] = useState(() =>
+      carTypes.map((type) => ({
+        Description: "Description",
+        PartNo: `Pt-` + Math.round(Math.random() * (999 - 1) + 1),
+        Manufacture: type,
+        Units: Math.round(Math.random() * (999 - 1) + 1),
+        Weight: Math.round(Math.random() * (999 - 100) + 100),
+        Value: Math.round(Math.random() * (99999 - 100) + 100),
+      }))
+    );
+
+    const [newRow, setNewRow] = useState({
+      Description: "",
+      PartNo: "",
+      Manufacture: "",
+      Units: 0,
+      Weight: 0,
+      Value: 0,
+    });
+    // Handle input changes
+    const handleInputChange = (
+      index: number,
+      key: string,
+      value: string | number
+    ) => {
+      const updatedExtras = [...extras];
+      updatedExtras[index] = { ...updatedExtras[index], [key]: value };
+      setExtras(updatedExtras);
+    };
+
+    // Handle new row input
+    const handleNewRowChange = (key: string, value: string | number) => {
+      setNewRow((prev) => ({ ...prev, [key]: value }));
+    };
+
+    // Add new row to the table
+    const handleAddNewRow = () => {
+      if (newRow.Manufacture && newRow.Description) {
+        setExtras((prev) => [...prev, { ...newRow }]);
+        setNewRow({
+          Description: "",
+          PartNo: "",
+          Manufacture: "",
+          Units: 0,
+          Weight: 0,
+          Value: 0,
+        });
+      }
+    };
+
+    // Delete a row
+    const handleDeleteRow = (index: number) => {
+      const updatedExtras = extras.filter((_, i) => i !== index);
+      setExtras(updatedExtras);
+    };
+
+    return (
+      <div
+        className={`fixed inset-0 bg-gray-800 backdrop-blur-sm bg-opacity-50 flex justify-center items-center z-[100]`}
+        onClick={handleBackgroundClick}
+      >
+        <div
+          className={`custom-scrollbar overflow-y-scroll animate-slideUp bg-white p-8 md:p-12 py-8 rounded-lg shadow-lg relative min-w-96 m-2 w-3/5 max-h-[80%]`}
+        >
+          <div className="w-full flex items-center justify-between mb-4">
+            <p className="text-2xl font-bold">Inner Cargo</p>
+
+            {/* Close button */}
+            <button
+              className="text-lg bg-gray-100 hover:bg-gray-200 text-gray-800 p-1 rounded-full transition-all"
+              onClick={closeInnerCargoPopup}
+            >
+              <AiOutlineClose />
+            </button>
+          </div>
+          {/* Popup content */}
+          <div>
+            <div className="w-full">
+              <p className="text-sm mb-2">Inner Cargo comment</p>
+              <textarea
+                rows={3}
+                className="border w-full rounded-md p-2 resize-none"
+                placeholder="Comments here"
+              />
+            </div>
+            <table className="w-full mt-6">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className={`${colClass}`}>Description</th>
+                  <th className={`${colClass}`}>Part No</th>
+                  <th className={`${colClass}`}>Manufacturer</th>
+                  <th className={`${colClass}`}>Units</th>
+                  <th className={`${colClass}`}>Weight</th>
+                  <th className={`${colClass}`}>Value</th>
+                  <th className={`${colClass} text-center`}>
+                    {!editMode && (
+                      <button
+                        onClick={() => setEditMode((prevMode) => !prevMode)}
+                      >
+                        <MdModeEditOutline size={18} />
+                      </button>
+                    )}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {extras.map((extra, index) => (
+                  <tr
+                    key={index}
+                    className={`${index % 2 === 1 && "bg-gray-50"}`}
+                  >
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <input
+                          type="text"
+                          className="w-full border px-2 rounded-md"
+                          value={extra.Description}
+                          onChange={(e) =>
+                            handleInputChange(
+                              index,
+                              "Description",
+                              e.target.value
+                            )
+                          }
+                        />
+                      ) : (
+                        <p>{extra.Description}</p>
+                      )}
+                    </td>
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <input
+                          type="text"
+                          className="w-full border px-2 rounded-md"
+                          value={extra.PartNo}
+                          onChange={(e) =>
+                            handleInputChange(index, "PartNo", e.target.value)
+                          }
+                        />
+                      ) : (
+                        <p>{extra.PartNo}</p>
+                      )}
+                    </td>
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <input
+                          type="text"
+                          className="w-full border px-2 rounded-md"
+                          value={extra.Manufacture}
+                          onChange={(e) =>
+                            handleInputChange(
+                              index,
+                              "Manufacture",
+                              e.target.value
+                            )
+                          }
+                        />
+                      ) : (
+                        <>¥ {extra.Weight.toLocaleString()}</>
+                      )}
+                    </td>
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <input
+                          type="number"
+                          className="w-full border px-2 rounded-md"
+                          value={extra.Units}
+                          onChange={(e) =>
+                            handleInputChange(
+                              index,
+                              "Units",
+                              Number(e.target.value)
+                            )
+                          }
+                        />
+                      ) : (
+                        <>¥ {extra.Value.toLocaleString()}</>
+                      )}
+                    </td>
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <input
+                          type="number"
+                          className="w-full border px-2 rounded-md"
+                          value={extra.Weight}
+                          onChange={(e) =>
+                            handleInputChange(
+                              index,
+                              "Weight",
+                              Number(e.target.value)
+                            )
+                          }
+                        />
+                      ) : (
+                        <>¥ {extra.Units.toLocaleString()}</>
+                      )}
+                    </td>
+                    <td className={`${colClass}`}>
+                      {editMode ? (
+                        <input
+                          type="number"
+                          className="w-full border px-2 rounded-md"
+                          value={extra.Value}
+                          onChange={(e) =>
+                            handleInputChange(
+                              index,
+                              "Value",
+                              Number(e.target.value)
+                            )
+                          }
+                        />
+                      ) : (
+                        <>¥ {extra.Units.toLocaleString()}</>
+                      )}
+                    </td>
+                    <td className={`${colClass} text-center`}>
+                      <button onClick={() => handleDeleteRow(index)}>
+                        <IoClose size={20} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                {editMode && (
+                  <tr className="bg-gray-100">
+                    <td className={`${colClass}`}>
+                      <input
+                        type="text"
+                        className="w-full border px-2 rounded-md"
+                        value={newRow.Description}
+                        onChange={(e) =>
+                          handleNewRowChange("Description", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <input
+                        type="text"
+                        className="w-full border px-2 rounded-md"
+                        value={newRow.PartNo}
+                        onChange={(e) =>
+                          handleNewRowChange("PartNo", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <input
+                        type="text"
+                        className="w-full border px-2 rounded-md"
+                        value={newRow.Manufacture}
+                        onChange={(e) =>
+                          handleNewRowChange("Manufacture", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <input
+                        type="number"
+                        className="w-full border px-2 rounded-md"
+                        value={newRow.Units}
+                        onChange={(e) =>
+                          handleNewRowChange("Units", Number(e.target.value))
+                        }
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <input
+                        type="number"
+                        className="w-full border px-2 rounded-md"
+                        value={newRow.Weight}
+                        onChange={(e) =>
+                          handleNewRowChange("Weight", Number(e.target.value))
+                        }
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <input
+                        type="number"
+                        className="w-full border px-2 rounded-md"
+                        value={newRow.Value}
+                        onChange={(e) =>
+                          handleNewRowChange("Value", Number(e.target.value))
+                        }
+                      />
+                    </td>
+                    <td className={`${colClass}`}>
+                      <button
+                        onClick={handleAddNewRow}
+                        className="font-semibold"
+                      >
+                        Add
+                      </button>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+            <div className="flex gap-4 justify-end mt-6">
+              <button
+                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
+                onClick={closeInnerCargoPopup}
+              >
+                Save
+              </button>
+              <button
+                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
+                onClick={() => setEditMode(false)}
+              >
+                Cancel
+              </button>
+            </div>
+
+            <div className="w-full">
+              <p className="text-sm mb-2">Photos</p>
+              <input
+                type="file"
+                className="border w-full rounded-md p-2 resize-none"
+                placeholder="Comments here"
+              />
+            </div>
+            <div className="flex gap-2 text-gray-500 mt-2 px-2 text-sm">
+              <input type="checkbox" />
+              <p>Invinsible to end user</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
       <CNetAdminNav />
+      {isInnerCargoPopupOpen && <InnerCargoPopup />}
 
       {showGallery && (
         <Gallery
@@ -1602,12 +1947,15 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             </button>
             <button
               className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
-              onClick={openCommentsePopup}
+              onClick={openCommentsPopup}
             >
               <FaRegCommentDots size={20} />
               <p className="font-semibold">Comments</p>
             </button>
-            <button className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md">
+            <button
+              className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
+              onClick={openInnerCargoPopup}
+            >
               <RiTruckLine size={20} />
               <p className="font-semibold">Cargo</p>
             </button>
