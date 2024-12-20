@@ -4,7 +4,7 @@ import { FaRegTrashAlt, FaSearch, FaListUl } from "react-icons/fa";
 import { MdTune, MdBorderAll } from "react-icons/md";
 import DropDown from "../components/DropDown";
 import CarCard from "../components/CarCard";
-import { carStatus, exteriorColor, sortOptions, yardArea } from "../data/generateData";
+import { carStatus, exteriorColor, yardArea } from "../data/generateData";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
 import Pagination from "../components/Pagination";
@@ -86,6 +86,22 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
     setFilteredModels(models);
   };
 
+  const sortOptions = [
+    "Most Relevant",
+    "Date Latest to Oldest",
+    "Date Oldest to Latest",
+    "Price Low to High",
+    "Price High to Low",
+    "Mileage Low to High",
+    "Mileage High to Low",
+  ];
+
+  const sortOptions2 = [
+    `All Vehicles (${cars.length})`,
+    `Available vehicles (${cars.filter((car) => car.hold === true).length})`,
+    `Unavailable vehicles (${cars.filter((car) => car.hold === true).length})`,
+  ];
+
   return (
     <>
     <CNetNav/>
@@ -152,14 +168,14 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               options={sortOptions}
               customClass="my-custom-class"
               optionClass="my-option-class"
-              optionBoxClass="md:w-fit right-0 z-50"
+              optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
               buttonClass="py-2"
             />
             <DropDown
-              options={sortOptions}
+              options={sortOptions2}
               customClass="my-custom-class"
               optionClass="my-option-class"
-              optionBoxClass="md:w-fit right-0 z-50"
+              optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
               buttonClass="py-2"
             />
           </div>

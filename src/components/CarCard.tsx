@@ -332,7 +332,8 @@ const CarCard: React.FC<CarCardProps> = ({
                 {car.vesselFrom}
               </p>
             </div>
-            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold">
+            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold" 
+          onClick={() => (onClick ? onClick() : handleCardClick(car))}>
               View All Details <IoIosArrowForward />
             </button>
           </>
