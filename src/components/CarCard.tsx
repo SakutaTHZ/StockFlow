@@ -35,6 +35,7 @@ import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
 import Trans from "../assets/transmission.png";
 import { LuMapPin } from "react-icons/lu";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
 
 interface CarCardProps {
   customClass?: string;
@@ -124,6 +125,14 @@ const CarCard: React.FC<CarCardProps> = ({
         }`}
       >
         <MdOutlineNewReleases /> {car.highlightStatus}
+      </span>
+    ): status === "Sold" ? (
+      <span
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
+          car.hold && "hidden"
+        }`}
+      >
+        <FaMoneyBillTrendUp /> {car.highlightStatus}
       </span>
     ) : (
       <span
@@ -333,7 +342,7 @@ const CarCard: React.FC<CarCardProps> = ({
               </p>
             </div>
             <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold" 
-          onClick={() => (onClick ? onClick() : handleCardClick(car))}>
+          onClick={() => handleCardClick(car)}>
               View All Details <IoIosArrowForward />
             </button>
           </>

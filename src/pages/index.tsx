@@ -297,6 +297,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                     key={index}
                     car={car}
                     extraStatus={car.showExtraStatus}
+                    customClass={`${car.highlightStatus === "Sold" && "bg-yellow-50 border-2 border-yellow-50"}`}
                     style={{
                       animationDelay: `${
                         index === 0 ? "0s" : `${index * 0.1}s`
@@ -315,6 +316,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                     key={index}
                     car={car}
                     extraStatus={car.showExtraStatus}
+                    customClass={`${car.highlightStatus === "Sold" && "bg-yellow-50 border-2 border-yellow-50"}`}
                     style={{
                       animationDelay: `${
                         index === 0 ? "0s" : `${index * 0.1}s`

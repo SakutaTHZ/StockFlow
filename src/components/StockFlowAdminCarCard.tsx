@@ -39,6 +39,7 @@ import Popup from "./Popup";
 import { IoCarOutline } from "react-icons/io5";
 import DropDown from "./DropDown";
 import { highlightStatus, promotionText, yards } from "../data/generateData";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
 
 interface CarCardProps {
   customClass?: string;
@@ -126,7 +127,15 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
       >
         <img src={Hybrid} alt="Hybrid" /> {car.highlightStatus}
       </span>
-    ) : status === "Reduced" ? (
+    ): status === "Sold" ? (
+          <span
+            className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
+              car.hold && "hidden"
+            }`}
+          >
+            <FaMoneyBillTrendUp /> {car.highlightStatus}
+          </span>
+        ) : status === "Reduced" ? (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-red-600 bg-red-200 ${
           car.hold && "hidden"
@@ -375,7 +384,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
                 {car.vesselFrom}
               </p>
             </div>
-            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold">
+            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold" onClick={() => handleCardClick(car)}>
               View All Details <IoIosArrowForward />
             </button>
           </>

@@ -34,7 +34,7 @@ const Login: React.FC<LoginProps> = () => {
     if (username === "admin" && password === "admin") {
       navigate("/StockFlowAdmin"); // Admin page
     } else {
-      navigate("/StockFlow"); // Redirect to home or another page
+      navigate("/StockFlow"); // Redirect to home or another
     }
   };
 

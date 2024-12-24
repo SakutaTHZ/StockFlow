@@ -34,6 +34,7 @@ import { LuMapPin } from "react-icons/lu";
 import { IoCarOutline } from "react-icons/io5";
 import { yards, promotionText, highlightStatus } from "../data/generateData";
 import DropDown from "./DropDown";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
 
 interface StockFlowAdminTableRowProps {
   customClass?: string;
@@ -112,7 +113,15 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       >
         <PiChartLineDownBold /> {car.highlightStatus}
       </span>
-    ) : status === "New" ? (
+    ): status === "Sold" ? (
+          <span
+            className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
+              car.hold && "hidden"
+            }`}
+          >
+            <FaMoneyBillTrendUp /> {car.highlightStatus}
+          </span>
+        ) : status === "New" ? (
       <span
         className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
           car.hold && "hidden"
@@ -243,7 +252,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           <div className="flex justify-center">{statusPill(car.status)}</div>
         </td>
         <td className="border px-4 leading-6">
-          <p>{car.registerDate}</p>
+          <p>{car.soldDate}</p>
           <p>
             {car.milleage}, {car.exteriorColor.split("#")[0]}
           </p>
@@ -258,7 +267,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           <p>{car.vesselFrom}</p>
           <p className="flex items-center text-sm text-gray-500">
             <MdOutlineCalendarMonth size={12} />
-            {car.sentDate}
+            {car.soldDate.replace(/ /g, "-")}
           </p>
         </td>
         <td className="border px-4 leading-6">

@@ -6,6 +6,7 @@ import DropDown from "../components/DropDown";
 import {
   carStatus,
   exteriorColor,
+  series,
   sortOptions,
   yardArea,
 } from "../data/generateData";
@@ -22,6 +23,7 @@ import StockFlowAdminCarCard from "../components/StockFlowAdminCarCard";
 import StockFlowAdminTableRow from "../components/StockFlowAdminTableRow";
 import CNetAdminNav from "../components/CNetAdminNav";
 import { TiArrowSortedDown, TiArrowUnsorted } from "react-icons/ti";
+import SeriesDropDown from "../components/SeriesDropDown";
 
 interface adminPageProps {
   customClass?: string;
@@ -92,6 +94,17 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     setFilteredModels(models);
   };
 
+  const sortOptions2 = [
+    `All Vehicles (${cars.length})`,
+    `Available vehicles (${cars.filter((car) => car.hold === true).length})`,
+    `Unavailable vehicles (${cars.filter((car) => car.hold === true).length})`,
+  ];
+  const sortOptions3 = [
+    `Visible and Hidden`,
+    `Hidden`,
+    `Visible`,
+  ];
+
   return (
     <>
       <CNetAdminNav />
@@ -134,7 +147,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
             </div>
           </div>
         </div>
-        <div className="flex gap-8 w-full items-center transition-all">
+        <div className="flex gap-2 w-full items-center transition-all">
           <div className="flex items-center gap-2 transition-all">
             <button
               className="flex items-center gap-2 border p-2 px-5 rounded-3xl bg-white border-gray-300"
@@ -154,18 +167,22 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
             </div>
             <div className="flex gap-2 items-center w-fit">
+              <SeriesDropDown
+                optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
+                buttonClass="" options={series}/>
               <DropDown
-                options={sortOptions}
-                customClass="my-custom-class"
-                optionClass="my-option-class"
-                optionBoxClass="md:w-fit right-0 z-50"
+                options={sortOptions3}
+                optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
                 buttonClass="py-2"
               />
               <DropDown
                 options={sortOptions}
-                customClass="my-custom-class"
-                optionClass="my-option-class"
                 optionBoxClass="md:w-fit right-0 z-50"
+                buttonClass="py-2"
+              />
+              <DropDown
+                options={sortOptions2}
+                optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
                 buttonClass="py-2"
               />
             </div>
@@ -313,7 +330,8 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                     {cars
                       .slice(20 * currentPage - 20, 20 * currentPage)
                       .map((car, index: number) => (
-                        <StockFlowAdminTableRow key={index} car={car} />
+                        <StockFlowAdminTableRow 
+                        customClass={`${car.highlightStatus === "Sold" && "bg-yellow-50 border-yellow-300"}`} key={index} car={car} />
                       ))}
                   </tbody>
                 </table>
@@ -327,6 +345,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       key={index}
                       car={car}
                       extraStatus={car.showExtraStatus}
+                      customClass={`${car.highlightStatus === "Sold" && "bg-yellow-50 border-yellow-50"}`}
                       style={{
                         animationDelay: `${
                           index === 0 ? "0s" : `${index * 0.1}s`

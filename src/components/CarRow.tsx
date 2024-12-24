@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import Trans from "../assets/transmission.png";
 import Engine from "../assets/EnginePower.svg";
 import { LuMapPin } from "react-icons/lu";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
 
 interface CarRowProps {
   customClass?: string;
@@ -112,7 +113,15 @@ const CarRow: React.FC<CarRowProps> = ({
       >
         <MdOutlineNewReleases /> {car.highlightStatus}
       </span>
-    ) : (
+    ): status === "Sold" ? (
+          <span
+            className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
+              car.hold && "hidden"
+            }`}
+          >
+            <FaMoneyBillTrendUp /> {car.highlightStatus}
+          </span>
+        ) : (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
           car.hold && "hidden"

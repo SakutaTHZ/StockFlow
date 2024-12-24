@@ -303,3 +303,14 @@ export const sortOptions = [
   "Mileage Low to High",
   "Mileage High to Low",
 ];
+
+export const series =[
+  'K',
+  'J',
+  'T',
+  'E',
+  'A',
+  'D',
+  'C',
+  'M'
+]

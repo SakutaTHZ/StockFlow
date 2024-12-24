@@ -2080,7 +2080,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
 
       <div className="flex flex-col gap-6 px-4 md:px-24 py-8">
         <div className="flex items-center gap-1 font-medium">
-          <Link to="/StockFlow" className="text-gray-500">
+          <Link to="/StockFlowAdmin" className="text-gray-500">
             Car stock
           </Link>
           <p className="text-blue-950 font-semibold">/ Car Details</p>
