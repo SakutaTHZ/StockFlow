@@ -113,15 +113,15 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       >
         <PiChartLineDownBold /> {car.highlightStatus}
       </span>
-    ): status === "Sold" ? (
-          <span
-            className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
-              car.hold && "hidden"
-            }`}
-          >
-            <FaMoneyBillTrendUp /> {car.highlightStatus}
-          </span>
-        ) : status === "New" ? (
+    ) : status === "Sold" ? (
+      <span
+        className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
+          car.hold && "hidden"
+        }`}
+      >
+        <FaMoneyBillTrendUp /> {car.highlightStatus}
+      </span>
+    ) : status === "New" ? (
       <span
         className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
           car.hold && "hidden"
@@ -168,13 +168,10 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   const [cardOption, setcardOption] = useState(true);
   const checkOption = () => {
     if (cardOption === true) {
-      console.log("false");
       setcardOption(false);
     } else {
-      console.log("true");
       setcardOption(true);
     }
-    console.log("box stat - " + cardOption);
   };
 
   const [more, setMore] = useState(true);
@@ -184,8 +181,22 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
 
   return (
     <>
-      <tr className={`border ${customClass}`} style={style}>
-        <td className="border p-2" onClick={showMore}>
+      <tr
+        className={`border ${customClass}`}
+        style={style}
+        onClick={() =>
+          onClick
+            ? onClick()
+            : handleCardClick(car, `/StockDetail/${car.id.slice(1)}`)
+        }
+      >
+        <td
+          className="border p-2"
+          onClick={(e) => {
+            e.stopPropagation();
+            showMore();
+          }}
+        >
           <div className="flex justify-center">
             <FaChevronDown
               size={12}
@@ -219,7 +230,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           </div>
         </td>
         <td className="relative border px-4">
-          <button
+          {/* <button
             onClick={() =>
               onClick
                 ? onClick()
@@ -228,7 +239,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             className="absolute top-2 right-2 font-semibold text-nowrap text-left p-2 rounded-md hover:bg-gray-100"
           >
             <IoMdEye className="text-gray-400" />
-          </button>
+          </button> */}
           <div className="relative h-full flex flex-col justify-center items-start">
             <p>
               {car.name} {car.type}
@@ -302,7 +313,10 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           <div className="relative flex justify-center">
             <button
               className="option z-20 bg-gray-200 p-3 rounded-md shadow-md border"
-              onClick={checkOption}
+              onClick={(e) => {
+                e.stopPropagation();
+                checkOption();
+              }}
             >
               <BsThreeDots />
             </button>
@@ -312,29 +326,39 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
               }`}
             >
               <button
-                onClick={openPopup}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openPopup();
+                }}
                 className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
               >
                 Show Vehicle Overview
               </button>
               <button
-                onClick={openPromotionPopup}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openPromotionPopup();
+                }}
                 className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
               >
                 Add Promotion
               </button>
               <button
-                onClick={openBannerPopup}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openBannerPopup();
+                }}
                 className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
               >
                 Add Banner
               </button>
               <button
-                onClick={() =>
+                onClick={(e) => {
+                  e.stopPropagation();
                   onClick
                     ? onClick()
-                    : handleCardClick(car, `/detail/${car.id.slice(1)}`)
-                }
+                    : handleCardClick(car, `/detail/${car.id.slice(1)}`);
+                }}
                 className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
               >
                 Customer View
