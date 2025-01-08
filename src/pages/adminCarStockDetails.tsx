@@ -6,7 +6,6 @@ import {
   MdOutlineTimer,
   MdOutlineNewReleases,
   MdEdit,
-  MdOutlineInsertLink,
   MdOutlineRemoveRedEye,
   MdAirlineSeatReclineNormal,
   MdInsertPhoto,
@@ -32,18 +31,14 @@ import {
 import { BiImages } from "react-icons/bi";
 import {
   RiCarLine,
-  RiLineChartLine,
-  RiTimerLine,
   RiTruckLine,
 } from "react-icons/ri";
 import { HiOutlineChartBar } from "react-icons/hi";
 import { useState } from "react";
-import { BsBoxSeam } from "react-icons/bs";
 import {
   IoCarOutline,
   IoClose,
   IoLanguage,
-  IoPersonCircleOutline,
 } from "react-icons/io5";
 import Gallery from "../components/Gallery";
 import Popup from "../components/Popup";
@@ -64,6 +59,7 @@ import {
 import { AiOutlineClose } from "react-icons/ai";
 import { carAtom } from "../data/atoms";
 import { useAtom } from "jotai";
+import LogsDropDown from "../components/adminComponents/LogsDropDown";
 
 interface DetailsProps {
   customClass?: string;
@@ -1991,77 +1987,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             </>
           }
         />
-      </>
-    );
-  };
-  const LogsDropDown = () => {
-    const [dropDownOpen, setDropDownOpen] = useState(false);
-    const buttonClass =
-      "flex items-center gap-2 p-2 px-4 text-left hover:bg-gray-100";
-
-    const toggle = () => {
-      setDropDownOpen(!dropDownOpen);
-    };
-    
-  const [isVisitorLogPopupOpen, setIsVisitorLogPopupOpen] = useState(false);
-  const openVisitorLogPopup = () => setIsVisitorLogPopupOpen(true);
-  const closeVisitorLogPopup = () => setIsVisitorLogPopupOpen(false);
-  
-    return (
-      <>
-      <div className="relative">
-        <button
-          className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
-          onClick={toggle}
-        >
-          <MdOutlineInsertLink size={20} />
-          <p className="flex items-center gap-1 font-semibold">
-            Logs <FaChevronDown size={10} className="translate-y-0.5" />
-          </p>
-        </button>
-        {dropDownOpen && (
-          <div
-            className={`border bg-white shadow-sm absolute right-0 translate-y-2 flex flex-col text-nowrap rounded-md`}
-          >
-            <button className={buttonClass}>
-              <RiTimerLine size={18} />
-              Stock Log
-            </button>
-            <button className={buttonClass}>
-              <BsBoxSeam size={18} />
-              Bids
-            </button>
-            <button className={buttonClass}>
-              <RiLineChartLine size={18} />
-              Price Changes
-            </button>
-            <button className={buttonClass} onClick={openVisitorLogPopup}>
-              <IoPersonCircleOutline size={18} />
-              Visitor Log
-            </button>
-          </div>
-        )}
-      </div>
-      <Popup
-        isOpen={isVisitorLogPopupOpen}
-        onClose={closeVisitorLogPopup}
-        title="Visitor Log"
-        customClass="m-2 w-1/3"
-        content={
-          <>
-            <p className="">
-              Left mirror cover has some touch up marks <br /> Front window has
-              some cracks Body has some scratches and dents
-              <br /> Audio doesn't work well
-              <br />
-              Push start
-              <br /> Standard alloy wheels
-              <br /> HID head lamps Fog lamps
-              <br /> Trade in vehicle Interior has some scratches
-            </p>
-          </>
-        }
-      />
       </>
     );
   };

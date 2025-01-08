@@ -92,7 +92,7 @@ const SeriesDropDown: React.FC<SeriesDropDownProps> = ({
             {options.map((option, index) => (
               <div
                 key={index}
-                className="flex justify-start min-w-16 px-3 cursor-pointer transition-all hover:bg-gray-100"
+                className="flex justify-start min-w-16 px-4 cursor-pointer transition-all hover:bg-gray-100"
               >
                 <label
                   className={`flex items-center gap-2 cursor-pointer ${optionClass}`}
