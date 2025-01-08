@@ -30,6 +30,13 @@ const LogsDropDown: React.FC<LogsDropDownProps> = ({ customClass }) => {
   const [isStocksLogPopupOpen, setIsStocksLogPopupOpen] = useState(false);
   const openStocksLogPopup = () => setIsStocksLogPopupOpen(true);
   const closeStocksLogPopup = () => setIsStocksLogPopupOpen(false);
+
+  const [isPriceChangesPopupOpen, setIsPriceChangesPopupOpen] = useState(false);
+  const openPriceChangesPopup = () => setIsPriceChangesPopupOpen(true);
+  const closePriceChangesPopup = () => setIsPriceChangesPopupOpen(false);
+
+  const tableColumnClass = "text-left p-2 px-4";
+
   return (
     <>
       <div className={`relative inline-block w-full text-left ${customClass}`}>
@@ -54,7 +61,7 @@ const LogsDropDown: React.FC<LogsDropDownProps> = ({ customClass }) => {
               <BsBoxSeam size={18} className="flex-shrink-0" />
               Bids
             </button>
-            <button className={buttonClass}>
+            <button className={buttonClass} onClick={openPriceChangesPopup}>
               <RiLineChartLine size={18} className="flex-shrink-0" />
               Price Changes
             </button>
@@ -67,8 +74,70 @@ const LogsDropDown: React.FC<LogsDropDownProps> = ({ customClass }) => {
       </div>
 
       {/* Popups */}
-        <StockLogs customClass="w-11/12 h-5/6" isOpen={isStocksLogPopupOpen} onClose={closeStocksLogPopup}/>
+      <StockLogs
+        customClass="w-11/12 h-5/6"
+        isOpen={isStocksLogPopupOpen}
+        onClose={closeStocksLogPopup}
+      />
 
+      <Popup
+        isOpen={isPriceChangesPopupOpen}
+        onClose={closePriceChangesPopup}
+        title="Price Changes"
+        customClass="m-2 w-9/12 md:w-5/12"
+        content={
+          <>
+            <table className="w-full border-collapse border border-gray-300">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className={`${tableColumnClass}`}>Price</th>
+                  <th className={`${tableColumnClass}`}>Currency</th>
+                  <th className={`${tableColumnClass}`}>Terms</th>
+                  <th className={`${tableColumnClass}`}>Display</th>
+                  <th className={`${tableColumnClass}`}>Modified</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-t border-b border-gray-300">
+                  <td className={`${tableColumnClass}`}>0.00</td>
+                  <td className={`${tableColumnClass}`}>JPY</td>
+                  <td className={`${tableColumnClass}`}>FOB</td>
+                  <td className={`${tableColumnClass}`}>HIDE</td>
+                  <td className={`${tableColumnClass}`}>20 Jun, 11:29</td>
+                </tr>
+                <tr className="border-t border-b border-gray-300">
+                  <td className={`${tableColumnClass}`}>0.00</td>
+                  <td className={`${tableColumnClass}`}>JPY</td>
+                  <td className={`${tableColumnClass}`}>FOB</td>
+                  <td className={`${tableColumnClass}`}>HIDE</td>
+                  <td className={`${tableColumnClass}`}>20 Jun, 11:29</td>
+                </tr>
+                <tr className="border-t border-b border-gray-300">
+                  <td className={`${tableColumnClass}`}>0.00</td>
+                  <td className={`${tableColumnClass}`}>JPY</td>
+                  <td className={`${tableColumnClass}`}>FOB</td>
+                  <td className={`${tableColumnClass}`}>HIDE</td>
+                  <td className={`${tableColumnClass}`}>20 Jun, 11:29</td>
+                </tr>
+                <tr className="border-t border-b border-gray-300">
+                  <td className={`${tableColumnClass}`}>0.00</td>
+                  <td className={`${tableColumnClass}`}>JPY</td>
+                  <td className={`${tableColumnClass}`}>FOB</td>
+                  <td className={`${tableColumnClass}`}>HIDE</td>
+                  <td className={`${tableColumnClass}`}>20 Jun, 11:29</td>
+                </tr>
+                <tr className="border-t border-b border-gray-300">
+                  <td className={`${tableColumnClass}`}>0.00</td>
+                  <td className={`${tableColumnClass}`}>JPY</td>
+                  <td className={`${tableColumnClass}`}>FOB</td>
+                  <td className={`${tableColumnClass}`}>HIDE</td>
+                  <td className={`${tableColumnClass}`}>20 Jun, 11:29</td>
+                </tr>
+              </tbody>
+            </table>
+          </>
+        }
+      />
       <Popup
         isOpen={isVisitorLogPopupOpen}
         onClose={closeVisitorLogPopup}
