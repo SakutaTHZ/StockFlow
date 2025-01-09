@@ -81,6 +81,31 @@ export const getRandomHighlightStatus = () => {
   return highlightStatus[Math.floor(Math.random() * highlightStatus.length)];
 };
 
+//tasks
+export const tasks: string[] = [
+  "Yard Base",
+  "CJP Extra",
+  "Yard Extra",
+];
+export const getRandomTask = () => {
+  return tasks[Math.floor(Math.random() * tasks.length)];
+};
+
+//Status
+export const status: string[] = [
+  "Created",
+  "System",
+  "Sent",
+  "Checked",
+  "Booked",
+  "To Cancel",
+  "Cancel",
+  "Completed",
+];
+export const getRandomStatus = () => {
+  return status[Math.floor(Math.random() * status.length)];
+}
+
 // exteriorColor
 export const exteriorColor: string[] = [
   "black#000000",

@@ -28,6 +28,9 @@ function App() {
         <Route path="/StockFlowAdmin" element={<Admin />} />
 
         <Route path="/login" element={<Login />} />
+
+        {/* Catch-all route to redirect any invalid URL */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>
   );

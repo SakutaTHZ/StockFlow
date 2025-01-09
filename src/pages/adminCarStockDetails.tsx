@@ -11,7 +11,6 @@ import {
   MdInsertPhoto,
   MdModeEditOutline,
   MdCalendarMonth,
-  MdStar,
 } from "react-icons/md";
 import {
   PiCalendarDots,
@@ -60,6 +59,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import { carAtom } from "../data/atoms";
 import { useAtom } from "jotai";
 import LogsDropDown from "../components/adminComponents/LogsDropDown";
+import YardTaskBox from "../components/adminComponents/YardTaskBox";
+import BuyingTaskBox from "../components/adminComponents/BuyingTaskBox";
 
 interface DetailsProps {
   customClass?: string;
@@ -1156,70 +1157,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               </button>
             </div>
           )}
-        </div>
-      </>
-    );
-  };
-  const YardTaskBox = () => {
-    return (
-      <>
-        <div className="w-1/2 border p-4 rounded-md bg-white">
-          <div className="head flex justify-between items-center">
-            <p className="font-bold text-xl">Yard Task</p>
-            <button className="flex items-center gap-1 font-semibold text-[#997435]">
-              <MdStar />
-              Add Task
-            </button>
-          </div>
-
-          <div className="statuses bg-gray-50 p-4 flex flex-col gap-2 mt-4">
-            <ul className="ml-4 list-disc">
-              <li>Car Check</li>
-              <li>Car Check</li>
-              <li>Car Check</li>
-            </ul>
-          </div>
-
-          <textarea
-            rows={3}
-            className="w-full resize-none border rounded-md mt-4 p-2"
-            placeholder="Comment"
-          ></textarea>
-
-          <div className="flex justify-end mt-4">
-            <button className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md">
-              Save
-            </button>
-          </div>
-        </div>
-      </>
-    );
-  };
-  const BuyingTaskBox = () => {
-    return (
-      <>
-        <div className="w-1/2 h-fit border p-4 rounded-md bg-white">
-          <div className="head flex justify-between items-center">
-            <p className="font-bold text-xl">Buying Task</p>
-            <button className="flex items-center gap-1 font-semibold text-[#997435]">
-              <MdStar />
-              Add Task
-            </button>
-          </div>
-
-          <div className="statuses bg-gray-50 p-4 flex flex-col gap-2 mt-4">
-            <ul className="ml-4 list-disc">
-              <li>Car Check</li>
-              <li>Car Check</li>
-              <li>Car Check</li>
-            </ul>
-          </div>
-
-          <div className="flex justify-end mt-4">
-            <button className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md">
-              Save
-            </button>
-          </div>
         </div>
       </>
     );
