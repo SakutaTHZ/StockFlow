@@ -35,7 +35,7 @@ const LogsDropDown: React.FC<LogsDropDownProps> = ({ customClass }) => {
   const openPriceChangesPopup = () => setIsPriceChangesPopupOpen(true);
   const closePriceChangesPopup = () => setIsPriceChangesPopupOpen(false);
 
-  const tableColumnClass = "text-left p-2 px-4";
+  const tableColumnClass = "text-left p-3 px-4";
 
   return (
     <>
@@ -106,28 +106,28 @@ const LogsDropDown: React.FC<LogsDropDownProps> = ({ customClass }) => {
                   <td className={`${tableColumnClass}`}>20 Jun, 11:29</td>
                 </tr>
                 <tr className="border-t border-b border-gray-300">
-                  <td className={`${tableColumnClass}`}>0.00</td>
+                  <td className={`${tableColumnClass}`}>678,000.00</td>
                   <td className={`${tableColumnClass}`}>JPY</td>
                   <td className={`${tableColumnClass}`}>FOB</td>
                   <td className={`${tableColumnClass}`}>HIDE</td>
                   <td className={`${tableColumnClass}`}>20 Jun, 11:29</td>
                 </tr>
                 <tr className="border-t border-b border-gray-300">
-                  <td className={`${tableColumnClass}`}>0.00</td>
+                  <td className={`${tableColumnClass}`}>708,000.00</td>
                   <td className={`${tableColumnClass}`}>JPY</td>
                   <td className={`${tableColumnClass}`}>FOB</td>
                   <td className={`${tableColumnClass}`}>HIDE</td>
                   <td className={`${tableColumnClass}`}>20 Jun, 11:29</td>
                 </tr>
                 <tr className="border-t border-b border-gray-300">
-                  <td className={`${tableColumnClass}`}>0.00</td>
+                  <td className={`${tableColumnClass}`}>474,000.00</td>
                   <td className={`${tableColumnClass}`}>JPY</td>
                   <td className={`${tableColumnClass}`}>FOB</td>
                   <td className={`${tableColumnClass}`}>HIDE</td>
                   <td className={`${tableColumnClass}`}>20 Jun, 11:29</td>
                 </tr>
                 <tr className="border-t border-b border-gray-300">
-                  <td className={`${tableColumnClass}`}>0.00</td>
+                  <td className={`${tableColumnClass}`}>166,000.00</td>
                   <td className={`${tableColumnClass}`}>JPY</td>
                   <td className={`${tableColumnClass}`}>FOB</td>
                   <td className={`${tableColumnClass}`}>HIDE</td>
@@ -142,19 +142,55 @@ const LogsDropDown: React.FC<LogsDropDownProps> = ({ customClass }) => {
         isOpen={isVisitorLogPopupOpen}
         onClose={closeVisitorLogPopup}
         title="Visitor Log"
-        customClass="m-2 w-1/3"
+        customClass="m-2 w-1/3 h-5/6 overflow-y-auto custom-scrollbar"
         content={
           <>
-            <p className="">
-              Left mirror cover has some touch up marks <br /> Front window has
-              some cracks Body has some scratches and dents
-              <br /> Audio doesn't work well
-              <br />
-              Push start
-              <br /> Standard alloy wheels
-              <br /> HID head lamps Fog lamps
-              <br /> Trade in vehicle Interior has some scratches
-            </p>
+          <table className="w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className={`${tableColumnClass}`}>Customer</th>
+                <th className={`${tableColumnClass}`}>Time Stamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-b border-gray-300">
+                <td className={`${tableColumnClass}`}>Andys Imports</td>
+                <td className={`${tableColumnClass}`}>2024/8/24 19:02</td>
+              </tr>
+              <tr className="border-t border-b border-gray-300">
+                <td className={`${tableColumnClass}`}>Bookham Imports</td>
+                <td className={`${tableColumnClass}`}>2024/8/24 19:02</td>
+              </tr>
+              <tr className="border-t border-b border-gray-300">
+                <td className={`${tableColumnClass}`}>Cye Import Ltd</td>
+                <td className={`${tableColumnClass}`}>2024/8/24 19:02</td>
+              </tr>
+              <tr className="border-t border-b border-gray-300">
+                <td className={`${tableColumnClass}`}>Shinko</td>
+                <td className={`${tableColumnClass}`}>2024/8/24 19:02</td> 
+              </tr>
+              <tr className="border-t border-b border-gray-300">
+                <td className={`${tableColumnClass}`}>John Pate</td>
+                <td className={`${tableColumnClass}`}>2024/8/24 19:02</td> 
+              </tr>
+              <tr className="border-t border-b border-gray-300">
+                <td className={`${tableColumnClass}`}>Andys Imports</td>
+                <td className={`${tableColumnClass}`}>2024/8/24 19:02</td>
+              </tr>
+              <tr className="border-t border-b border-gray-300">
+                <td className={`${tableColumnClass}`}>Bookham Imports</td>
+                <td className={`${tableColumnClass}`}>2024/8/24 19:02</td>
+              </tr>
+              <tr className="border-t border-b border-gray-300">
+                <td className={`${tableColumnClass}`}>Cye Import Ltd</td>
+                <td className={`${tableColumnClass}`}>2024/8/24 19:02</td>
+              </tr>
+              <tr className="border-t border-b border-gray-300">
+                <td className={`${tableColumnClass}`}>Shinko</td>
+                <td className={`${tableColumnClass}`}>2024/8/24 19:02</td> 
+              </tr>
+            </tbody>
+          </table>
           </>
         }
       />
