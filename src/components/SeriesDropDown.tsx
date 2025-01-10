@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
@@ -25,10 +25,11 @@ const SeriesDropDown: React.FC<SeriesDropDownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>(selected);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Toggle dropdown visibility
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   // Handle checkbox selection changes
@@ -52,11 +53,32 @@ const SeriesDropDown: React.FC<SeriesDropDownProps> = ({
     }
   };
 
+  // Close dropdown if clicked outside
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   // Render nothing if noDropDown is set
   if (noDropDown) return null;
 
   return (
-    <div className={`relative inline-block w-full text-left ${customClass}`} title="Series">
+    <div
+      ref={dropdownRef}
+      className={`relative inline-block w-full text-left ${customClass}`}
+      title="Series"
+    >
       {/* Dropdown Button */}
       <div
         className={`flex gap-2 items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 py-1.5 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
@@ -74,7 +96,7 @@ const SeriesDropDown: React.FC<SeriesDropDownProps> = ({
               className="bg-gray-100 text-gray-700 px-2 py-1 rounded-md text-sm flex items-center gap-1 hover:bg-gray-200"
             >
               {opt}
-              <IoClose size={16} className="text-gray-400"/>
+              <IoClose size={16} className="text-gray-400" />
             </button>
           ))
         ) : (

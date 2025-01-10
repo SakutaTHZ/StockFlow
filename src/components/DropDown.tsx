@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
 interface DropDownProps {
@@ -26,6 +26,7 @@ const DropDown: React.FC<DropDownProps> = ({
   const [selectedOption, setSelectedOption] = useState(
     selected ? selected : options[0]
   );
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
@@ -36,11 +37,30 @@ const DropDown: React.FC<DropDownProps> = ({
   };
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={`relative inline-block w-full text-left ${customClass}`}>
+    <div
+      ref={dropdownRef}
+      className={`relative inline-block w-full text-left ${customClass}`}
+    >
       <button
         onClick={toggleDropdown}
         className={`${
@@ -55,7 +75,7 @@ const DropDown: React.FC<DropDownProps> = ({
         <div
           className={`${
             noDropDown ? "block" : "absolute mt-2"
-          } origin-top-right w-full h-64 overflow-hidden overflow-y-auto custom-scrollbar rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
+          } animate-dropDown origin-top-right w-full h-64 overflow-hidden overflow-y-auto custom-scrollbar rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
         >
           <div className="py-1">
             {options.map((option) => (

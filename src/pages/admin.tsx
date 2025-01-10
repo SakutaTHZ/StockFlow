@@ -157,8 +157,8 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               Filters
             </button>
           </div>
-          <div className="w-full flex flex-col md:flex-row gap-2 items-center">
-            <div className="relative w-full border rounded-md border-gray-300">
+          <div className="w-full flex flex-col md:flex-row gap-2 justify-between items-center">
+            <div className="relative w-72 border rounded-md border-gray-300">
               <input
                 type="text"
                 placeholder="Search by Make or Model"
@@ -191,9 +191,8 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
 
         <div className="lg:flex z-10 transition-all">
           {/* Left Sticky Box */}
-          {isFilterOn && (
             <div
-              className="leftBox mr-6 overflow-hidden animate-slideUp transition-all inset-0 md:sticky top-24 w-full md:w-64 flex flex-col rounded-md shadow-lg h-fit z-40"
+            className={`leftBox overflow-hidden animate-slideUp transition-all duration-200 inset-0 md:sticky top-24 flex flex-col rounded-md shadow-lg h-fit z-40 ${isFilterOn ? "md:w-64 w-full mr-6" : "w-0"}`}
               style={{ animationFillMode: "forwards" }}
             >
               <div className="bg-slate-50 w-full flex gap-1 justify-between items-center py-2.5 px-4 border-b border-b-gray-200">
@@ -283,7 +282,6 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                 color={true}
               />
             </div>
-          )}
 
           {/* Right Scrollable Content */}
           <div className="flex-1 flex flex-wrap justify-evenly align-top gap-2 mt-6 lg:mt-0 transition-all">

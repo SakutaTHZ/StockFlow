@@ -182,11 +182,10 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
         </div>
       </div>
 
-      <div className="lg:flex z-10 transition-all">
+      <div className="lg:flex z-10 transition ease-in-out  duration-300">
         {/* Left Sticky Box */}
-        {isFilterOn && (
           <div
-            className="leftBox mr-6 overflow-hidden animate-slideUp transition-all inset-0 md:sticky top-24 w-full md:w-64 flex flex-col rounded-md shadow-lg h-fit z-40"
+            className={`leftBox overflow-hidden animate-slideUp transition-all duration-200 inset-0 md:sticky top-24 flex flex-col rounded-md shadow-lg h-fit z-40 ${isFilterOn ? "md:w-64 w-full mr-6" : "w-0"}`}
             style={{ animationFillMode: "forwards" }}
           >
             <div className="bg-slate-50 w-full flex gap-1 justify-between items-center py-2.5 px-4 border-b border-b-gray-200">
@@ -276,10 +275,9 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               color={true}
             />
           </div>
-        )}
 
         {/* Right Scrollable Content */}
-        <div className="flex-1 flex flex-wrap justify-evenly align-top gap-2 mt-6 lg:mt-0 transition-all">
+        <div className="flex-1 flex flex-wrap justify-evenly align-top gap-2 mt-6 lg:mt-0 transition">
           {cars.length == 0 ? (
             <div className="w-full h-96 flex flex-col md:flex-row gap-2 md:gap-5 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
               <FaCarTunnel size={30} className="text-gray-400" />
@@ -289,7 +287,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               </p>
             </div>
           ) : isTableView ? (
-            <div className="rightBox flex flex-col gap-4 w-full h-full">
+            <div className="rightBox flex flex-col gap-4 w-full h-full transition ease-in-out  duration-300">
               {cars
                 .slice(20 * currentPage - 20, 20 * currentPage)
                 .map((car, index: number) => (
@@ -308,7 +306,10 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                 ))}
             </div>
           ) : (
-            <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full h-full">
+            <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full h-full" 
+            style={{
+              transition: "0.5s linear",
+            }}>
               {cars
                 .slice(20 * currentPage - 20, 20 * currentPage)
                 .map((car, index: number) => (
@@ -316,7 +317,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                     key={index}
                     car={car}
                     extraStatus={car.showExtraStatus}
-                    customClass={`${car.highlightStatus === "Sold" && "bg-yellow-50 border-2 border-yellow-50"}`}
+                    customClass={` transition ease-in-out  duration-300 ${car.highlightStatus === "Sold" && "bg-yellow-50 border-2 border-yellow-50"}`}
                     style={{
                       animationDelay: `${
                         index === 0 ? "0s" : `${index * 0.1}s`

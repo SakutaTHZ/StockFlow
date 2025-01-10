@@ -43,10 +43,15 @@ export default {
           '75%': { transform: 'translate(-200px, 50px)' },
           '100%': { transform: 'translate(0, 0)' },
         },
+        dropDown: {
+          '0%': { transform: 'translateY(-30px) scale(.8)', opacity: 0 },
+          '100%': { transform: 'translateY(0) scale(1)', opacity: 1 },
+        },
       },
       animation: {
         slideUp: 'slideUp 0.6s ease-out',
         slideDown: 'slideDown 0.6s ease-out',
+        dropDown: 'dropDown 0.4s ease-in-out',
         slideRight: 'slideRight 0.6s ease-out',
         slideLeft: 'slideLeft 0.6s ease-out',
         appear: 'appear 0.6s ease-out',

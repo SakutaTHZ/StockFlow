@@ -32,9 +32,6 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
   const addNewTask = (newTask: string): void => {
     setTaskList([...taskList, { task: newTask, status: status[0] }]);
   };
-  const removeTask = (task: Task): void => {
-    setTaskList(taskList.filter((t) => t.task !== task.task));
-  };
 
   React.useEffect(() => {
     if (isOpen) {
