@@ -168,7 +168,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
             </div>
             <div className="flex gap-2 items-center w-fit">
               <SeriesDropDown
-                optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
+                optionBoxClass="custom-scrollbar md:w-24 h-fit right-0 z-50"
                 buttonClass="" options={series}/>
               <DropDown
                 options={sortOptions3}

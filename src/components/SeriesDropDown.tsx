@@ -108,13 +108,14 @@ const SeriesDropDown: React.FC<SeriesDropDownProps> = ({
       {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className={`absolute mt-2 origin-top-right w-full rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
+          className={`absolute animate-dropDown mt-2 origin-top-right w-full rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
         >
           <div className="py-1">
             {options.map((option, index) => (
               <div
                 key={index}
                 className="flex justify-start min-w-16 px-4 cursor-pointer transition-all hover:bg-gray-100"
+                    onClick={() => handleOptionClick(option)}
               >
                 <label
                   className={`flex items-center gap-2 cursor-pointer ${optionClass}`}
@@ -122,7 +123,6 @@ const SeriesDropDown: React.FC<SeriesDropDownProps> = ({
                   <input
                     type="checkbox"
                     checked={selectedOptions.includes(option)}
-                    onChange={() => handleOptionClick(option)}
                     className="form-checkbox h-3 w-3 cursor-pointer"
                   />
                   <span>{option}</span>
