@@ -104,88 +104,90 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
 
   return (
     <>
-    <CNetNav/>
-    <div className={`px-12 py-10 flex flex-col gap-6 ${customClass}`}>
-      <div className="flex items-center justify-between">
-        <p className="text-3xl font-bold">Car For Sale</p>
-        <div className="flex items-center">
-          <p className="px-6 text-gray-500">
-            {cars.length != 0 && (
-              <>
-                Showing{" "}
-                <b>
-                  {20 * currentPage - 20 + 1}-{20 * currentPage - 1}
-                </b>{" "}
-                of <b>{cars.length}</b> listings
-              </>
-            )}
-          </p>
-          <div className="flex items-center gap-4 pl-6 border-l">
+      <CNetNav />
+      <div className={`px-12 py-10 flex flex-col gap-6 ${customClass}`}>
+        <div className="flex items-center justify-between">
+          <p className="text-3xl font-bold">Car For Sale</p>
+          <div className="flex items-center">
+            <p className="px-6 text-gray-500">
+              {cars.length != 0 && (
+                <>
+                  Showing{" "}
+                  <b>
+                    {20 * currentPage - 20 + 1}-{20 * currentPage - 1}
+                  </b>{" "}
+                  of <b>{cars.length}</b> listings
+                </>
+              )}
+            </p>
+            <div className="flex items-center gap-4 pl-6 border-l">
+              <button
+                onClick={() => setIsTableView(false)}
+                className={`flex items-center p-2 rounded-md transition ${
+                  !isTableView
+                    ? "bg-amber-200 border border-yellow-400"
+                    : "bg-gray-100 hover:bg-amber-100"
+                }`}
+              >
+                <MdBorderAll size={18} />
+              </button>
+              <button
+                onClick={() => setIsTableView(true)}
+                className={`flex items-center p-2 rounded-md transition ${
+                  isTableView
+                    ? "bg-amber-200 border border-yellow-400"
+                    : "bg-gray-100 hover:bg-amber-100"
+                }`}
+              >
+                <FaListUl size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2 w-full items-center justify-between transition-all">
+          <div className="flex items-center gap-2 transition-all">
             <button
-              onClick={() => setIsTableView(false)}
-              className={`flex items-center p-2 rounded-md transition ${
-                !isTableView
-                  ? "bg-amber-200 border border-yellow-400"
-                  : "bg-gray-100 hover:bg-amber-100"
-              }`}
+              className="flex items-center gap-2 border p-2 px-3 rounded-3xl bg-white border-gray-300"
+              onClick={toggleFilter}
             >
-              <MdBorderAll size={18} />
-            </button>
-            <button
-              onClick={() => setIsTableView(true)}
-              className={`flex items-center p-2 rounded-md transition ${
-                isTableView
-                  ? "bg-amber-200 border border-yellow-400"
-                  : "bg-gray-100 hover:bg-amber-100"
-              }`}
-            >
-              <FaListUl size={16} />
+              <MdTune size={18} />
+              Filters
             </button>
           </div>
-        </div>
-      </div>
-      <div className="flex flex-wrap gap-2 w-full items-center justify-between transition-all">
-        <div className="flex items-center gap-2 transition-all">
-          <button
-            className="flex items-center gap-2 border p-2 px-3 rounded-3xl bg-white border-gray-300"
-            onClick={toggleFilter}
-          >
-            <MdTune size={18} />
-            Filters
-          </button>
-        </div>
-        <div className="w-full md:w-auto flex flex-col md:flex-row gap-2 items-center">
-          <div className="relative w-full md:w-auto border rounded-md border-gray-300">
-            <input
-              type="text"
-              placeholder="Search by Make or Model"
-              className="pl-10 pr-4 py-2 rounded-md w-full md:w-72 bg-white outline-none"
-            />
-            <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
-          </div>
-          <div className="flex gap-2 items-center w-full">
-            <DropDown
-              options={sortOptions}
-              customClass="my-custom-class"
-              optionClass="my-option-class"
-              optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
-              buttonClass="py-2"
-            />
-            <DropDown
-              options={sortOptions2}
-              customClass="my-custom-class"
-              optionClass="my-option-class"
-              optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
-              buttonClass="py-2"
-            />
+          <div className="w-full md:w-auto flex flex-col md:flex-row gap-2 items-center">
+            <div className="relative w-full md:w-auto border rounded-md border-gray-300">
+              <input
+                type="text"
+                placeholder="Search by Make or Model"
+                className="pl-10 pr-4 py-2 rounded-md w-full md:w-72 bg-white outline-none"
+              />
+              <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
+            </div>
+            <div className="flex gap-2 items-center w-full">
+              <DropDown
+                options={sortOptions}
+                customClass="my-custom-class"
+                optionClass="my-option-class"
+                optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
+                buttonClass="py-2"
+              />
+              <DropDown
+                options={sortOptions2}
+                customClass="my-custom-class"
+                optionClass="my-option-class"
+                optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
+                buttonClass="py-2"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="lg:flex z-10 transition ease-in-out  duration-300">
-        {/* Left Sticky Box */}
+        <div className="lg:flex z-10 transition ease-in-out  duration-300">
+          {/* Left Sticky Box */}
           <div
-            className={`leftBox overflow-hidden animate-slideUp transition-all duration-200 inset-0 md:sticky top-24 flex flex-col rounded-md shadow-lg h-fit z-40 ${isFilterOn ? "md:w-64 w-full mr-6" : "w-0"}`}
+            className={`leftBox overflow-hidden animate-slideUp transition-all duration-200 inset-0 md:sticky top-24 flex flex-col rounded-md shadow-lg h-fit z-40 ${
+              isFilterOn ? "md:w-64 w-full mr-6" : "w-0"
+            }`}
             style={{ animationFillMode: "forwards" }}
           >
             <div className="bg-slate-50 w-full flex gap-1 justify-between items-center py-2.5 px-4 border-b border-b-gray-200">
@@ -200,7 +202,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
 
             <FilterClearDropDown
               customClass={
-                "bg-slate-50 transmission border-b border-b-gray-200"
+                "bg-slate-50 makeBrand transmission border-b border-b-gray-200"
               }
               boxName="Market"
               listData={market}
@@ -265,7 +267,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               boxName="Yard Area"
               listData={filteredYardArea}
             />
-            
+
             <FilterClearDropDown
               customClass={
                 "bg-slate-50 transmission border-b border-b-gray-200"
@@ -276,67 +278,76 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
             />
           </div>
 
-        {/* Right Scrollable Content */}
-        <div className="flex-1 flex flex-wrap justify-evenly align-top gap-2 mt-6 lg:mt-0 transition">
-          {cars.length == 0 ? (
-            <div className="w-full h-96 flex flex-col md:flex-row gap-2 md:gap-5 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
-              <FaCarTunnel size={30} className="text-gray-400" />
-              <p className="text-center text-gray-400 font-semibold">
-                Looks like all the cars have zoomed off. Check back soon for new
-                arrivals!
-              </p>
-            </div>
-          ) : isTableView ? (
-            <div className="rightBox flex flex-col gap-4 w-full h-full transition ease-in-out  duration-300">
-              {cars
-                .slice(20 * currentPage - 20, 20 * currentPage)
-                .map((car, index: number) => (
-                  <CarRow
-                    key={index}
-                    car={car}
-                    extraStatus={car.showExtraStatus}
-                    customClass={`${car.highlightStatus === "Sold" && "bg-yellow-50 border-2 border-yellow-50"}`}
-                    style={{
-                      animationDelay: `${
-                        index === 0 ? "0s" : `${index * 0.1}s`
-                      }`,
-                      animationFillMode: "forwards",
-                    }}
-                  />
-                ))}
-            </div>
-          ) : (
-            <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full h-full" 
-            style={{
-              transition: "0.5s linear",
-            }}>
-              {cars
-                .slice(20 * currentPage - 20, 20 * currentPage)
-                .map((car, index: number) => (
-                  <CarCard
-                    key={index}
-                    car={car}
-                    extraStatus={car.showExtraStatus}
-                    customClass={` transition ease-in-out  duration-300 ${car.highlightStatus === "Sold" && "bg-yellow-50 border-2 border-yellow-50"}`}
-                    style={{
-                      animationDelay: `${
-                        index === 0 ? "0s" : `${index * 0.1}s`
-                      }`,
-                      animationFillMode: "forwards",
-                    }}
-                  />
-                ))}
-            </div>
-          )}
+          {/* Right Scrollable Content */}
+          <div className="flex-1 flex flex-wrap justify-evenly align-top gap-2 mt-6 lg:mt-0 transition">
+            {cars.length == 0 ? (
+              <div className="w-full h-96 flex flex-col md:flex-row gap-2 md:gap-5 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
+                <FaCarTunnel size={30} className="text-gray-400" />
+                <p className="text-center text-gray-400 font-semibold">
+                  Looks like all the cars have zoomed off. Check back soon for
+                  new arrivals!
+                </p>
+              </div>
+            ) : isTableView ? (
+              <div className="rightBox flex flex-col gap-4 w-full h-full transition ease-in-out  duration-300">
+                {cars
+                  .slice(20 * currentPage - 20, 20 * currentPage)
+                  .map((car, index: number) => (
+                    <CarRow
+                      key={index}
+                      car={car}
+                      extraStatus={car.showExtraStatus}
+                      customClass={`${
+                        car.highlightStatus === "Sold" &&
+                        "bg-yellow-50 border-2 border-yellow-50"
+                      }`}
+                      style={{
+                        animationDelay: `${
+                          index === 0 ? "0s" : `${index * 0.1}s`
+                        }`,
+                        animationFillMode: "forwards",
+                      }}
+                    />
+                  ))}
+              </div>
+            ) : (
+              <div
+                className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full h-full"
+                style={{
+                  transition: "0.5s linear",
+                }}
+              >
+                {cars
+                  .slice(20 * currentPage - 20, 20 * currentPage)
+                  .map((car, index: number) => (
+                    <CarCard
+                      key={index}
+                      car={car}
+                      extraStatus={car.showExtraStatus}
+                      customClass={` transition ease-in-out  duration-300 ${
+                        car.highlightStatus === "Sold" &&
+                        "bg-yellow-50 border-2 border-yellow-50"
+                      }`}
+                      style={{
+                        animationDelay: `${
+                          index === 0 ? "0s" : `${index * 0.1}s`
+                        }`,
+                        animationFillMode: "forwards",
+                      }}
+                    />
+                  ))}
+              </div>
+            )}
 
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       </div>
-    </div></>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties, useState, useRef, useEffect } from "react";
 import {
   FaWheelchair,
   FaRegCheckCircle,
@@ -87,6 +87,71 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     );
   };
 
+  const [cardOption, setcardOption] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null); // Ref for dropdown
+
+  const toggleDropdown = () => {
+    setcardOption((prev) => !prev);
+  };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setcardOption(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+   const cardOptions = () => {
+    return (
+      <div className="relative" ref={dropdownRef}>
+        <button
+          className="option z-20 absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border"
+          onClick={toggleDropdown}
+        >
+          <BsThreeDots />
+        </button>
+        <div
+          className={`z-50 right-2 bottom-8 flex flex-col transition-all bg-white border rounded-md shadow-md ${
+            cardOption ? "absolute" : "hidden"
+          }`}
+        >
+          <button
+            onClick={openPopup}
+            className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+          >
+            Show Vehicle Overview
+          </button>
+          <button
+            onClick={openPromotionPopup}
+            className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+          >
+            Add Promotion
+          </button>
+          <button
+            onClick={openBannerPopup}
+            className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+          >
+            Add Banner
+          </button>
+          <button
+            onClick={() => (onClick ? onClick() : handleCardClick(car))}
+            className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+          >
+            Customer View
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openPopup = () => setIsPopupOpen(true);
@@ -127,15 +192,15 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
       >
         <img src={Hybrid} alt="Hybrid" /> {car.highlightStatus}
       </span>
-    ): status === "Sold" ? (
-          <span
-            className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
-              car.hold && "hidden"
-            }`}
-          >
-            <FaMoneyBillTrendUp /> {car.highlightStatus}
-          </span>
-        ) : status === "Reduced" ? (
+    ) : status === "Sold" ? (
+      <span
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
+          car.hold && "hidden"
+        }`}
+      >
+        <FaMoneyBillTrendUp /> {car.highlightStatus}
+      </span>
+    ) : status === "Reduced" ? (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-red-600 bg-red-200 ${
           car.hold && "hidden"
@@ -172,25 +237,14 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
       state: { card: carData, cars: cars },
     });
   };
-
-  const [cardOption, setcardOption] = useState(true);
-  const checkOption = () => {
-    if (cardOption === true) {
-      console.log("false");
-      setcardOption(false);
-    } else {
-      console.log("true");
-      setcardOption(true);
-    }
-    console.log("box stat - " + cardOption);
-  };
-
   return (
     <>
       <div
-        className={`card pb-2 relative animate-slideUp transition-all w-full h-fit min-h-32 shadow-md rounded-lg border-2 bg-white ${customClass} ${
+        className={`card relative animate-slideUp transition-all w-full shadow-md rounded-lg border-2 bg-white ${customClass} ${
           extraStatus ? "border-[#FFC158]" : "border-gray-100"
-        } ${car.hold && "opacity-15"} transition-all`}
+        } ${
+          car.hold && "bg-[#ffe0e0] opacity-15 border-red-200"
+        } transition-all`}
         style={style}
       >
         <div
@@ -202,7 +256,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             src={car.image}
             alt="car Image"
             className={`rounded-t-md h-42 ${
-              car.hold && "opacity-50 pointer-events-none"
+              car.hold && "opacity-80 pointer-events-none"
             }`}
             loading="lazy"
           />
@@ -231,39 +285,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           >
             {car.id}
           </span>
-          <div className="relative">
-            <button
-              className="option z-20 absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border"
-              onClick={checkOption}
-            >
-              <BsThreeDots />
-            </button>
-            <div
-              className={`z-50 right-2 bottom-8 flex flex-col transition-all bg-white border rounded-md shadow-md ${
-                cardOption ? "hidden" : "absolute"
-              }`}
-            >
-              <button
-                onClick={openPopup}
-                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
-              >
-                Show Vehicle Overview
-              </button>
-              <button
-                onClick={openPromotionPopup}
-                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
-              >
-                Add Promotion
-              </button>
-              <button onClick={openBannerPopup} className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100">
-                Add Banner
-              </button>
-              <button 
-          onClick={() => (onClick ? onClick() : handleCardClick(car))} className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100">
-                Customer View
-              </button>
-            </div>
-          </div>
+          {cardOptions()}
         </div>
         <div className="body p-2">
           <p className="text-lg font-semibold">
@@ -307,12 +329,16 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
               <img src={Vin} alt="" />
               {car.vim}
             </span>
-          </div>
+            <span className={` ${pillClass}`}>
+              <MdOutlinePinDrop />
+              {car.yardArea}
+            </span>
 
-          <span className={`${pillClass} mt-2`}>
-            <MdOutlinePinDrop />
-            {car.vesselFrom}
-          </span>
+            <span className={`${pillClass}`}>
+              <MdOutlinePinDrop />
+              {car.vesselFrom}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -384,7 +410,10 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
                 {car.vesselFrom}
               </p>
             </div>
-            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold" onClick={() => handleCardClick(car)}>
+            <button
+              className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold"
+              onClick={() => handleCardClick(car)}
+            >
               View All Details <IoIosArrowForward />
             </button>
           </>

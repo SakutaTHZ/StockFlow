@@ -60,7 +60,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
   return (
     <div className={`flex flex-col gap-1 px-4 py-2.5 ${customClass}`}>
       <div
-        className="flex items-center justify-between w-full"
+        className="flex items-center justify-between w-full cursor-pointer"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
         <b>{boxName}</b>
@@ -87,15 +87,15 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
                 <div
                   key={index}
                   className="flex justify-between cursor-pointer transition-all hover:bg-gray-100"
+                      onClick={() => handleCheckboxChange(item)}
                 >
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={checkedItems.includes(item.name)}
-                      onChange={() => handleCheckboxChange(item)}
                       className="form-checkbox h-3 w-3 cursor-pointer"
                     />
-                    <span>{item.name}</span>
+                    <span  onClick={() => handleCheckboxChange(item)}>{item.name}</span>
                   </label>
                   <span className="text-gray-500">{item.count}</span>
                 </div>

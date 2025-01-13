@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import { FaWheelchair, FaRegCheckCircle, FaChevronDown } from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";
@@ -24,7 +24,7 @@ import {
   PiStar,
 } from "react-icons/pi";
 import Popup from "./Popup";
-import { IoIosArrowForward, IoMdEye } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
 import { useNavigate } from "react-router-dom";
@@ -164,19 +164,94 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       state: { card: carData, cars: cars },
     });
   };
-
-  const [cardOption, setcardOption] = useState(true);
-  const checkOption = () => {
-    if (cardOption === true) {
-      setcardOption(false);
-    } else {
-      setcardOption(true);
-    }
-  };
-
   const [more, setMore] = useState(true);
   const showMore = () => {
     setMore(!more);
+  };
+
+  const [openOptions, setOpenOptions] = useState<string | null>(null); // Track which card is open
+  const optionsRef = useRef<HTMLDivElement>(null);
+
+  // Close the options box if clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        optionsRef.current &&
+        !optionsRef.current.contains(event.target as Node)
+      ) {
+        setOpenOptions(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleCardOptions = (cardId: string) => {
+    setOpenOptions((prev) => (prev === cardId ? null : cardId));
+  };
+
+  const cardOptionBox = (cardId: string) => {
+    return (
+      <div className="relative flex justify-center" ref={optionsRef}>
+        <button
+          className="option z-20 bg-gray-200 p-3 rounded-md shadow-md border"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleCardOptions(cardId);
+          }}
+        >
+          <BsThreeDots />
+        </button>
+        <div
+          className={`z-50 right-2 bottom-8 flex flex-col transition-all bg-white border rounded-md shadow-md ${
+            openOptions === cardId ? "absolute" : "hidden"
+          }`}
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              openPopup();
+            }}
+            className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+          >
+            Show Vehicle Overview
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              openPromotionPopup();
+            }}
+            className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+          >
+            Add Promotion
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              openBannerPopup();
+            }}
+            className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+          >
+            Add Banner
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              if (onClick) {
+                onClick();
+              } else {
+                handleCardClick(car, `/detail/${car.id.slice(1)}`);
+              }
+            }}
+            className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+          >
+            Customer View
+          </button>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -310,61 +385,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           <p className="text-sm text-gray-500">$6,000 UK duty/ VAT paid!</p>
         </td>
         <td className="border">
-          <div className="relative flex justify-center">
-            <button
-              className="option z-20 bg-gray-200 p-3 rounded-md shadow-md border"
-              onClick={(e) => {
-                e.stopPropagation();
-                checkOption();
-              }}
-            >
-              <BsThreeDots />
-            </button>
-            <div
-              className={`z-50 right-2 bottom-8 flex flex-col transition-all bg-white border rounded-md shadow-md ${
-                cardOption ? "hidden" : "absolute"
-              }`}
-            >
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openPopup();
-                }}
-                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
-              >
-                Show Vehicle Overview
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openPromotionPopup();
-                }}
-                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
-              >
-                Add Promotion
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openBannerPopup();
-                }}
-                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
-              >
-                Add Banner
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onClick
-                    ? onClick()
-                    : handleCardClick(car, `/detail/${car.id.slice(1)}`);
-                }}
-                className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
-              >
-                Customer View
-              </button>
-            </div>
-          </div>
+        {cardOptionBox(car.id)}
         </td>
       </tr>
 

@@ -60,7 +60,7 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
   return (
     <div className={`flex flex-col gap-1 px-4 py-2.5 ${customClass}`}>
       <div
-        className="flex items-center justify-between w-full"
+        className="flex items-center justify-between w-full cursor-pointer"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
         <b>{boxName}</b>
@@ -92,13 +92,13 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
                 <div
                   key={index}
                   className="flex justify-between cursor-pointer hover:bg-gray-100"
+                      onClick={() => handleCheckboxChange(item)}
                 >
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={checkedItems.includes(item.name)}
-                      onChange={() => handleCheckboxChange(item)}
-                      className="form-checkbox h-3 w-3 hue-rotate-[185deg] opacity-80 cursor-pointer"
+                      className="form-checkbox h-3 w-3 cursor-pointer"
                     />
                     {color ? (
                       <>
@@ -108,12 +108,12 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
                             backgroundColor: `#${item.name.split("#")[1]}`,
                           }}
                         ></div>
-                        <span className="capitalize">
+                        <span className="pointer-events-none capitalize"  onClick={() => handleCheckboxChange(item)}>
                           {item.name.split("#")[0]}
                         </span>
                       </>
                     ) : (
-                      <span className="capitalize">{item.name}</span>
+                      <span className="pointer-events-none capitalize"  onClick={() => handleCheckboxChange(item)}>{item.name}</span>
                     )}
                   </label>
                   <span className="text-gray-500">{item.count}</span>
