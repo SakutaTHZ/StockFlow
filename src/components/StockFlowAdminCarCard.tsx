@@ -171,7 +171,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     return status === "Welcab" ? (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          car.hold && "hidden"
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
         }`}
       >
         <FaWheelchair /> {car.highlightStatus}
@@ -179,7 +179,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     ) : status === "Coming soon" ? (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          car.hold && "hidden"
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
         }`}
       >
         <MdOutlineTimer /> {car.highlightStatus}
@@ -187,7 +187,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     ) : status === "Hybrid" ? (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          car.hold && "hidden"
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
         }`}
       >
         <img src={Hybrid} alt="Hybrid" /> {car.highlightStatus}
@@ -195,7 +195,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     ) : status === "Sold" ? (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
-          car.hold && "hidden"
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
         }`}
       >
         <FaMoneyBillTrendUp /> {car.highlightStatus}
@@ -203,15 +203,15 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     ) : status === "Reduced" ? (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-red-600 bg-red-200 ${
-          car.hold && "hidden"
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
         }`}
       >
         <PiChartLineDownBold /> {car.highlightStatus}
       </span>
     ) : status === "New" ? (
       <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
-          car.hold && "hidden"
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-100 ${
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
         }`}
       >
         <MdOutlineNewReleases /> {car.highlightStatus}
@@ -219,7 +219,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     ) : (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          car.hold && "hidden"
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
         }`}
       >
         <TbFaceIdError /> {car.highlightStatus}
@@ -243,10 +243,10 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
         className={`card relative animate-slideUp transition-all w-full shadow-md rounded-lg border-2 bg-white ${customClass} ${
           extraStatus ? "border-[#FFC158]" : "border-gray-100"
         } ${
-          car.hold && "bg-[#ffe0e0] opacity-15 border-red-200"
-        } transition-all`}
+          car.hold && " opacity-15 border-[#FFC158]"
+        } ${car.highlightStatus === "Sold" && `border-green-400`} transition-all`}
         style={style}
-      >
+      > 
         <div
           className="ClickArea absolute z-10 w-full h-full"
           onClick={() => (onClick ? onClick() : handleCardClick(car))}
@@ -256,15 +256,23 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             src={car.image}
             alt="car Image"
             className={`rounded-t-md h-42 ${
-              car.hold && "opacity-80 pointer-events-none"
+              car.highlightStatus === "Sold" ? "opacity-100" :
+              car.hold && "opacity-50 pointer-events-none"
             }`}
             loading="lazy"
           />
-          {car.hold && (
-            <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-1 py-2">
-              <FaRegPauseCircle />
-              On Hold
+          {car.highlightStatus === "Sold" ? (
+            <div className="absolute w-full bottom-0 flex items-center bg-green-500 bg-opacity-40 text-white font-semibold justify-center gap-2 py-2">
+              <FaMoneyBillTrendUp />
+              Sold
             </div>
+          ) : (
+            car.hold && (
+              <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-2 py-2">
+                <FaRegPauseCircle />
+                On Hold
+              </div>
+            )
           )}
           {car.highlightStatus != "" && (
             <>{highlightPill(car.highlightStatus)}</>
@@ -272,7 +280,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           {extraStatus && (
             <span
               className={`status absolute top-2 right-0 flex items-center gap-2 text-sm font-semibold border border-[#FFC158] rounded-s-full px-3 py-1 bg-gradient-to-r from-[#FFF3DE] to-[#FFC158] ${
-                car.hold && "hidden"
+                (car.hold || car.highlightStatus === "Sold") && "hidden"
               }`}
             >
               <RiDiscountPercentLine /> Stock Offer
@@ -280,7 +288,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           )}
           <span
             className={`id absolute bottom-2 left-2 flex items-center gap-2 text-sm  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-              car.hold && "hidden"
+              (car.hold || car.highlightStatus === "Sold") && "hidden"
             }`}
           >
             {car.id}

@@ -276,7 +276,7 @@ export const generateCardData = (): CarData => {
     milleage: getRandomMileage(),
     vim: getRandomVim(),
     price: getRandomPrice(),
-    hold: getTrueOrFalse(),
+    hold: newHighlightStatus === "On Hold" ? true : false,
     discount: getDiscount(newHighlightStatus),
     marketType: getMarketType(),
     yardArea: getRandomYardArea(),

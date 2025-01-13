@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
-import { FaWheelchair, FaRegCheckCircle, FaChevronDown } from "react-icons/fa";
+import { FaWheelchair, FaRegCheckCircle, FaChevronDown, FaRegPauseCircle } from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";
 import { BsThreeDots } from "react-icons/bs";
@@ -97,6 +97,12 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       >
         <MdOutlineTimer /> {car.highlightStatus}
       </span>
+    ) : status === "On Hold" ? (
+      <span
+        className={`stat flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40`}
+      >
+        <FaRegPauseCircle /> {car.highlightStatus}
+      </span>
     ) : status === "Hybrid" ? (
       <span
         className={`stat flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
@@ -115,7 +121,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       </span>
     ) : status === "Sold" ? (
       <span
-        className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
+        className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
           car.hold && "hidden"
         }`}
       >
@@ -123,7 +129,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       </span>
     ) : status === "New" ? (
       <span
-        className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
+        className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-100 ${
           car.hold && "hidden"
         }`}
       >
@@ -169,10 +175,9 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
     setMore(!more);
   };
 
-  const [openOptions, setOpenOptions] = useState<string | null>(null); // Track which card is open
+  const [openOptions, setOpenOptions] = useState<string | null>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
 
-  // Close the options box if clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -324,13 +329,15 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
               {car.highlightStatus != "" && (
                 <>{highlightPill(car.highlightStatus)}</>
               )}
-              <span
-                className={`status flex items-center gap-2 text-sm font-semibold rounded-md bg-[#FFC158] px-3 py-1  ${
-                  car.hold && "hidden"
-                }`}
-              >
-                <RiDiscountPercentLine /> Stock Offer
-              </span>
+              {car.showExtraStatus && (
+                <span
+                  className={`status flex items-center gap-2 text-sm font-semibold rounded-md bg-[#FFC158] px-3 py-1  ${
+                    car.hold && "hidden"
+                  }`}
+                >
+                  <RiDiscountPercentLine /> Stock Offer
+                </span>
+              )}
             </div>
           </div>
         </td>
@@ -384,9 +391,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           </p>
           <p className="text-sm text-gray-500">$6,000 UK duty/ VAT paid!</p>
         </td>
-        <td className="border">
-        {cardOptionBox(car.id)}
-        </td>
+        <td className="border">{cardOptionBox(car.id)}</td>
       </tr>
 
       <tr

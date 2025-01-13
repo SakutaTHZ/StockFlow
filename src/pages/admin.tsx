@@ -329,7 +329,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       .slice(20 * currentPage - 20, 20 * currentPage)
                       .map((car, index: number) => (
                         <StockFlowAdminTableRow 
-                        customClass={`${car.highlightStatus === "Sold" && "bg-yellow-50 border-yellow-300"}`} key={index} car={car} />
+                        customClass={`${(car.highlightStatus === "Sold") && "bg-green-50 border-green-300"}`} key={index} car={car} />
                       ))}
                   </tbody>
                 </table>
@@ -343,7 +343,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       key={index}
                       car={car}
                       extraStatus={car.showExtraStatus}
-                      customClass={`${car.highlightStatus === "Sold" && "bg-yellow-50 border-yellow-50"}`}
+                      customClass={``}
                       style={{
                         animationDelay: `${
                           index === 0 ? "0s" : `${index * 0.1}s`
