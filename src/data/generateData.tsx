@@ -214,8 +214,8 @@ export const getRandomDate = () => {
 const generateFormattedDate = (): string => {
   const date = new Date();
   const year = date.getFullYear();
-  const month = date.toLocaleString("default", { month: "long" }); // Get full month name
-  const day = date.getDate();
+  const month = date.toLocaleString("default", { month: "short" }); // Get full month name
+  const day = date.getDate().toString().padStart(2, "0");
 
   return `${year} ${month} ${day}`;
 };
@@ -253,7 +253,7 @@ function getRandomVehicleParts() {
   return selectedParts.join(", ");
 }
 
-export const transmissions = ["Automatic", "Manual"];
+export const transmissions = ["Automatic", "Manual", "Special"];
 export const getTransmission = () => {
   return transmissions[Math.floor(Math.random() * transmissions.length)];
 };

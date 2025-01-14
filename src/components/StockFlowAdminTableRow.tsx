@@ -30,6 +30,7 @@ import { carAtom } from "../data/atoms";
 import { useNavigate } from "react-router-dom";
 import Trans from "../assets/transmission.png";
 import Engine from "../assets/EnginePower.svg";
+import CarAvailability from "../assets/check availability.svg";
 import { LuMapPin } from "react-icons/lu";
 import { IoCarOutline } from "react-icons/io5";
 import { yards, promotionText, highlightStatus } from "../data/generateData";
@@ -437,7 +438,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             </div>
             <div className="grid grid-cols-2 gap-4 my-4">
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0" />
+                <PiCarProfile size={20} className="flex-shrink-0 transform scale-x-[-1]" />
                 {car.exteriorColor.split("#")[0]}
               </p>
               <p className="flex gap-2 items-center">
@@ -469,11 +470,11 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
                 {car.rating}
               </p>
               <p className="flex gap-2 items-center">
-                <img src={Trans} />
-                Automatic Transmission
+                <img src={Trans} className="flex-shrink-0" />
+                {car.transmission}
               </p>
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0" />
+                <img src={CarAvailability} alt="engine" className="flex-shrink-0" />
                 {car.status}
               </p>
               <p className="flex gap-2 items-center">
@@ -547,7 +548,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             <div className="flex items-center gap-2 mt-4">
               <button
                 onClick={closePromotionPopup}
-                className="py-2 w-full bg-yellow-400 font-semibold rounded-md"
+                className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
               >
                 Add
               </button>
@@ -599,7 +600,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             <div className="flex items-center gap-2 mt-8">
               <button
                 onClick={closeBannerPopup}
-                className="py-2 w-full bg-yellow-400 font-semibold rounded-md"
+                className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
               >
                 Add
               </button>

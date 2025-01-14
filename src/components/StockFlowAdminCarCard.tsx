@@ -16,6 +16,7 @@ import UKFlag from "../assets/GB.svg";
 import Hybrid from "../assets/hybrid.png";
 import Engine from "../assets/EnginePower.svg";
 import Trans from "../assets/transmission.png";
+import CarAvailability from "../assets/check availability.svg";
 import {
   MdOutlineTimer,
   MdOutlineNewReleases,
@@ -367,7 +368,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             </div>
             <div className="grid grid-cols-2 gap-4 my-4">
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0" />
+                <PiCarProfile size={20} className="flex-shrink-0 transform scale-x-[-1]" />
                 {car.exteriorColor.split("#")[0]}
               </p>
               <p className="flex gap-2 items-center">
@@ -400,10 +401,10 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
               </p>
               <p className="flex gap-2 items-center">
                 <img src={Trans} />
-                Automatic Transmission
+                {car.transmission}
               </p>
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0" />
+                <img src={CarAvailability} alt="engine" className="flex-shrink-0" />
                 {car.status}
               </p>
               <p className="flex gap-2 items-center">
@@ -475,7 +476,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             <div className="flex items-center gap-2 mt-4">
               <button
                 onClick={closePromotionPopup}
-                className="py-2 w-full bg-yellow-400 font-semibold rounded-md"
+                className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
               >
                 Add
               </button>
@@ -527,7 +528,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             <div className="flex items-center gap-2 mt-8">
               <button
                 onClick={closeBannerPopup}
-                className="py-2 w-full bg-yellow-400 font-semibold rounded-md"
+                className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
               >
                 Add
               </button>
