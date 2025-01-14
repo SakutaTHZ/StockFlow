@@ -12,8 +12,8 @@ import {
 } from "../data/generateData";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
-import Pagination from "../components/Pagination";
-import { useLocation, useNavigate } from "react-router-dom";
+// import Pagination from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
 import { FaCarTunnel } from "react-icons/fa6";
 import FilterOptionDropDown from "../components/FilterOptionDropDown";
 import { makeBrandData, Model } from "../data/arrayData";
@@ -28,9 +28,9 @@ import SeriesDropDown from "../components/SeriesDropDown";
 interface adminPageProps {
   customClass?: string;
 }
-interface LocationState {
-  page?: number; // Optional since it might not always exist
-}
+// interface LocationState {
+//   page?: number; // Optional since it might not always exist
+// }
 
 const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const [cars] = useAtom(carAtom);
@@ -42,24 +42,25 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     setIsFilterOn(!isFilterOn);
   };
 
+  const navigate = useNavigate();
+
   const handleClearAll = () => {
-    navigate(`/StockFlowAdmin`, { state: { cars, page: currentPage } });
+    navigate(`/StockFlowAdmin`, { state: { cars, page: 1 } });
   };
 
   // Pagination
 
-  const location = useLocation() as unknown as Location & {
-    state: LocationState;
-  };
-  const [currentPage, setCurrentPage] = useState(location.state?.page || 1);
-  const totalPages = Math.ceil(cars.length / 20);
-  const navigate = useNavigate();
+  // const location = useLocation() as unknown as Location & {
+  //   state: LocationState;
+  // };
+  // const [currentPage, setCurrentPage] = useState(location.state?.page || 1);
+  // const totalPages = Math.ceil(cars.length / 20);
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  // const handlePageChange = (page: number) => {
+  //   setCurrentPage(page);
 
-    return navigate(`/StockFlowAdmin`, { state: { cars, page: page } });
-  };
+  //   return navigate(`/StockFlowAdmin`, { state: { cars, page: page } });
+  // };
 
   const [filteredModels, setFilteredModels] = useState<Model[]>([]);
 
@@ -107,8 +108,9 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
 
   return (
     <>
-      <CNetAdminNav />
-      <div className={`px-12 py-10 flex flex-col gap-6 ${customClass}`}>
+      <CNetAdminNav customClass="sticky top-0"/>
+      <div className={`px-12 py-5 flex flex-col gap-6 ${customClass}`}>
+        <div className="sticky top-28 py-4 z-40 transition-all bg-white flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <p className="text-3xl font-bold">Car For Sale</p>
           <div className="flex items-center">
@@ -116,10 +118,11 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               {cars.length != 0 && (
                 <>
                   Showing{" "}
-                  <b>
+                  {/* <b>
                     {20 * currentPage - 20 + 1}-{20 * currentPage - 1}
                   </b>{" "}
-                  of <b>{cars.length}</b> listings
+                  of  */}
+                  <b>{cars.length}</b> listings
                 </>
               )}
             </p>
@@ -188,11 +191,12 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
             </div>
           </div>
         </div>
+        </div>
 
         <div className="lg:flex z-10 transition-all">
           {/* Left Sticky Box */}
             <div
-            className={`leftBox overflow-hidden animate-slideUp transition-all duration-200 inset-0 md:sticky top-24 flex flex-col rounded-md shadow-lg h-fit z-40 ${isFilterOn ? "md:w-64 w-full mr-6" : "w-0"}`}
+            className={`leftBox mr-6 overflow-hidden overflow-y-auto custom-scrollbar animate-slideUp transition-all inset-0 md:sticky top-60 max-h-[70dvh] flex flex-col rounded-md shadow-lg h-fit z-40 ${isFilterOn ? "md:w-64 w-full mr-6" : "w-0"}`}
               style={{ animationFillMode: "forwards" }}
             >
               <div className="bg-slate-50 w-full flex gap-1 justify-between items-center py-2.5 px-4 border-b border-b-gray-200">
@@ -326,7 +330,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                   </thead>
                   <tbody>
                     {cars
-                      .slice(20 * currentPage - 20, 20 * currentPage)
+                      // .slice(20 * currentPage - 20, 20 * currentPage)
                       .map((car, index: number) => (
                         <StockFlowAdminTableRow 
                         customClass={`${(car.highlightStatus === "Sold") && "bg-green-50 border-green-300"}`} key={index} car={car} />
@@ -337,7 +341,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
             ) : (
               <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full h-full">
                 {cars
-                  .slice(20 * currentPage - 20, 20 * currentPage)
+                  // .slice(20 * currentPage - 20, 20 * currentPage)
                   .map((car, index: number) => (
                     <StockFlowAdminCarCard
                       key={index}
@@ -355,11 +359,11 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               </div>
             )}
 
-            <Pagination
+            {/* <Pagination
               totalPages={totalPages}
               currentPage={currentPage}
               onPageChange={handlePageChange}
-            />
+            /> */}
           </div>
         </div>
       </div>

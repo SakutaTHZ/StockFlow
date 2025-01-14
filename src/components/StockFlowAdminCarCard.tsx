@@ -241,7 +241,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   return (
     <>
       <div
-        className={`card relative animate-slideUp transition-all w-full shadow-md rounded-lg border-2 bg-white ${customClass} ${
+        className={`card relative animate-slideUp transition-all w-full rounded-lg border-2 bg-white ${customClass} ${
           extraStatus ? "border-[#FFC158]" : "border-gray-100"
         } ${
           car.hold && " opacity-15 border-[#FFC158]"
