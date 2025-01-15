@@ -22,6 +22,8 @@ import {
   MdOutlineNewReleases,
   MdOutlinePinDrop,
   MdAirlineSeatReclineNormal,
+  MdAddCircleOutline,
+  MdRemoveCircleOutline,
 } from "react-icons/md";
 import {
   PiCalendarDots,
@@ -37,7 +39,7 @@ import { carAtom } from "../data/atoms";
 import { IoIosArrowForward } from "react-icons/io";
 import { LuMapPin } from "react-icons/lu";
 import Popup from "./Popup";
-import { IoCarOutline } from "react-icons/io5";
+import { IoCarOutline, IoEyeOutline } from "react-icons/io5";
 import DropDown from "./DropDown";
 import { highlightStatus, promotionText, yards } from "../data/generateData";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
@@ -57,7 +59,11 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   car,
   onClick,
 }) => {
-  const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 ${car.hidden ? `bg-red-200 border-transparent shadow-sm` : `border-gray-300`}`;
+
+  const [isCarHidden, setIsCarHidden] = useState(car.hidden);
+  const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 ${
+    isCarHidden ? `bg-red-200 border-transparent shadow-sm` : `border-gray-300`
+  }`;
 
   const statusPill = (status: string) => {
     return status === "Arrived" ? (
@@ -99,7 +105,10 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setcardOption(false);
       }
     };
@@ -110,7 +119,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     };
   }, []);
 
-   const cardOptions = () => {
+  const cardOptions = () => {
     return (
       <div className="relative" ref={dropdownRef}>
         <button
@@ -124,6 +133,29 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             cardOption ? "absolute" : "hidden"
           }`}
         >
+          {isCarHidden ? (
+            <div className="w-full flex border-b">
+              <button
+                onClick={()=>{console.log("On List")}}
+                className="flex items-center justify-center gap-1 border-r font-semibold w-1/2 text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
+                <MdAddCircleOutline size={20} className="flex-shrink-0"/>On List
+              </button>
+              <button
+                onClick={()=>{console.log("Off List")}}
+                className="flex items-center justify-center gap-1 font-semibold  w-1/2 text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
+                <MdRemoveCircleOutline size={20} className="flex-shrink-0"/>Off List
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={()=>{setIsCarHidden(true)}}
+              className="border-b flex items-center gap-2 font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+            >
+              <IoEyeOutline size={20} className="flex-shrink-0"/>Hide
+            </button>
+          )}
           <button
             onClick={openPopup}
             className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
@@ -243,11 +275,11 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
       <div
         className={`card relative animate-slideUp transition-all w-full rounded-lg border-2 ${customClass} ${
           extraStatus ? "border-[#FFC158]" : "border-gray-100"
-        } ${
-          car.hold && " opacity-15 border-[#FFC158]"
-        } ${car.highlightStatus === "Sold" && `border-green-400`} ${car.hidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
+        } ${car.hold && " opacity-15 border-[#FFC158]"} ${
+          car.highlightStatus === "Sold" && `border-green-400`
+        } ${isCarHidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
         style={style}
-      > 
+      >
         <div
           className="ClickArea absolute z-10 w-full h-full"
           onClick={() => (onClick ? onClick() : handleCardClick(car))}
@@ -257,8 +289,9 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             src={car.image}
             alt="car Image"
             className={`rounded-t-md h-42 ${
-              car.highlightStatus === "Sold" ? "opacity-100" :
-              car.hold && "opacity-50 pointer-events-none"
+              car.highlightStatus === "Sold"
+                ? "opacity-100"
+                : car.hold && "opacity-50 pointer-events-none"
             }`}
             loading="lazy"
           />
@@ -288,8 +321,10 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             </span>
           )}
           <span
-            className={`id absolute bottom-2 left-2 flex items-center gap-2 text-sm  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-              (car.hold || car.highlightStatus === "Sold") && "hidden"
+            className={`id absolute bottom-1.5 left-2 flex items-center gap-2 text-sm  rounded-full px-3 py-1 text-white  ${
+              car.hold || car.highlightStatus === "Sold"
+                ? "bg-white bg-opacity-20"
+                : "bg-black bg-opacity-40"
             }`}
           >
             {car.id}
@@ -368,7 +403,10 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             </div>
             <div className="grid grid-cols-2 gap-4 my-4">
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0 transform scale-x-[-1]" />
+                <PiCarProfile
+                  size={20}
+                  className="flex-shrink-0 transform scale-x-[-1]"
+                />
                 {car.exteriorColor.split("#")[0]}
               </p>
               <p className="flex gap-2 items-center">
@@ -404,7 +442,11 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
                 {car.transmission}
               </p>
               <p className="flex gap-2 items-center">
-                <img src={CarAvailability} alt="engine" className="flex-shrink-0" />
+                <img
+                  src={CarAvailability}
+                  alt="engine"
+                  className="flex-shrink-0"
+                />
                 {car.status}
               </p>
               <p className="flex gap-2 items-center">

@@ -39,6 +39,20 @@ const CardOptions = () => {
           cardOption ? "absolute" : "hidden"
         }`}
       >
+        
+        <button
+          onClick={() => console.log("Show Vehicle Overview")}
+          className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+        >
+          On list
+        </button>
+        
+        <button
+          onClick={() => console.log("Show Vehicle Overview")}
+          className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+        >
+          Off List
+        </button>
         <button
           onClick={() => console.log("Show Vehicle Overview")}
           className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"

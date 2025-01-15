@@ -167,7 +167,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     <>
       <CNetAdminNav customClass="sticky top-0" />
       <div className={`px-12 py-5 flex flex-col gap-6 ${customClass}`}>
-        <div className="sticky top-28 py-4 z-40 transition-all bg-white flex flex-col gap-4">
+        <div className="sticky top-28 py-4 z-10 transition-all bg-white flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <p className="text-3xl font-bold">Car For Sale</p>
             <div className="flex items-center">
@@ -255,7 +255,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
           </div>
         </div>
 
-        <div className="lg:flex z-10 transition-all">
+        <div className="lg:flex transition-all">
           {/* Left Sticky Box */}
           <div
             className={`leftBox mr-6 overflow-hidden overflow-y-auto custom-scrollbar animate-slideUp transition-all inset-0 md:sticky top-60 max-h-[70dvh] flex flex-col rounded-md shadow-lg h-fit z-40 ${

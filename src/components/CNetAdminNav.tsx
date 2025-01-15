@@ -30,7 +30,7 @@ const CNetAdminNav: React.FC<CNetAdminNavProps> = ({
   const navOptions = ["Car", "Ledger", "User", "Payment"];
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white">
+    <nav className="sticky top-0 z-[11] w-full bg-white">
       <div
         className={`flex flex-col md:flex-row border-b items-center justify-between w-full min-h-16 bg-[#F8F5EF] px-10 py-3 ${customClass}`}
       >
