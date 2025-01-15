@@ -96,16 +96,21 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     setFilteredModels(models);
   };
 
-  const carOptions = [
+  const carOptions = React.useMemo(() => [
     `All Vehicles (${cars.length})`,
-    `Available vehicles (${cars.filter((car) => car.hold === true).length})`,
+    `Available vehicles (${cars.filter((car) => car.hold === false).length})`,
     `Unavailable vehicles (${cars.filter((car) => car.hold === true).length})`,
-  ];
+  ], [cars]);
   const visibilityOptions = [`Visible and Hidden`, `Hidden`, `Visible`];
 
   const [selectedVisibility, setSelectedVisibility] =
     useState("Visible and Hidden");
   const [selectedSort, setSelectedSort] = useState("Most Relevant");
+
+  const [carAvailability, setCarAvailability] = useState(carOptions[0]);
+  const handleCarAvailabilityChange = (option: string) => {
+    setCarAvailability(option);
+  }
 
   const handleVisibilityChange = (option: string) => {
     setSelectedVisibility(option);
@@ -123,6 +128,12 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
       filteredCars = filteredCars.filter((car) => !car.hidden);
     } else if (selectedVisibility === "Hidden") {
       filteredCars = filteredCars.filter((car) => car.hidden);
+    }
+
+    if(carAvailability === carOptions[1]){
+      filteredCars = filteredCars.filter((car) => !car.hold);
+    }else if(carAvailability === carOptions[2]){
+      filteredCars = filteredCars.filter((car) => car.hold);
     }
 
     // Apply sorting
@@ -148,7 +159,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
           return 0; // "Most Relevant" or fallback
       }
     });
-  }, [cars, selectedVisibility, selectedSort]);
+  }, [cars, selectedVisibility, selectedSort, carAvailability, carOptions]);
 
   const displayedCars = filterCars();
 
@@ -237,7 +248,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                   options={carOptions}
                   optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
                   buttonClass="py-2"
-                  onSelectionChange={(option) => console.log(option)}
+                  onSelectionChange={handleCarAvailabilityChange}
                 />
               </div>
             </div>
