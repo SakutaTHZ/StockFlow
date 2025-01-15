@@ -46,6 +46,7 @@ export interface CarData {
   engine: string;
   highlightStatus: string;
   showExtraStatus: boolean;
+  hidden:boolean;
   rating: string;
   milleage: number;
   vim: string;

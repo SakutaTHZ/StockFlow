@@ -50,7 +50,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   car,
   onClick,
 }) => {
-  const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 border-gray-300`;
+  const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 ${car.hidden ? `bg-red-200 border-transparent shadow-sm` : `border-gray-300`}`;
 
   const statusPill = (status: string) => {
     return status === "Arrived" ? (
@@ -263,7 +263,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   return (
     <>
       <tr
-        className={`border ${customClass}`}
+        className={`border ${customClass} ${car.hidden && `bg-[#FDC5C5]`}`}
         style={style}
         onClick={() =>
           onClick

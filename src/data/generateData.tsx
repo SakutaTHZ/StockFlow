@@ -244,6 +244,11 @@ export const vehicleParts = [
   "5-seater",
 ];
 
+//Function to get true or false with 5% chance of true
+export const getTrueOrFalseTenPercent = () => {
+  return Math.random() < 0.1;
+};
+
 function getRandomVehicleParts() {
   const randomCount = Math.floor(Math.random() * vehicleParts.length) + 1;
 
@@ -272,6 +277,7 @@ export const generateCardData = (): CarData => {
     engine: getRandomCarEngines(),
     highlightStatus: newHighlightStatus,
     showExtraStatus: getTrueOrFalse(),
+    hidden: getTrueOrFalseTenPercent(),
     rating: getRandomRating(),
     milleage: getRandomMileage(),
     vim: getRandomVim(),

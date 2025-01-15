@@ -57,31 +57,31 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   car,
   onClick,
 }) => {
-  const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 border-gray-300`;
+  const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 ${car.hidden ? `bg-red-200 border-transparent shadow-sm` : `border-gray-300`}`;
 
   const statusPill = (status: string) => {
     return status === "Arrived" ? (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
+      <span className={` ${pillClass}`}>
         <FaRegCheckCircle />
         {status}
       </span>
     ) : status === "Transit" ? (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
+      <span className={`bg-gray-50 ${pillClass}`}>
         <RiShipLine />
         {status}
       </span>
     ) : status === "In Japan" ? (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
+      <span className={`${pillClass}`}>
         <img src={JapanFlag} alt="Jp flag" className="h-4" />
         {status}
       </span>
     ) : status === "Clearance UK" ? (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
+      <span className={` ${pillClass}`}>
         <img src={UKFlag} alt="UK flag" className="h-4" />
         {status}
       </span>
     ) : (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
+      <span className={`  ${pillClass}`}>
         <FaRegCheckCircle />
         Unknown Status
       </span>
@@ -241,11 +241,11 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   return (
     <>
       <div
-        className={`card relative animate-slideUp transition-all w-full rounded-lg border-2 bg-white ${customClass} ${
+        className={`card relative animate-slideUp transition-all w-full rounded-lg border-2 ${customClass} ${
           extraStatus ? "border-[#FFC158]" : "border-gray-100"
         } ${
           car.hold && " opacity-15 border-[#FFC158]"
-        } ${car.highlightStatus === "Sold" && `border-green-400`} transition-all`}
+        } ${car.highlightStatus === "Sold" && `border-green-400`} ${car.hidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
         style={style}
       > 
         <div
