@@ -42,6 +42,7 @@ interface StockFlowAdminTableRowProps {
   style?: CSSProperties;
   car: CarData;
   onClick?: () => void;
+  collapse?: boolean;
 }
 
 const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
@@ -49,6 +50,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   style,
   car,
   onClick,
+  collapse
 }) => {
   const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 ${car.hidden ? `bg-red-200 border-transparent shadow-sm` : `border-gray-300`}`;
 
@@ -171,10 +173,14 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       state: { card: carData, cars: cars },
     });
   };
-  const [more, setMore] = useState(true);
+  const [more, setMore] = useState(collapse);
   const showMore = () => {
     setMore(!more);
   };
+
+  useEffect(() => {
+    setMore(collapse);
+  }, [collapse]);
 
   const [openOptions, setOpenOptions] = useState<string | null>(null);
   const optionsRef = useRef<HTMLDivElement>(null);

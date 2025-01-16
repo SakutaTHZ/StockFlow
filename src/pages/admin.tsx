@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
-import { FaRegTrashAlt, FaSearch, FaListUl } from "react-icons/fa";
+import {
+  FaRegTrashAlt,
+  FaSearch,
+  FaListUl,
+  FaChevronDown,
+} from "react-icons/fa";
 import { MdTune, MdBorderAll } from "react-icons/md";
 import DropDown from "../components/DropDown";
 import {
@@ -96,11 +101,16 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     setFilteredModels(models);
   };
 
-  const carOptions = React.useMemo(() => [
-    `All Vehicles (${cars.length})`,
-    `Available vehicles (${cars.filter((car) => car.hold === false).length})`,
-    `Unavailable vehicles (${cars.filter((car) => car.hold === true).length})`,
-  ], [cars]);
+  const carOptions = React.useMemo(
+    () => [
+      `All Vehicles (${cars.length})`,
+      `Available vehicles (${cars.filter((car) => car.hold === false).length})`,
+      `Unavailable vehicles (${
+        cars.filter((car) => car.hold === true).length
+      })`,
+    ],
+    [cars]
+  );
   const visibilityOptions = [`Visible and Hidden`, `Hidden`, `Visible`];
 
   const [selectedVisibility, setSelectedVisibility] =
@@ -110,7 +120,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const [carAvailability, setCarAvailability] = useState(carOptions[0]);
   const handleCarAvailabilityChange = (option: string) => {
     setCarAvailability(option);
-  }
+  };
 
   const handleVisibilityChange = (option: string) => {
     setSelectedVisibility(option);
@@ -130,9 +140,9 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
       filteredCars = filteredCars.filter((car) => car.hidden);
     }
 
-    if(carAvailability === carOptions[1]){
+    if (carAvailability === carOptions[1]) {
       filteredCars = filteredCars.filter((car) => !car.hold);
-    }else if(carAvailability === carOptions[2]){
+    } else if (carAvailability === carOptions[2]) {
       filteredCars = filteredCars.filter((car) => car.hold);
     }
 
@@ -162,6 +172,11 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   }, [cars, selectedVisibility, selectedSort, carAvailability, carOptions]);
 
   const displayedCars = filterCars();
+
+  const [rowCollapsed, setRowCollapsed] = useState(false);
+  const handleRowCollapse = () => {
+    setRowCollapsed(!rowCollapsed);
+  };
 
   return (
     <>
@@ -366,7 +381,16 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                 <table className=" animate-slideUp transition-all table-auto border-collapse border border-gray-300 w-full">
                   <thead>
                     <tr className="border">
-                      <th className="border h-16"></th>
+                      <th className="border h-16" onClick={handleRowCollapse}>
+                        <div className="flex justify-center">
+                          <FaChevronDown
+                            size={12}
+                            className={`text-gray-400 flex-shrink-0 transition-all ${
+                              rowCollapsed && "rotate-180"
+                            }`}
+                          />
+                        </div>
+                      </th>
                       <th className="border">Stock Number</th>
                       <th className="border">Model</th>
                       <th className="border">
@@ -403,6 +427,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                           }`}
                           key={index}
                           car={car}
+                          collapse={rowCollapsed}
                         />
                       ))}
                   </tbody>
