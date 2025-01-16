@@ -386,7 +386,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                           <FaChevronDown
                             size={12}
                             className={`text-gray-400 flex-shrink-0 transition-all ${
-                              rowCollapsed && "rotate-180"
+                              !rowCollapsed && "rotate-180"
                             }`}
                           />
                         </div>

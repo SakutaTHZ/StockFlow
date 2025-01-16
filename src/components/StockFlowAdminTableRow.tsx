@@ -52,31 +52,30 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   onClick,
   collapse
 }) => {
-  const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 ${car.hidden ? `bg-red-200 border-transparent shadow-sm` : `border-gray-300`}`;
 
   const statusPill = (status: string) => {
     return status === "Arrived" ? (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
+      <span className={`flex gap-2 items-center`}>
         <FaRegCheckCircle />
         {status}
       </span>
     ) : status === "Transit" ? (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
-        <RiShipLine />
+      <span className={`flex gap-2 items-center font-bold text-blue-800 text-shadow-md`}>
+        <RiShipLine/>
         {status}
       </span>
     ) : status === "In Japan" ? (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
+      <span className={`flex gap-2 items-center`}>
         <img src={JapanFlag} alt="Jp flag" className="h-4" />
         {status}
       </span>
     ) : status === "Clearance UK" ? (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
+      <span className={`flex gap-2 items-center`}>
         <img src={UKFlag} alt="UK flag" className="h-4" />
         {status}
       </span>
     ) : (
-      <span className={`bg-gray-50 border-gray-400 ${pillClass}`}>
+      <span className={`flex gap-2 items-center`}>
         <FaRegCheckCircle />
         Unknown Status
       </span>
@@ -265,11 +264,23 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       </div>
     );
   };
+  const formatDate = (dateString:string) => {
+    // Convert the input date string to a Date object
+    const date = new Date(dateString);
+  
+    // Extract year, month, and day
+    const year = date.getFullYear();
+    const month = date.toLocaleString("default", { month: "short" });
+    const day = String(date.getDate()).padStart(2, "0");
+  
+    // Return the formatted date as yyyy:MM:DD
+    return `${year} ${month} ${day}`;
+  };
 
   return (
     <>
       <tr
-        className={`border ${customClass} ${car.hidden && `bg-[#FDC5C5]`}`}
+        className={`border ${customClass} ${car.hidden ? `bg-[#FDC5C5]`: car.hold ? `bg-gray-50` : ""}`}
         style={style}
         onClick={() =>
           onClick
@@ -288,7 +299,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             <FaChevronDown
               size={12}
               className={`text-gray-400 flex-shrink-0 transition-all ${
-                more && "rotate-180"
+                !more && "rotate-180"
               }`}
             />
           </div>
@@ -301,9 +312,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             <img
               src={car.image}
               alt="car Image"
-              className={`rounded-md w-44 h-28 object-cover object- ${
-                car.hold && "opacity-50 pointer-events-none"
-              }`}
+              className={`rounded-md w-44 h-28 object-cover`}
               loading="lazy"
             />
             <span
@@ -352,10 +361,10 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           <div className="flex justify-center">{statusPill(car.status)}</div>
         </td>
         <td className="border px-4 leading-6">
-          <p>{car.soldDate}</p>
+          <p>{formatDate(car.soldDate)}</p>
           <p>
-            {car.milleage}, {car.exteriorColor.split("#")[0]}
-          </p>
+            {car.milleage.toLocaleString()} km, <span className="capitalize">{car.exteriorColor.split("#")[0]}</span>
+            </p>
           <p>
             {car.enginePower.toLocaleString()} cc, {car.fuelType}
           </p>
