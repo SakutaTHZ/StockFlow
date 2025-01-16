@@ -274,7 +274,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
     const day = String(date.getDate()).padStart(2, "0");
   
     // Return the formatted date as yyyy:MM:DD
-    return `${year} ${month} ${day}`;
+    return `${year}-${month}-${day}`;
   };
 
   return (
@@ -376,7 +376,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           <p>{car.vesselFrom}</p>
           <p className="flex items-center text-sm text-gray-500">
             <MdOutlineCalendarMonth size={12} />
-            {car.soldDate.replace(/ /g, "-")}
+            {formatDate(car.soldDate.replace(/ /g, "-"))}
           </p>
         </td>
         <td className="border px-4 leading-6">
@@ -386,7 +386,6 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
                 ¥{car.price.toLocaleString()}
               </span>
             )}
-            <br />
             <span
               className={`text-2xl font-bold ${
                 car.discount === 0 ? "text-blue-950" : "text-red-600"
@@ -425,12 +424,12 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             </p>
 
             <p>
-              <span className="w-28 text-gray-500">ETD:</span> {car.sentDate}
+              <span className="w-28 text-gray-500">ETD:</span> {formatDate(car.sentDate)}
             </p>
 
             <p>
               <span className="w-28 text-gray-500">Destination:</span>{" "}
-              {car.vesselTo}
+              {car.vesselFrom}
             </p>
           </div>
         </td>

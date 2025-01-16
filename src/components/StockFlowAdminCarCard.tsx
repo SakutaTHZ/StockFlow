@@ -175,7 +175,14 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             Add Banner
           </button>
           <button
-            onClick={() => (onClick ? onClick() : handleCardClick(car))}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (onClick) {
+                onClick();
+              } else {
+                handleCardClick(car, `/detail/${car.id.slice(1)}`);
+              }
+            }}
             className="font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
           >
             Customer View
@@ -264,12 +271,12 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
 
   const [cars] = useAtom(carAtom);
 
-  const handleCardClick = (carData: CarData) => {
-    console.log("clicked" + carData.id);
-    navigate(`/StockDetail/${carData.id.slice(1)}`, {
-      state: { card: carData, cars: cars },
-    });
-  };
+  const handleCardClick = (carData: CarData, toPath: string) => {
+      console.log("clicked" + carData.id);
+      navigate(toPath, {
+        state: { card: carData, cars: cars },
+      });
+    };
   return (
     <>
       <div
@@ -282,7 +289,11 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
       >
         <div
           className="ClickArea absolute z-10 w-full h-full"
-          onClick={() => (onClick ? onClick() : handleCardClick(car))}
+          onClick={() =>
+            onClick
+              ? onClick()
+              : handleCardClick(car, `/StockDetail/${car.id.slice(1)}`)
+          }
         ></div>
         <div className="head relative flex h-42">
           <img
@@ -462,8 +473,11 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
               </p>
             </div>
             <button
-              className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold"
-              onClick={() => handleCardClick(car)}
+              className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold" onClick={() =>
+                onClick
+                  ? onClick()
+                  : handleCardClick(car, `/StockDetail/${car.id.slice(1)}`)
+              }
             >
               View All Details <IoIosArrowForward />
             </button>
