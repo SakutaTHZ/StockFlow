@@ -27,7 +27,7 @@ import RangeSlider from "../components/RangeSlider";
 import StockFlowAdminCarCard from "../components/StockFlowAdminCarCard";
 import StockFlowAdminTableRow from "../components/StockFlowAdminTableRow";
 import CNetAdminNav from "../components/CNetAdminNav";
-import { TiArrowSortedDown, TiArrowUnsorted } from "react-icons/ti";
+import { TiArrowSortedDown} from "react-icons/ti";
 import SeriesDropDown from "../components/SeriesDropDown";
 import React from "react";
 
@@ -173,7 +173,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
 
   const displayedCars = filterCars();
 
-  const [rowCollapsed, setRowCollapsed] = useState(false);
+  const [rowCollapsed, setRowCollapsed] = useState(true);
   const handleRowCollapse = () => {
     setRowCollapsed(!rowCollapsed);
   };
@@ -391,7 +391,12 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                           />
                         </div>
                       </th>
-                      <th className="border">Stock Number</th>
+                      <th className="border">
+                        <p className="flex justify-center items-center gap-2">
+                          Stock Number
+                          <TiArrowSortedDown />
+                        </p>
+                      </th>
                       <th className="border">Model</th>
                       <th className="border">
                         <p className="flex justify-center items-center gap-2">
@@ -410,7 +415,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       <th className="border">
                         <p className="flex justify-center items-center gap-2">
                           Price
-                          <TiArrowUnsorted />
+                          <TiArrowSortedDown />
                         </p>
                       </th>
                       <th className="border"></th>

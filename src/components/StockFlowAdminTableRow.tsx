@@ -381,11 +381,6 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
         </td>
         <td className="border px-4 leading-6">
           <p className=" relative">
-            {car.discount != 0 && (
-              <span className="line-through text-gray-400">
-                ¥{car.price.toLocaleString()}
-              </span>
-            )}
             <span
               className={`text-2xl font-bold ${
                 car.discount === 0 ? "text-blue-950" : "text-red-600"
@@ -403,6 +398,12 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             >
               CIF
             </span>
+            {" "}
+            {car.discount != 0 && (
+              <span className="line-through text-gray-400">
+                ¥{car.price.toLocaleString()}
+              </span>
+            )}
           </p>
           <p className="text-sm text-gray-500">$6,000 UK duty/ VAT paid!</p>
         </td>
@@ -453,7 +454,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             <div className="grid grid-cols-2 gap-4 my-4">
               <p className="flex gap-2 items-center">
                 <PiCarProfile size={20} className="flex-shrink-0 transform scale-x-[-1]" />
-                {car.exteriorColor.split("#")[0]}
+                <span className="capitalize">{car.exteriorColor.split("#")[0]}</span>
               </p>
               <p className="flex gap-2 items-center">
                 <img src={Vin} alt="" className="brightness-50" />
@@ -461,7 +462,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
               </p>
               <p className="flex gap-2 items-center">
                 <PiCalendarDots size={20} className="flex-shrink-0" />
-                {car.registerDate}
+                {formatDate(car.registerDate)}
               </p>
               <p className="flex gap-2 items-center">
                 <PiCar size={20} className="flex-shrink-0" />

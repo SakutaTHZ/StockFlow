@@ -277,6 +277,20 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
         state: { card: carData, cars: cars },
       });
     };
+
+    
+  const formatDate = (dateString:string) => {
+    // Convert the input date string to a Date object
+    const date = new Date(dateString);
+  
+    // Extract year, month, and day
+    const year = date.getFullYear();
+    const month = date.toLocaleString("default", { month: "short" });
+    const day = String(date.getDate()).padStart(2, "0");
+  
+    // Return the formatted date as yyyy:MM:DD
+    return `${year}-${month}-${day}`;
+  };
   return (
     <>
       <div
@@ -418,7 +432,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
                   size={20}
                   className="flex-shrink-0 transform scale-x-[-1]"
                 />
-                {car.exteriorColor.split("#")[0]}
+                <span className="capitalize">{car.exteriorColor.split("#")[0]}</span>
               </p>
               <p className="flex gap-2 items-center">
                 <img src={Vin} alt="" className="brightness-50" />
@@ -426,7 +440,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
               </p>
               <p className="flex gap-2 items-center">
                 <PiCalendarDots size={20} className="flex-shrink-0" />
-                {car.registerDate}
+                {formatDate(car.registerDate)}
               </p>
               <p className="flex gap-2 items-center">
                 <PiCar size={20} className="flex-shrink-0" />
