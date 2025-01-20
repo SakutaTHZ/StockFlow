@@ -72,7 +72,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
         {status}
       </span>
     ) : status === "Transit" ? (
-      <span className={`bg-gray-50 ${pillClass}`}>
+      <span className={` font-semibold border flex gap-1 items-center w-fit px-2 rounded-md text-blue-800`}>
         <RiShipLine />
         {status}
       </span>
@@ -136,13 +136,13 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           {isCarHidden ? (
             <div className="w-full flex border-b">
               <button
-                onClick={()=>{console.log("On List")}}
+              onClick={()=>{setIsCarHidden(false)}}
                 className="flex items-center justify-center gap-1 border-r font-semibold w-1/2 text-nowrap text-left p-2 px-4 hover:bg-gray-100"
               >
                 <MdAddCircleOutline size={20} className="flex-shrink-0"/>On List
               </button>
               <button
-                onClick={()=>{console.log("Off List")}}
+              onClick={()=>{setIsCarHidden(false)}}
                 className="flex items-center justify-center gap-1 font-semibold  w-1/2 text-nowrap text-left p-2 px-4 hover:bg-gray-100"
               >
                 <MdRemoveCircleOutline size={20} className="flex-shrink-0"/>Off List
@@ -279,18 +279,15 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     };
 
     
-  const formatDate = (dateString:string) => {
-    // Convert the input date string to a Date object
-    const date = new Date(dateString);
-  
-    // Extract year, month, and day
-    const year = date.getFullYear();
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = String(date.getDate()).padStart(2, "0");
-  
-    // Return the formatted date as yyyy:MM:DD
-    return `${year}-${month}-${day}`;
-  };
+    const formatDate = (dateString: string) => {
+      const date = new Date(dateString);
+    
+      const year = date.getFullYear();
+      const month = date.toLocaleString("en-US", { month: "short" });
+      const day = String(date.getDate()).padStart(2, "0");
+    
+      return `${year}-${month}-${day}`;
+    };
   return (
     <>
       <div
@@ -315,7 +312,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             alt="car Image"
             className={`rounded-t-md h-42 ${
               car.highlightStatus === "Sold"
-                ? "opacity-100"
+                ? "opacity-50"
                 : car.hold && "opacity-50 pointer-events-none"
             }`}
             loading="lazy"
@@ -399,8 +396,8 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
               {car.vim}
             </span>
             <span className={` ${pillClass}`}>
-              <MdOutlinePinDrop />
-              {car.yardArea}
+              <RiShipLine />
+              {car.yard}
             </span>
 
             <span className={`${pillClass}`}>

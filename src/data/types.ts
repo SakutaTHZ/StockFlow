@@ -38,6 +38,7 @@ export interface AuctionGrade {
 
 export interface CarData {
   id: string;
+  yard:string;
   name: string;
   package: string;
   type: string;

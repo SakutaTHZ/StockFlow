@@ -48,7 +48,7 @@ export const getRandomCarEngines = () => {
 };
 
 // yardArea
-export const yardArea: string[] = ["Kasai-K", "Tokyo-T", "KyuShu-Q","Real International Yokohama "];
+export const yardArea: string[] = ["Kasai-K", "Tokyo-T", "KyuShu-Q" , "Osaka-O", "Nagoya-N"];
 export const getRandomYardArea = () => {
   return yardArea[Math.floor(Math.random() * yardArea.length)];
 };
@@ -263,12 +263,29 @@ export const getTransmission = () => {
   return transmissions[Math.floor(Math.random() * transmissions.length)];
 };
 
+export const yardname = [
+  "Akebono",
+  "Apex Logistics Nagoya",
+  "ECL Kawasaki-Kisarazu",
+  "Eddy Pandas Auto Parts Co",
+  "Fujiwara Sukematsu",
+  "J Trading Kawasaki",
+  "MK International Hakata",
+  "Real International Yokohama",
+  "Sync Logistics Osaka",
+  "THK",
+];
+export const getRandomYardName = () => {
+  return yardname[Math.floor(Math.random() * yardname.length)];
+};
+
 export const generateCardData = (): CarData => {
   const newHighlightStatus = getRandomHighlightStatus();
   const date = getRandomDate();
 
   const cardData: CarData = {
     id: getRandomCarId(),
+    yard: getRandomYardName(),
     name: getRandomCarNames(),
     package: getRandomPackage(),
     type: getRandomCarTypes(),

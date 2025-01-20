@@ -41,6 +41,14 @@ interface adminPageProps {
 const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const [cars] = useAtom(carAtom);
 
+  const sortedCars = cars.slice().sort((a, b) => {
+    // Sort cars with hidden === true to the end
+    if (a.hidden === b.hidden) {
+      return 0; // No change if both are either hidden or not hidden
+    }
+    return a.hidden ? 1 : -1; // Move hidden cars to the end
+  });
+
   const [isFilterOn, setIsFilterOn] = useState(false);
   const [isTableView, setIsTableView] = useState(false);
 
@@ -51,7 +59,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const navigate = useNavigate();
 
   const handleClearAll = () => {
-    navigate(`/StockFlowAdmin`, { state: { cars, page: 1 } });
+    navigate(`/StockFlowAdmin`, { state: { sortedCars, page: 1 } });
   };
 
   // Pagination
@@ -71,26 +79,26 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const [filteredModels, setFilteredModels] = useState<Model[]>([]);
 
   const market = [
-    { name: "All", count: cars.length },
+    { name: "All", count: sortedCars.length },
     {
       name: "My Market",
-      count: cars.filter((car) => car.marketType === true).length,
+      count: sortedCars.filter((car) => car.marketType === true).length,
     },
     {
       name: "Other Market",
-      count: cars.filter((car) => car.marketType === false).length,
+      count: sortedCars.filter((car) => car.marketType === false).length,
     },
   ];
   const filteredCarStatus = carStatus.map((status) => {
-    const count = cars.filter((car) => car.status === status).length;
+    const count = sortedCars.filter((car) => car.status === status).length;
     return { name: status, count };
   });
   const filteredYardArea = yardArea.map((area) => {
-    const count = cars.filter((car) => car.yardArea === area).length;
+    const count = sortedCars.filter((car) => car.yardArea === area).length;
     return { name: area, count };
   });
   const filteredExteriorColor = exteriorColor.map((color) => {
-    const count = cars.filter((car) => car.exteriorColor === color).length;
+    const count = sortedCars.filter((car) => car.exteriorColor === color).length;
     return { name: color, count };
   });
 
@@ -103,13 +111,13 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
 
   const carOptions = React.useMemo(
     () => [
-      `All Vehicles (${cars.length})`,
-      `Available vehicles (${cars.filter((car) => car.hold === false).length})`,
+      `All Vehicles (${sortedCars.length})`,
+      `Available vehicles (${sortedCars.filter((car) => car.hold === false).length})`,
       `Unavailable vehicles (${
-        cars.filter((car) => car.hold === true).length
+        sortedCars.filter((car) => car.hold === true).length
       })`,
     ],
-    [cars]
+    [sortedCars]
   );
   const visibilityOptions = [`Visible and Hidden`, `Hidden`, `Visible`];
 
@@ -132,7 +140,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
 
   // Sort the cars
   const filterCars = React.useCallback(() => {
-    let filteredCars = cars;
+    let filteredCars = sortedCars;
     // Apply visibility filter
     if (selectedVisibility === "Visible") {
       filteredCars = filteredCars.filter((car) => !car.hidden);
@@ -169,7 +177,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
           return 0; // "Most Relevant" or fallback
       }
     });
-  }, [cars, selectedVisibility, selectedSort, carAvailability, carOptions]);
+  }, [sortedCars, selectedVisibility, selectedSort, carAvailability, carOptions]);
 
   const displayedCars = filterCars();
 
@@ -447,7 +455,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       key={index}
                       car={car}
                       extraStatus={car.showExtraStatus}
-                      customClass={``}
+                      customClass={` ${car.hidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
                       style={{
                         animationDelay: `${
                           index === 0 ? "0s" : `${index * 0.1}s`

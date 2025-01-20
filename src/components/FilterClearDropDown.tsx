@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 
@@ -24,6 +24,13 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showAllChecked, setShowAllChecked] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
+
+  // Helper function to check if there are changes
+  const checkIfEdited = React.useCallback((currentCheckedItems: string[]) => {
+    // Mark as edited if any items are selected
+    setIsEdited(currentCheckedItems.length > 0);
+  }, []);
 
   const handleCheckboxChange = (item: ListDataItem) => {
     const updatedCheckedItems = checkedItems.includes(item.name)
@@ -31,8 +38,8 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
       : [...checkedItems, item.name];
 
     setCheckedItems(updatedCheckedItems);
-
     setSelectAll(updatedCheckedItems.length === listData.length);
+    checkIfEdited(updatedCheckedItems); // Check if the state is edited
   };
 
   const handleRemoveCheckedItem = (item: string) => {
@@ -40,22 +47,28 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
       (checked) => checked !== item
     );
     setCheckedItems(updatedCheckedItems);
-
     setSelectAll(updatedCheckedItems.length === listData.length);
+    checkIfEdited(updatedCheckedItems); // Check if the state is edited
   };
 
   const handleSelectAllChange = () => {
-    if (selectAll) {
-      setCheckedItems([]);
-    } else {
-      setCheckedItems(listData.map((item) => item.name));
-    }
+    const updatedCheckedItems = selectAll
+      ? [] // Deselect all
+      : listData.map((item) => item.name); // Select all
+
+    setCheckedItems(updatedCheckedItems);
     setSelectAll(!selectAll);
+    checkIfEdited(updatedCheckedItems); // Check if the state is edited
   };
 
-  const filteredData = listData.filter((item) => item.name.toLowerCase());
-
   const toggleShowAllChecked = () => setShowAllChecked(!showAllChecked);
+
+  useEffect(() => {
+    // Ensure `isEdited` updates if `listData` changes
+    checkIfEdited(checkedItems);
+  }, [checkedItems, listData, checkIfEdited]);
+
+  const filteredData = listData.filter((item) => item.name.toLowerCase());
 
   return (
     <div className={`flex flex-col gap-1 px-4 py-2.5 ${customClass}`}>
@@ -63,7 +76,12 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
         className="flex items-center justify-between w-full cursor-pointer"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <b>{boxName}</b>
+        <div className="flex items-center gap-2">
+          <b>{boxName}</b>
+          {isEdited && (
+            <div className="bg-yellow-400 h-2 w-2 rounded-full"></div>
+          )}
+        </div>
         <FaChevronDown
           size={14}
           className={`text-gray-400 cursor-pointer transition-all duration-500 ${
@@ -92,13 +110,13 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
                 <div
                   key={index}
                   className="flex justify-between cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleCheckboxChange(item)}
                 >
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={checkedItems.includes(item.name)}
                       className="form-checkbox h-3 w-3 cursor-pointer"
+                      onChange={() => handleCheckboxChange(item)}
                     />
                     {color ? (
                       <>
@@ -108,12 +126,14 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
                             backgroundColor: `#${item.name.split("#")[1]}`,
                           }}
                         ></div>
-                        <span className="pointer-events-none capitalize"  onClick={() => handleCheckboxChange(item)}>
+                        <span className="pointer-events-none capitalize">
                           {item.name.split("#")[0]}
                         </span>
                       </>
                     ) : (
-                      <span className="pointer-events-none capitalize"  onClick={() => handleCheckboxChange(item)}>{item.name}</span>
+                      <span className="pointer-events-none capitalize">
+                        {item.name}
+                      </span>
                     )}
                   </label>
                   <span className="text-gray-500">{item.count}</span>
@@ -134,7 +154,21 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
               onClick={() => handleRemoveCheckedItem(item)}
               className="flex gap-1 items-center bg-gray-100 px-2 rounded-full shadow-sm cursor-pointer"
             >
-              {item}
+              {color ? (
+                <>
+                  <div
+                    className={`w-4 h-4 rounded-full`}
+                    style={{
+                      backgroundColor: `#${item.split("#")[1]}`,
+                    }}
+                  ></div>
+                  <span className="pointer-events-none capitalize">
+                    {item.split("#")[0]}
+                  </span>
+                </>
+              ) : (
+                <span className="pointer-events-none capitalize">{item}</span>
+              )}
               <MdClose size={14} className="text-gray-600" />
             </div>
           ))}
@@ -154,7 +188,23 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
                   onClick={() => handleRemoveCheckedItem(item)}
                   className="flex gap-1 items-center bg-gray-100 px-2 rounded-full shadow-sm cursor-pointer"
                 >
-                  {item}
+                  {color ? (
+                    <>
+                      <div
+                        className={`w-4 h-4 rounded-full`}
+                        style={{
+                          backgroundColor: `#${item.split("#")[1]}`,
+                        }}
+                      ></div>
+                      <span className="pointer-events-none capitalize">
+                        {item.split("#")[0]}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="pointer-events-none capitalize">
+                      {item}
+                    </span>
+                  )}
                   <MdClose size={14} className="text-gray-600" />
                 </div>
               ))}

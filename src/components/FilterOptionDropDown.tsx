@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
-import { LuUndoDot } from "react-icons/lu";
 
 interface ListDataItem {
   name: string;
@@ -13,7 +12,7 @@ interface FilterOptionDropDownProps {
   listData: ListDataItem[];
   customClass?: string;
   placeholder?: string;
-  onSelectionChange?: any;
+  onSelectionChange?: (selectedItems: string[]) => void;
 }
 
 const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
@@ -27,6 +26,13 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showAllChecked, setShowAllChecked] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
+
+  // Helper function to check if the component is edited
+  const checkIfEdited = (currentCheckedItems: string[]) => {
+    // Mark as edited if any items are selected
+    setIsEdited(currentCheckedItems.length > 0);
+  };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -38,6 +44,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
         ? prev.filter((checked) => checked !== item.name)
         : [...prev, item.name];
 
+      checkIfEdited(newCheckedItems); // Check if the state is edited
       if (onSelectionChange) {
         onSelectionChange(newCheckedItems);
       }
@@ -46,7 +53,11 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
   };
 
   const handleRemoveCheckedItem = (item: string) => {
-    setCheckedItems((prev) => prev.filter((checked) => checked !== item));
+    setCheckedItems((prev) => {
+      const newCheckedItems = prev.filter((checked) => checked !== item);
+      checkIfEdited(newCheckedItems); // Check if the state is edited
+      return newCheckedItems;
+    });
   };
 
   const filteredData = listData.filter((item) =>
@@ -63,7 +74,12 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
         className="flex items-center justify-between w-full cursor-pointer"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <b>{boxName}</b>
+        <div className="flex items-center gap-2">
+          <b>{boxName}</b>
+          {isEdited && (
+            <div className="bg-yellow-400 h-2 w-2 rounded-full"></div>
+          )}
+        </div>
         <FaChevronDown
           size={14}
           className={`text-gray-400 cursor-pointer transition-all duration-500 ${
@@ -87,7 +103,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
                 <div
                   key={index}
                   className="flex justify-between cursor-pointer transition-all hover:bg-gray-100"
-                      onClick={() => handleCheckboxChange(item)}
+                  onClick={() => handleCheckboxChange(item)}
                 >
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -95,7 +111,9 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
                       checked={checkedItems.includes(item.name)}
                       className="form-checkbox h-3 w-3 cursor-pointer"
                     />
-                    <span  onClick={() => handleCheckboxChange(item)}>{item.name}</span>
+                    <span onClick={() => handleCheckboxChange(item)}>
+                      {item.name}
+                    </span>
                   </label>
                   <span className="text-gray-500">{item.count}</span>
                 </div>
@@ -154,7 +172,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
                 onClick={toggleShowAllChecked}
                 className="text-blue-500 text-sm cursor-pointer mt-1 bg-blue-100 px-2 rounded-full"
               >
-                <LuUndoDot />
+                Collapse
               </button>
             </>
           )}
