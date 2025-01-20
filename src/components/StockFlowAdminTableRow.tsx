@@ -361,7 +361,10 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           <div className="flex justify-center">{statusPill(car.status)}</div>
         </td>
         <td className="border px-4 leading-6">
-          <p>{formatDate(car.soldDate)}</p>
+          <p className="flex gap-1 items-center text-gray-700">
+            <MdOutlineCalendarMonth size={12} />
+            {formatDate(car.soldDate.replace(/ /g, "-"))}
+          </p>
           <p>
             {car.milleage.toLocaleString()} km, <span className="capitalize">{car.exteriorColor.split("#")[0]}</span>
             </p>
@@ -374,7 +377,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
         </td>
         <td className="border px-4 leading-6">
           <p>{car.vesselFrom}</p>
-          <p className="flex items-center text-sm text-gray-500">
+          <p className="flex gap-1 items-center text-sm text-gray-500">
             <MdOutlineCalendarMonth size={12} />
             {formatDate(car.soldDate.replace(/ /g, "-"))}
           </p>
