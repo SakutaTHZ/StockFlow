@@ -110,13 +110,13 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
                 <div
                   key={index}
                   className="flex justify-between cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleCheckboxChange(item)}
                 >
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={checkedItems.includes(item.name)}
                       className="form-checkbox h-3 w-3 cursor-pointer"
-                      onChange={() => handleCheckboxChange(item)}
                     />
                     {color ? (
                       <>
@@ -126,12 +126,22 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
                             backgroundColor: `#${item.name.split("#")[1]}`,
                           }}
                         ></div>
-                        <span className="pointer-events-none capitalize">
+                        <span
+                          className="pointer-events-auto capitalize"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
                           {item.name.split("#")[0]}
                         </span>
                       </>
                     ) : (
-                      <span className="pointer-events-none capitalize">
+                      <span
+                        className="pointer-events-auto capitalize"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
                         {item.name}
                       </span>
                     )}

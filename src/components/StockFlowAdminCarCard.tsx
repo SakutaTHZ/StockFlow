@@ -20,7 +20,7 @@ import CarAvailability from "../assets/check availability.svg";
 import {
   MdOutlineTimer,
   MdOutlineNewReleases,
-  MdOutlinePinDrop,
+  // MdOutlinePinDrop,
   MdAirlineSeatReclineNormal,
   MdAddCircleOutline,
   MdRemoveCircleOutline,
@@ -98,9 +98,9 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
 
   const dropdownRef = useRef<HTMLDivElement>(null); // Ref for dropdown
 
-  const toggleDropdown = () => {
-    setcardOption((prev) => !prev);
-  };
+  // const toggleDropdown = () => {
+  //   setcardOption((prev) => !prev);
+  // };
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -124,7 +124,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
       <div className="relative" ref={dropdownRef}>
         <button
           className="option z-20 absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border"
-          onClick={toggleDropdown}
+          onClick={()=>setcardOption(true)}
         >
           <BsThreeDots />
         </button>
@@ -400,10 +400,10 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
               {car.yard}
             </span>
 
-            <span className={`${pillClass}`}>
+            {/* <span className={`${pillClass}`}>
               <MdOutlinePinDrop />
               {car.vesselFrom}
-            </span>
+            </span> */}
           </div>
         </div>
       </div>
