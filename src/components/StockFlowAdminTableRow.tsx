@@ -207,7 +207,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
     return (
       <div className="relative flex justify-center" ref={optionsRef}>
         <button
-          className="option z-20 bg-gray-200 p-3 rounded-md shadow-md border"
+          className="option bg-gray-200 p-3 rounded-md shadow-md border"
           onClick={(e) => {
             e.stopPropagation();
             toggleCardOptions(cardId);
