@@ -58,6 +58,14 @@ export default {
         moveCircle1: 'move1 15s infinite alternate ease-in-out',
         moveCircle2: 'move2 25s infinite alternate ease-in-out',
       },
+      colors: {
+        primary: '#9b26af',
+        secondary: '#711fab',
+        gray: {
+          DEFAULT: '#999999',
+          light: '#DEDEDE',
+        },
+      },
     },
   },
   plugins: [

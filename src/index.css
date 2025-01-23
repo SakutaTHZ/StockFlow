@@ -180,15 +180,51 @@ input[type="checkbox"] {
   background: rgb(252 211 77);
 }
 
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Slider container */
+.custom-slider {
+  width: 100%;
+  box-sizing: border-box;
+}
+.custom-slider .noUi-target {
+  width: 100%;
+  margin: 0%;
+  height: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background: #e0e0e0;
+}
+.custom-slider .noUi-base {
+  width: 100%;
+}
+
+.custom-slider .noUi-connect {
+  height: 20px;
+  background: #ffc158;
+}
+
+.custom-slider .noUi-handle {
+  width: 20px !important;
+  height: 20px !important;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #ffc158;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: grab;
+}
+/* .custom-slider .noUi-handle-upper {
+  transform: translateX(-15px); 
 } */
+.custom-slider .noUi-handle::before,
+.custom-slider .noUi-handle::after {
+  content: none; 
+}
+
+
+.custom-slider .noUi-tooltip {
+  background: #ffc158;
+  color: #fff; 
+  font-size: 12px;
+  border-radius: 3px;
+  padding: 5px;
+}

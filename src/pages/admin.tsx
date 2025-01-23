@@ -30,6 +30,7 @@ import CNetAdminNav from "../components/CNetAdminNav";
 import { TiArrowSortedDown} from "react-icons/ti";
 import SeriesDropDown from "../components/SeriesDropDown";
 import React from "react";
+import RangeSlider_V2 from "../components/RangeSlider_V2";
 
 interface adminPageProps {
   customClass?: string;
@@ -335,9 +336,15 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               boxName={"Registration Year"}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
             />
-            <RangeSlider
+            {/* <RangeSlider
               min={0}
               max={10000}
+              boxName={"Mileage km"}
+              customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
+            /> */}
+            <RangeSlider_V2
+              min={0}
+              max={5000}
               boxName={"Mileage km"}
               customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
             />
