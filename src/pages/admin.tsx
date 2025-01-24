@@ -264,7 +264,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                 />
                 <DropDown
                   options={sortOptions}
-                  optionBoxClass="md:w-fit right-0 z-50"
+                  optionBoxClass="md:w-fit h-fit right-0 z-50"
                   buttonClass="py-2"
                   onSelectionChange={handleSortChange}
                 />

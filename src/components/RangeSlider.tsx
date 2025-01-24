@@ -45,7 +45,8 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   return (
     <div className={`px-4 py-2 bg-gray-50 ${customClass}`}>
       {/* Slider Label */}
-      <div className="flex flex-col gap-2 cursor-pointer">
+      <div className="flex flex-col gap-2 cursor-pointer"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
         <label className="font-bold flex items-center justify-between cursor-pointer">
           <p className="flex gap-2 items-center">
             {boxName}
@@ -58,7 +59,6 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
             className={`text-gray-400 cursor-pointer transition-all duration-500 ${
               isDropdownOpen ? "rotate-180" : ""
             }`}
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           />
         </label>
 

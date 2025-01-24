@@ -38,7 +38,7 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
 
       sliderRef.current.style.backgroundColor = "#f0f0f0";
       sliderRef.current.style.borderRadius = "10px";
-      sliderRef.current.style.height = "10px";
+      sliderRef.current.style.height = "12px";
 
       noUiSlider.create(slider, {
         start: [min, max],
@@ -59,7 +59,6 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
           parseFloat(newValues[0]),
           parseFloat(newValues[1]),
         ];
-        // Update state only if values have changed
         setValues((prevValues) =>
           prevValues[0] !== parsedValues[0] || prevValues[1] !== parsedValues[1]
             ? parsedValues
@@ -78,7 +77,10 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
   return (
     <div className={`px-4 py-2 bg-gray-50 ${customClass}`}>
       {/* Slider Label */}
-      <div className="flex flex-col gap-2 cursor-pointer">
+      <div
+        className="flex flex-col gap-2 cursor-pointer"
+        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+      >
         <label className="font-bold flex items-center justify-between cursor-pointer">
           <p className="flex gap-2 items-center">
             {boxName}
@@ -91,41 +93,40 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
             className={`text-gray-400 cursor-pointer transition-all duration-500 ${
               isDropdownOpen ? "rotate-180" : ""
             }`}
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           />
         </label>
       </div>
-      {isDropdownOpen && (
-        <div
-          className={`flex flex-wrap mt-3 justify-between w-full ${customClass}`}
-        >
-          <div className="flex gap-2">
-            <label className="relative cursor-pointer">
-              <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
-                From
-              </span>
-              <input
-                type="text"
-                value={values[0]}
-                onChange={(e) => handleInputChange(0, e.target.value)}
-                className="w-full h-9 border-2 rounded-md pl-10 pr-2 text-sm"
-              />
-            </label>
-            <label className="relative cursor-pointer">
-              <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
-                To
-              </span>
-              <input
-                type="text"
-                value={values[1]}
-                onChange={(e) => handleInputChange(1, e.target.value)}
-                className="w-full h-9 border-2 rounded-md pl-10 pr-2 text-sm"
-              />
-            </label>
-          </div>
-          <div ref={sliderRef} className="w-full mt-3 custom-slider"></div>
+      <div
+        className={`flex flex-wrap mt-3 justify-between w-full ${customClass} ${
+          isDropdownOpen ? "flex" : "hidden"
+        }`}
+      >
+        <div className="flex gap-2">
+          <label className="relative cursor-pointer">
+            <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
+              From
+            </span>
+            <input
+              type="text"
+              value={values[0]}
+              onChange={(e) => handleInputChange(0, e.target.value)}
+              className="w-full h-9 border-2 rounded-md pl-10 pr-2 text-sm"
+            />
+          </label>
+          <label className="relative cursor-pointer">
+            <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
+              To
+            </span>
+            <input
+              type="text"
+              value={values[1]}
+              onChange={(e) => handleInputChange(1, e.target.value)}
+              className="w-full h-9 border-2 rounded-md pl-10 pr-2 text-sm"
+            />
+          </label>
         </div>
-      )}
+        <div ref={sliderRef} className="w-full mt-3 custom-slider"></div>
+      </div>
     </div>
   );
 };

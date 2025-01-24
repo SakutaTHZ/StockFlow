@@ -343,8 +343,8 @@ export const generateCardData = (): CarData => {
 
 // Sort Options
 export const sortOptions = [
-  "Most Relevant",
-  "Date Latest to Oldest",
+  // "Most Relevant",
+  // "Date Latest to Oldest",
   "Date Oldest to Latest",
   "Price Low to High",
   "Price High to Low",

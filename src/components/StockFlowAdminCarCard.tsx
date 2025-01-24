@@ -318,7 +318,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             loading="lazy"
           />
           {car.highlightStatus === "Sold" ? (
-            <div className="absolute w-full bottom-0 flex items-center bg-green-500 bg-opacity-40 text-white font-semibold justify-center gap-2 py-2">
+            <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-2 py-2">
               <FaMoneyBillTrendUp />
               Sold
             </div>
