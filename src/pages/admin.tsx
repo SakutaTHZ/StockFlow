@@ -23,7 +23,6 @@ import { FaCarTunnel } from "react-icons/fa6";
 import FilterOptionDropDown from "../components/FilterOptionDropDown";
 import { makeBrandData, Model } from "../data/arrayData";
 import FilterClearDropDown from "../components/FilterClearDropDown";
-import RangeSlider from "../components/RangeSlider";
 import StockFlowAdminCarCard from "../components/StockFlowAdminCarCard";
 import StockFlowAdminTableRow from "../components/StockFlowAdminTableRow";
 import CNetAdminNav from "../components/CNetAdminNav";
@@ -378,25 +377,19 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               />
             )}
 
-            <RangeSlider
+            <RangeSlider_V2
               min={1900}
               max={2025}
               boxName={"Registration Year"}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
             />
-            {/* <RangeSlider
-              min={0}
-              max={10000}
-              boxName={"Mileage km"}
-              customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
-            /> */}
             <RangeSlider_V2
               min={0}
-              max={5000}
+              max={99999}
               boxName={"Mileage km"}
               customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
             />
-            <RangeSlider
+            <RangeSlider_V2
               min={0}
               max={99999}
               boxName={"Price ¥"}
@@ -460,24 +453,26 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       >
                         <p className="flex justify-center items-center gap-2">
                           Stock Number
-                          {selectedSortDirection.column === "Stock Number" &&
+                          {selectedSortDirection.column === "Stock Number" ?
                             (selectedSortDirection.direction === "asc" ? (
                               <TiArrowSortedDown className="rotate-180" />
                             ) : (
                               <TiArrowSortedDown />
-                            ))}
+                            )) : 
+                            <TiArrowSortedDown className="opacity-25"/>}
                         </p>
                       </th>
                       <th className="border">Model</th>
                       <th className="border" onClick={() => handleSort("Status")}>
                         <p className="flex justify-center items-center gap-2">
                           Status
-                          {selectedSortDirection.column === "Status" &&
+                          {selectedSortDirection.column === "Status" ?
                             (selectedSortDirection.direction === "asc" ? (
                               <TiArrowSortedDown className="rotate-180" />
                             ) : (
                               <TiArrowSortedDown />
-                            ))}
+                            )) : 
+                            <TiArrowSortedDown className="opacity-25"/>}
                         </p>
                       </th>
                       <th className="border">Car Specs</th>
@@ -485,12 +480,13 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       <th className="border" onClick={() => handleSort("ETY")}>
                         <p className="flex justify-center items-center gap-2">
                           ETY
-                          {selectedSortDirection.column === "ETY" &&
+                          {selectedSortDirection.column === "ETY" ?
                             (selectedSortDirection.direction === "asc" ? (
                               <TiArrowSortedDown className="rotate-180" />
                             ) : (
                               <TiArrowSortedDown />
-                            ))}
+                            )) : 
+                            <TiArrowSortedDown className="opacity-25"/>}
                         </p>
                       </th>
                       <th className="border" onClick={() => handleSort("Price")}>

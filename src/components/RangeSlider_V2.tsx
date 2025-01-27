@@ -20,12 +20,41 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
   const [values, setValues] = useState<[number, number]>([min, max]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
+  const [timeoutId, setTimeoutId] = useState<number | null>(null);
 
   const handleInputChange = (index: 0 | 1, value: string) => {
     const numericValue = parseFloat(value);
     if (!isNaN(numericValue)) {
       const newValues = [...values] as [number, number];
+
       newValues[index] = numericValue;
+
+      // Apply constraints
+      if (index === 1 && newValues[1] > max) {
+        newValues[1] = max;
+      }
+      if (index === 0 && newValues[0] < min) {
+        newValues[0] = min;
+      }
+
+      // Clear any existing timeouts to avoid multiple pending checks
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
+
+      // Set a new timeout to check after a delay
+      const id = setTimeout(() => {
+        if (newValues[0] > newValues[1]) {
+          newValues[1] = newValues[0];
+          sliderRef.current?.noUiSlider?.set(newValues);
+          setValues(newValues);
+        }
+      }, 3000);
+
+      // Update the timeout state
+      setTimeoutId(id);
+
+      // Update the values immediately
       sliderRef.current?.noUiSlider?.set(newValues);
       setValues(newValues);
     }
@@ -107,7 +136,7 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
               From
             </span>
             <input
-              type="text"
+              type="number"
               value={values[0]}
               onChange={(e) => handleInputChange(0, e.target.value)}
               className="w-full h-9 border-2 rounded-md pl-10 pr-2 text-sm"
@@ -118,7 +147,7 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
               To
             </span>
             <input
-              type="text"
+              type="number"
               value={values[1]}
               onChange={(e) => handleInputChange(1, e.target.value)}
               className="w-full h-9 border-2 rounded-md pl-10 pr-2 text-sm"
