@@ -212,9 +212,9 @@ input[type="checkbox"] {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   cursor: grab;
 }
-/* .custom-slider .noUi-handle-upper {
-  transform: translateX(-15px); 
-} */
+.custom-slider .noUi-handle {
+  transform: translateX(-7px); 
+}
 .custom-slider .noUi-handle::before,
 .custom-slider .noUi-handle::after {
   content: none; 

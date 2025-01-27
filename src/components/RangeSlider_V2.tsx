@@ -112,7 +112,7 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
               onChange={(e) => handleInputChange(0, e.target.value)}
               className="w-full h-9 border-2 rounded-md pl-10 pr-2 text-sm"
             />
-          </label>
+          </label>  
           <label className="relative cursor-pointer">
             <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
               To

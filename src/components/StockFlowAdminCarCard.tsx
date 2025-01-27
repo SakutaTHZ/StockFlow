@@ -292,7 +292,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
     <>
       <div
         className={`card relative animate-slideUp transition-all w-full rounded-lg border-2 ${customClass} ${
-          extraStatus ? "border-[#FFC158]" : "border-gray-100"
+          extraStatus ? "border-[#FFC158] border-[3px]" : "border-gray-100"
         } ${car.hold && " opacity-15 border-[#FFC158]"} ${
           car.highlightStatus === "Sold" && `border-green-400`
         } ${isCarHidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
@@ -335,7 +335,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           )}
           {extraStatus && (
             <span
-              className={`status absolute top-2 right-0 flex items-center gap-2 text-sm font-semibold border border-[#FFC158] rounded-s-full px-3 py-1 bg-gradient-to-r from-[#FFF3DE] to-[#FFC158] ${
+              className={`status absolute top-2 right-0 flex items-center gap-2 text-sm font-semibold border border-2 border-[#FFC158] rounded-s-full px-3 py-1 bg-gradient-to-r from-[#FFF3DE] to-[#FFC158] ${
                 (car.hold || car.highlightStatus === "Sold") && "hidden"
               }`}
             >
@@ -357,7 +357,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           <p className="text-lg font-semibold">
             {car.name} {car.type}
           </p>
-          <p>
+          <p className={`${car.hold && 'opacity-0 -my-3'}`}>
             <span
               className={`text-2xl font-bold ${
                 car.discount === 0 ? "text-blue-950" : "text-red-600"

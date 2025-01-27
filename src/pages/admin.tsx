@@ -27,7 +27,7 @@ import RangeSlider from "../components/RangeSlider";
 import StockFlowAdminCarCard from "../components/StockFlowAdminCarCard";
 import StockFlowAdminTableRow from "../components/StockFlowAdminTableRow";
 import CNetAdminNav from "../components/CNetAdminNav";
-import { TiArrowSortedDown} from "react-icons/ti";
+import { TiArrowSortedDown } from "react-icons/ti";
 import SeriesDropDown from "../components/SeriesDropDown";
 import React from "react";
 import RangeSlider_V2 from "../components/RangeSlider_V2";
@@ -99,7 +99,9 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     return { name: area, count };
   });
   const filteredExteriorColor = exteriorColor.map((color) => {
-    const count = sortedCars.filter((car) => car.exteriorColor === color).length;
+    const count = sortedCars.filter(
+      (car) => car.exteriorColor === color
+    ).length;
     return { name: color, count };
   });
 
@@ -113,7 +115,9 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const carOptions = React.useMemo(
     () => [
       `All Vehicles (${sortedCars.length})`,
-      `Available vehicles (${sortedCars.filter((car) => car.hold === false).length})`,
+      `Available vehicles (${
+        sortedCars.filter((car) => car.hold === false).length
+      })`,
       `Unavailable vehicles (${
         sortedCars.filter((car) => car.hold === true).length
       })`,
@@ -139,6 +143,19 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     setSelectedSort(option);
   };
 
+  const [selectedSortDirection, setSelectedSortDirection] = useState<{
+    column: string;
+    direction: "asc" | "desc";
+  }>({ column: "Stock Number", direction: "asc" });
+
+  const handleSort = (column: string) => {
+    setSelectedSortDirection((prev) => ({
+      column,
+      direction:
+        prev.column === column && prev.direction === "asc" ? "desc" : "asc",
+    }));
+  };
+
   // Sort the cars
   const filterCars = React.useCallback(() => {
     let filteredCars = sortedCars;
@@ -157,6 +174,30 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
 
     // Apply sorting
     return filteredCars.sort((a, b) => {
+      const { column, direction } = selectedSortDirection;
+
+      let compareValue = 0;
+
+      switch (column) {
+        case "Stock Number":
+          compareValue = a.id.localeCompare(b.id);
+          break;
+        case "Status":
+          compareValue = a.status.localeCompare(b.status);
+          break;
+        case "ETY":
+          compareValue =
+            new Date(a.soldDate).getTime() - new Date(b.soldDate).getTime();
+          break;
+        case "Price":
+          compareValue = a.price - b.price;
+          break;
+        default:
+          return 0; // No sorting applied for unspecified columns
+      }
+
+      compareValue = direction === "asc" ? compareValue : -compareValue;
+
       switch (selectedSort) {
         case "Date Latest to Oldest":
           return (
@@ -175,10 +216,17 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
         case "Mileage High to Low":
           return b.milleage - a.milleage;
         default:
-          return 0; // "Most Relevant" or fallback
+          return compareValue; // Use column sorting if no specific sort option is selected
       }
     });
-  }, [sortedCars, selectedVisibility, selectedSort, carAvailability, carOptions]);
+  }, [
+    sortedCars,
+    selectedVisibility,
+    selectedSort,
+    carAvailability,
+    carOptions,
+    selectedSortDirection,
+  ]);
 
   const displayedCars = filterCars();
 
@@ -397,7 +445,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                   <thead>
                     <tr className="border">
                       <th className="border h-16" onClick={handleRowCollapse}>
-                        <div className="flex justify-center">
+                        <div className="flex justify-center cursor-pointer">
                           <FaChevronDown
                             size={12}
                             className={`text-gray-400 flex-shrink-0 transition-all ${
@@ -406,31 +454,55 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                           />
                         </div>
                       </th>
-                      <th className="border">
+                      <th
+                        className="border"
+                        onClick={() => handleSort("Stock Number")}
+                      >
                         <p className="flex justify-center items-center gap-2">
                           Stock Number
-                          <TiArrowSortedDown />
+                          {selectedSortDirection.column === "Stock Number" &&
+                            (selectedSortDirection.direction === "asc" ? (
+                              <TiArrowSortedDown className="rotate-180" />
+                            ) : (
+                              <TiArrowSortedDown />
+                            ))}
                         </p>
                       </th>
                       <th className="border">Model</th>
-                      <th className="border">
+                      <th className="border" onClick={() => handleSort("Status")}>
                         <p className="flex justify-center items-center gap-2">
                           Status
-                          <TiArrowSortedDown />
+                          {selectedSortDirection.column === "Status" &&
+                            (selectedSortDirection.direction === "asc" ? (
+                              <TiArrowSortedDown className="rotate-180" />
+                            ) : (
+                              <TiArrowSortedDown />
+                            ))}
                         </p>
                       </th>
                       <th className="border">Car Specs</th>
                       <th className="border">Chassis Number</th>
-                      <th className="border">
+                      <th className="border" onClick={() => handleSort("ETY")}>
                         <p className="flex justify-center items-center gap-2">
                           ETY
-                          <TiArrowSortedDown />
+                          {selectedSortDirection.column === "ETY" &&
+                            (selectedSortDirection.direction === "asc" ? (
+                              <TiArrowSortedDown className="rotate-180" />
+                            ) : (
+                              <TiArrowSortedDown />
+                            ))}
                         </p>
                       </th>
-                      <th className="border">
+                      <th className="border" onClick={() => handleSort("Price")}>
                         <p className="flex justify-center items-center gap-2">
                           Price
-                          <TiArrowSortedDown />
+                          {selectedSortDirection.column === "Price" ?
+                            (selectedSortDirection.direction === "asc" ? (
+                              <TiArrowSortedDown className="rotate-180" />
+                            ) : (
+                              <TiArrowSortedDown />
+                            )) : 
+                            <TiArrowSortedDown className="opacity-25"/>}
                         </p>
                       </th>
                       <th className="border"></th>
@@ -462,7 +534,9 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       key={index}
                       car={car}
                       extraStatus={car.showExtraStatus}
-                      customClass={` ${car.hidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
+                      customClass={` ${
+                        car.hidden && `bg-[#FDC5C5] border-red-400`
+                      } transition-all`}
                       style={{
                         animationDelay: `${
                           index === 0 ? "0s" : `${index * 0.1}s`

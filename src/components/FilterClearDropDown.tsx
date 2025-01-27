@@ -125,6 +125,9 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
                           style={{
                             backgroundColor: `#${item.name.split("#")[1]}`,
                           }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
                         ></div>
                         <span
                           className="pointer-events-auto capitalize"

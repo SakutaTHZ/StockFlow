@@ -122,8 +122,15 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
         <PiChartLineDownBold /> {car.highlightStatus}
       </span>
     ) : status === "Sold" ? (
+      // <span
+      //   className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
+      //     car.hold && "hidden"
+      //   }`}
+      // >
+      //   <FaMoneyBillTrendUp /> {car.highlightStatus}
+      // </span>
       <span
-        className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
+        className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
           car.hold && "hidden"
         }`}
       >
@@ -280,7 +287,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   return (
     <>
       <tr
-        className={`border ${customClass} ${car.hidden ? `bg-[#FDC5C5]`: car.hold ? `bg-gray-50` : ""}`}
+        className={`border ${customClass} ${car.hidden ? `bg-[#FDC5C5]`: car.hold ? `bg-gray-50` : ""} ${car.showExtraStatus && 'bg-[#FFC158] bg-opacity-20'}`}
         style={style}
         onClick={() =>
           onClick
@@ -295,7 +302,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             showMore();
           }}
         >
-          <div className="flex justify-center">
+          <div className="flex justify-center cursor-pointer">
             <FaChevronDown
               size={12}
               className={`text-gray-400 flex-shrink-0 transition-all ${
@@ -312,7 +319,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             <img
               src={car.image}
               alt="car Image"
-              className={`rounded-md w-44 h-28 object-cover`}
+              className={`rounded-md w-44 h-28 object-cover ${car.hold && 'opacity-50'}`}
               loading="lazy"
             />
             <span
@@ -363,7 +370,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
         <td className="border px-4 leading-6">
           <p className="flex gap-1 items-center text-gray-700">
             <MdOutlineCalendarMonth size={12} />
-            {formatDate(car.soldDate.replace(/ /g, "-"))}
+            {formatDate(car.soldDate)}
           </p>
           <p>
             {car.milleage.toLocaleString()} km, <span className="capitalize">{car.exteriorColor.split("#")[0]}</span>
@@ -379,11 +386,11 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           <p>{car.vesselFrom}</p>
           <p className="flex gap-1 items-center text-sm text-gray-500">
             <MdOutlineCalendarMonth size={12} />
-            {formatDate(car.soldDate.replace(/ /g, "-"))}
+            {formatDate(car.soldDate)}
           </p>
         </td>
         <td className="border px-4 leading-6">
-          <p className=" relative">
+          <p className={`relative ${car.hold && 'hidden'}`}>
             <span
               className={`text-2xl font-bold ${
                 car.discount === 0 ? "text-blue-950" : "text-red-600"
@@ -408,7 +415,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
               </span>
             )}
           </p>
-          <p className="text-sm text-gray-500">$6,000 UK duty/ VAT paid!</p>
+          <p className={`text-sm text-gray-500 ${car.hold && 'hidden'}`}>$6,000 UK duty/ VAT paid!</p>
         </td>
         <td className="border">{cardOptionBox(car.id)}</td>
       </tr>
@@ -504,7 +511,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
               </p>
               <p className="flex gap-2 items-center">
                 <LuMapPin size={20} className="flex-shrink-0" />
-                {car.vesselFrom}
+                {car.yard}
               </p>
             </div>
             <button
