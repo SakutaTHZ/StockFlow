@@ -14,8 +14,8 @@ import CarRow from "../components/CarRow";
 import FilterOptionDropDown from "../components/FilterOptionDropDown";
 import { makeBrandData, Model } from "../data/arrayData";
 import FilterClearDropDown from "../components/FilterClearDropDown";
-import RangeSlider from "../components/RangeSlider";
 import CNetNav from "../components/CNetNav";
+import RangeSlider_V2 from "../components/RangeSlider_V2";
 
 interface indexPageProps {
   customClass?: string;
@@ -233,19 +233,19 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               />
             )}
 
-            <RangeSlider
+            <RangeSlider_V2
               min={1900}
               max={2025}
               boxName={"Registration Year"}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
             />
-            <RangeSlider
+            <RangeSlider_V2
               min={0}
               max={10000}
               boxName={"Mileage km"}
               customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
             />
-            <RangeSlider
+            <RangeSlider_V2
               min={0}
               max={99999}
               boxName={"Price ¥"}
