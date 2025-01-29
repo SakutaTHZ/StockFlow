@@ -21,7 +21,7 @@ interface indexPageProps {
   customClass?: string;
 }
 interface LocationState {
-  page?: number; // Optional since it might not always exist
+  page?: number; 
 }
 
 const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
