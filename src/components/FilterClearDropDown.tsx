@@ -12,6 +12,8 @@ interface FilterClearDropDownProps {
   boxName?: string;
   listData: ListDataItem[];
   color?: boolean;
+  onSelectionChange?: (selectedItems: string[]) => void;
+  resetFilters?: boolean;
 }
 
 const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
@@ -19,12 +21,25 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
   boxName = "Data",
   listData,
   color,
+  onSelectionChange,
+  resetFilters,
 }) => {
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showAllChecked, setShowAllChecked] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
+  
+  useEffect(() => {
+    if (resetFilters) {
+      setCheckedItems([]);
+      setSelectAll(false);
+      setIsEdited(false);
+      if (onSelectionChange) {
+        onSelectionChange([]); // Notify parent of the reset
+      }
+    }
+  }, [resetFilters, onSelectionChange]);
 
   // Helper function to check if there are changes
   const checkIfEdited = React.useCallback((currentCheckedItems: string[]) => {
@@ -39,7 +54,10 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
 
     setCheckedItems(updatedCheckedItems);
     setSelectAll(updatedCheckedItems.length === listData.length);
-    checkIfEdited(updatedCheckedItems); // Check if the state is edited
+    checkIfEdited(updatedCheckedItems);
+    if (onSelectionChange) {
+      onSelectionChange(updatedCheckedItems); // Notify parent component
+    }
   };
 
   const handleRemoveCheckedItem = (item: string) => {
@@ -49,6 +67,9 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
     setCheckedItems(updatedCheckedItems);
     setSelectAll(updatedCheckedItems.length === listData.length);
     checkIfEdited(updatedCheckedItems); // Check if the state is edited
+    if (onSelectionChange) {
+      onSelectionChange(updatedCheckedItems); // Notify parent component
+    }
   };
 
   const handleSelectAllChange = () => {
@@ -59,6 +80,9 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
     setCheckedItems(updatedCheckedItems);
     setSelectAll(!selectAll);
     checkIfEdited(updatedCheckedItems); // Check if the state is edited
+    if (onSelectionChange) {
+      onSelectionChange(updatedCheckedItems); // Notify parent component
+    }
   };
 
   const toggleShowAllChecked = () => setShowAllChecked(!showAllChecked);
@@ -117,6 +141,7 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
                       type="checkbox"
                       checked={checkedItems.includes(item.name)}
                       className="form-checkbox h-3 w-3 cursor-pointer"
+                      onChange={() => handleCheckboxChange(item)}
                     />
                     {color ? (
                       <>

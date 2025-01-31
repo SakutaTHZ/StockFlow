@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaRegTrashAlt,
   FaSearch,
@@ -18,7 +18,7 @@ import {
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
 // import Pagination from "../components/Pagination";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { FaCarTunnel } from "react-icons/fa6";
 import FilterOptionDropDown from "../components/FilterOptionDropDown";
 import { makeBrandData, Model } from "../data/arrayData";
@@ -42,11 +42,10 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const [cars] = useAtom(carAtom);
 
   const sortedCars = cars.slice().sort((a, b) => {
-    // Sort cars with hidden === true to the end
     if (a.hidden === b.hidden) {
-      return 0; // No change if both are either hidden or not hidden
+      return 0;
     }
-    return a.hidden ? 1 : -1; // Move hidden cars to the end
+    return a.hidden ? 1 : -1;
   });
 
   const [isFilterOn, setIsFilterOn] = useState(false);
@@ -56,11 +55,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     setIsFilterOn(!isFilterOn);
   };
 
-  const navigate = useNavigate();
-
-  const handleClearAll = () => {
-    navigate(`/StockFlowAdmin`, { state: { sortedCars, page: 1 } });
-  };
+  // const navigate = useNavigate();
 
   // Pagination
 
@@ -234,6 +229,60 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     setRowCollapsed(!rowCollapsed);
   };
 
+  const [chosenFilter, setChosenFilter] = useState({
+    status: [],
+    price: { from: 0, to: 0 },
+    market: [],
+    makeBrand: [],
+    model: [],
+    registrationYear: { from: 1900, to: 2025 },
+    mileage: { from: 0, to: 99999 },
+    yardArea: [],
+    exteriorColor: [],
+  });
+
+  const handleUpdateFilter = (
+    key: string,
+    value: string | number | string[] | { from: number; to: number }
+  ) => {
+    setChosenFilter((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+  const [resetFilters, setResetFilters] = useState(false);
+
+  const handleClearAll = () => {
+    setResetFilters(true);
+    setTimeout(() => setResetFilters(false), 0);
+
+    setChosenFilter({
+      status: [],
+      price: { from: 0, to: 0 },
+      market: [],
+      makeBrand: [],
+      model: [],
+      registrationYear: { from: 1900, to: 2025 },
+      mileage: { from: 0, to: 99999 },
+      yardArea: [],
+      exteriorColor: [],
+    });
+  };
+
+  useEffect(() => {
+    console.log("Updated filter state:", chosenFilter);
+  }, [chosenFilter]);
+
+  const handleSelectionChangeWrapper = (selectedItems: string[]) => {
+    if (handleMakeSelection) {
+      handleMakeSelection(selectedItems); // Call the existing function
+    }
+
+    if (handleUpdateFilter) {
+      handleUpdateFilter("model", selectedItems); // Call the other function with the required arguments
+    }
+  };
+
   return (
     <>
       <CNetAdminNav customClass="sticky top-0" />
@@ -350,6 +399,10 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               }
               boxName="Market"
               listData={market}
+              resetFilters={resetFilters}
+              onSelectionChange={(selectedItems: string[]) =>
+                handleUpdateFilter("market", selectedItems)
+              }
             />
 
             <FilterOptionDropDown
@@ -360,7 +413,8 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               }))}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
               placeholder={"Search Make/Brand"}
-              onSelectionChange={handleMakeSelection}
+              resetFilters={resetFilters}
+              onSelectionChange={handleSelectionChangeWrapper}
             />
 
             {filteredModels.length > 0 && (
@@ -374,6 +428,10 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                   "animate-slideRight bg-slate-50 model border-b border-b-gray-200"
                 }
                 placeholder={"Search Model"}
+                resetFilters={resetFilters}
+                onSelectionChange={(selectedItems: string[]) =>
+                  handleUpdateFilter("model", selectedItems)
+                }
               />
             )}
 
@@ -382,18 +440,21 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               max={2025}
               boxName={"Registration Year"}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
+              reset={resetFilters}
             />
             <RangeSlider_V2
               min={0}
               max={99999}
               boxName={"Mileage km"}
               customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
+              reset={resetFilters}
             />
             <RangeSlider_V2
               min={0}
               max={99999}
               boxName={"Price ¥"}
               customClass={"bg-slate-50 price border-b border-b-gray-200"}
+              reset={resetFilters}
             />
 
             <FilterClearDropDown
@@ -402,6 +463,10 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               }
               boxName="Status"
               listData={filteredCarStatus}
+              resetFilters={resetFilters}
+              onSelectionChange={(selectedItems: string[]) =>
+                handleUpdateFilter("status", selectedItems)
+              }
             />
 
             <FilterClearDropDown
@@ -410,6 +475,10 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               }
               boxName="Yard Area"
               listData={filteredYardArea}
+              resetFilters={resetFilters}
+              onSelectionChange={(selectedItems: string[]) =>
+                handleUpdateFilter("yardArea", selectedItems)
+              }
             />
 
             <FilterClearDropDown
@@ -419,6 +488,10 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               boxName="Exterior Color"
               listData={filteredExteriorColor}
               color={true}
+              resetFilters={resetFilters}
+              onSelectionChange={(selectedItems: string[]) =>
+                handleUpdateFilter("exteriorColor", selectedItems)
+              }
             />
           </div>
 
@@ -453,26 +526,33 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       >
                         <p className="flex justify-center items-center gap-2">
                           Stock Number
-                          {selectedSortDirection.column === "Stock Number" ?
-                            (selectedSortDirection.direction === "asc" ? (
+                          {selectedSortDirection.column === "Stock Number" ? (
+                            selectedSortDirection.direction === "asc" ? (
                               <TiArrowSortedDown className="rotate-180" />
                             ) : (
                               <TiArrowSortedDown />
-                            )) : 
-                            <TiArrowSortedDown className="opacity-25"/>}
+                            )
+                          ) : (
+                            <TiArrowSortedDown className="opacity-25" />
+                          )}
                         </p>
                       </th>
                       <th className="border">Model</th>
-                      <th className="border" onClick={() => handleSort("Status")}>
+                      <th
+                        className="border"
+                        onClick={() => handleSort("Status")}
+                      >
                         <p className="flex justify-center items-center gap-2">
                           Status
-                          {selectedSortDirection.column === "Status" ?
-                            (selectedSortDirection.direction === "asc" ? (
+                          {selectedSortDirection.column === "Status" ? (
+                            selectedSortDirection.direction === "asc" ? (
                               <TiArrowSortedDown className="rotate-180" />
                             ) : (
                               <TiArrowSortedDown />
-                            )) : 
-                            <TiArrowSortedDown className="opacity-25"/>}
+                            )
+                          ) : (
+                            <TiArrowSortedDown className="opacity-25" />
+                          )}
                         </p>
                       </th>
                       <th className="border">Car Specs</th>
@@ -480,25 +560,32 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       <th className="border" onClick={() => handleSort("ETY")}>
                         <p className="flex justify-center items-center gap-2">
                           ETY
-                          {selectedSortDirection.column === "ETY" ?
-                            (selectedSortDirection.direction === "asc" ? (
+                          {selectedSortDirection.column === "ETY" ? (
+                            selectedSortDirection.direction === "asc" ? (
                               <TiArrowSortedDown className="rotate-180" />
                             ) : (
                               <TiArrowSortedDown />
-                            )) : 
-                            <TiArrowSortedDown className="opacity-25"/>}
+                            )
+                          ) : (
+                            <TiArrowSortedDown className="opacity-25" />
+                          )}
                         </p>
                       </th>
-                      <th className="border" onClick={() => handleSort("Price")}>
+                      <th
+                        className="border"
+                        onClick={() => handleSort("Price")}
+                      >
                         <p className="flex justify-center items-center gap-2">
                           Price
-                          {selectedSortDirection.column === "Price" ?
-                            (selectedSortDirection.direction === "asc" ? (
+                          {selectedSortDirection.column === "Price" ? (
+                            selectedSortDirection.direction === "asc" ? (
                               <TiArrowSortedDown className="rotate-180" />
                             ) : (
                               <TiArrowSortedDown />
-                            )) : 
-                            <TiArrowSortedDown className="opacity-25"/>}
+                            )
+                          ) : (
+                            <TiArrowSortedDown className="opacity-25" />
+                          )}
                         </p>
                       </th>
                       <th className="border"></th>

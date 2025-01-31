@@ -8,6 +8,7 @@ interface RangeSliderProps {
   min: number;
   max: number;
   customClass?: string;
+  reset: boolean; // Added reset prop (boolean)
 }
 
 const RangeSlider_V2: React.FC<RangeSliderProps> = ({
@@ -15,6 +16,7 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
   min,
   max,
   customClass,
+  reset,
 }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [values, setValues] = useState<[number, number]>([min, max]);
@@ -54,9 +56,20 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
       sliderRef.current?.noUiSlider?.set(newValues);
       setValues(newValues);
 
-      setIsEdited(newValues[0] !== initialValues[0] || newValues[1] !== initialValues[1]);
+      setIsEdited(
+        newValues[0] !== initialValues[0] || newValues[1] !== initialValues[1]
+      );
     }
   };
+
+  // Reset function triggered by parent through the reset prop
+  useEffect(() => {
+    if (reset) {
+      setValues(initialValues); // Reset to initial values
+      setIsEdited(false); // Mark as not edited
+      sliderRef.current?.noUiSlider?.set(initialValues); // Reset slider
+    }
+  }, [reset, initialValues]);
 
   useEffect(() => {
     if (sliderRef.current) {
@@ -92,7 +105,8 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
         );
 
         setIsEdited(
-          parsedValues[0] !== initialValues[0] || parsedValues[1] !== initialValues[1]
+          parsedValues[0] !== initialValues[0] ||
+            parsedValues[1] !== initialValues[1]
         );
       };
 
@@ -130,7 +144,7 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
           isDropdownOpen ? "flex" : "hidden"
         }`}
       >
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2">
           <label className="relative cursor-pointer">
             <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
               From
@@ -139,9 +153,9 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
               type="number"
               value={values[0]}
               onChange={(e) => handleInputChange(0, e.target.value)}
-              className="w-full h-9 border-2 rounded-md pl-10 pr-2 text-sm"
+              className="w-full h-9 border-2 rounded-md pl-14 pr-2 text-sm"
             />
-          </label>  
+          </label>
           <label className="relative cursor-pointer">
             <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
               To
@@ -150,7 +164,7 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
               type="number"
               value={values[1]}
               onChange={(e) => handleInputChange(1, e.target.value)}
-              className="w-full h-9 border-2 rounded-md pl-10 pr-2 text-sm"
+              className="w-full h-9 border-2 rounded-md pl-14 pr-2 text-sm"
             />
           </label>
         </div>

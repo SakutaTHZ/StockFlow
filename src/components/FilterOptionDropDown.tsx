@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 
@@ -13,6 +13,7 @@ interface FilterOptionDropDownProps {
   customClass?: string;
   placeholder?: string;
   onSelectionChange?: (selectedItems: string[]) => void;
+  resetFilters?: boolean; // New prop to trigger reset from parent
 }
 
 const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
@@ -21,6 +22,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
   customClass,
   placeholder = "Search here",
   onSelectionChange,
+  resetFilters,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
@@ -28,11 +30,17 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
   const [showAllChecked, setShowAllChecked] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
 
-  // Helper function to check if the component is edited
-  const checkIfEdited = (currentCheckedItems: string[]) => {
-    // Mark as edited if any items are selected
-    setIsEdited(currentCheckedItems.length > 0);
-  };
+  // Reset the component state when parent triggers resetFilters
+  useEffect(() => {
+    if (resetFilters) {
+      setCheckedItems([]);
+      setSearchTerm("");
+      setIsEdited(false);
+      if (onSelectionChange) {
+        onSelectionChange([]); // Notify parent about reset
+      }
+    }
+  }, [resetFilters, onSelectionChange]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -44,7 +52,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
         ? prev.filter((checked) => checked !== item.name)
         : [...prev, item.name];
 
-      checkIfEdited(newCheckedItems); // Check if the state is edited
+      setIsEdited(newCheckedItems.length > 0);
       if (onSelectionChange) {
         onSelectionChange(newCheckedItems);
       }
@@ -55,7 +63,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
   const handleRemoveCheckedItem = (item: string) => {
     setCheckedItems((prev) => {
       const newCheckedItems = prev.filter((checked) => checked !== item);
-      checkIfEdited(newCheckedItems); // Check if the state is edited
+      setIsEdited(newCheckedItems.length > 0);
       return newCheckedItems;
     });
   };
@@ -64,9 +72,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const toggleShowAllChecked = () => {
-    setShowAllChecked(!showAllChecked);
-  };
+  const toggleShowAllChecked = () => setShowAllChecked(!showAllChecked);
 
   return (
     <div className={`flex flex-col gap-1 px-4 py-2.5 ${customClass}`}>
@@ -125,7 +131,6 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
         </div>
       )}
 
-      {/* Checked items box with "3 more..." and "Collapse" logic */}
       {!isDropdownOpen && checkedItems.length > 0 && (
         <div className="checked-box flex flex-wrap gap-1 mt-2">
           {checkedItems.slice(0, 3).map((item, index) => (
@@ -135,14 +140,10 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
               className="flex gap-1 items-center bg-gray-100 w-fit px-2 rounded-full shadow-sm hover:bg-gray-200 cursor-pointer transition"
             >
               {item}
-              <MdClose
-                size={14}
-                className="text-gray-600 hover:text-gray-800"
-              />
+              <MdClose size={14} className="text-gray-600 hover:text-gray-800" />
             </div>
           ))}
 
-          {/* Show '3 more' if there are more than 3 items */}
           {checkedItems.length > 3 && !showAllChecked && (
             <button
               onClick={toggleShowAllChecked}
@@ -152,7 +153,6 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
             </button>
           )}
 
-          {/* Show remaining items and collapse button */}
           {showAllChecked && (
             <>
               {checkedItems.slice(3).map((item, index) => (
@@ -162,10 +162,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
                   className="flex gap-1 items-center bg-gray-100 w-fit px-2 rounded-full shadow-sm hover:bg-gray-200 cursor-pointer transition"
                 >
                   {item}
-                  <MdClose
-                    size={14}
-                    className="text-gray-600 hover:text-gray-800"
-                  />
+                  <MdClose size={14} className="text-gray-600 hover:text-gray-800" />
                 </div>
               ))}
               <button
