@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   FaRegTrashAlt,
   FaSearch,
@@ -240,7 +240,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     setRowCollapsed(!rowCollapsed);
   };
 
-  const [chosenFilter, setChosenFilter] = useState({
+  const [, setChosenFilter] = useState({
     status: [],
     price: { from: 0, to: 0 },
     market: [],
@@ -279,10 +279,6 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
       exteriorColor: [],
     });
   };
-
-  useEffect(() => {
-    console.log("Updated filter state:", chosenFilter);
-  }, [chosenFilter]);
 
   const handleSelectionChangeWrapper = (selectedItems: string[]) => {
     if (handleMakeSelection) {

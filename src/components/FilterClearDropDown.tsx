@@ -38,6 +38,7 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
       if (onSelectionChange) {
         onSelectionChange([]); // Notify parent of the reset
       }
+      setIsDropdownOpen(false);
     }
   }, [resetFilters, onSelectionChange]);
 

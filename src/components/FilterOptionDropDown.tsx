@@ -39,6 +39,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
       if (onSelectionChange) {
         onSelectionChange([]); // Notify parent about reset
       }
+      setIsDropdownOpen(false);
     }
   }, [resetFilters, onSelectionChange]);
 
