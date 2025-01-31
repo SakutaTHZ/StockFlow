@@ -42,10 +42,13 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const [cars] = useAtom(carAtom);
 
   const sortedCars = cars.slice().sort((a, b) => {
-    if (a.hidden === b.hidden) {
-      return 0;
+    const aHidden = a.hidden === true;
+    const bHidden = b.hidden === true;
+  
+    if (aHidden === bHidden) {
+      return 0; 
     }
-    return a.hidden ? 1 : -1;
+    return aHidden ? 1 : -1; 
   });
 
   const [isFilterOn, setIsFilterOn] = useState(false);
@@ -153,66 +156,74 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   // Sort the cars
   const filterCars = React.useCallback(() => {
     let filteredCars = sortedCars;
+  
     // Apply visibility filter
     if (selectedVisibility === "Visible") {
       filteredCars = filteredCars.filter((car) => !car.hidden);
     } else if (selectedVisibility === "Hidden") {
       filteredCars = filteredCars.filter((car) => car.hidden);
     }
-
+  
+    // Apply car availability filter
     if (carAvailability === carOptions[1]) {
       filteredCars = filteredCars.filter((car) => !car.hold);
     } else if (carAvailability === carOptions[2]) {
       filteredCars = filteredCars.filter((car) => car.hold);
     }
-
+  
     // Apply sorting
-    return filteredCars.sort((a, b) => {
-      const { column, direction } = selectedSortDirection;
-
-      let compareValue = 0;
-
-      switch (column) {
-        case "Stock Number":
-          compareValue = a.id.localeCompare(b.id);
-          break;
-        case "Status":
-          compareValue = a.status.localeCompare(b.status);
-          break;
-        case "ETY":
-          compareValue =
-            new Date(a.soldDate).getTime() - new Date(b.soldDate).getTime();
-          break;
-        case "Price":
-          compareValue = a.price - b.price;
-          break;
-        default:
-          return 0; // No sorting applied for unspecified columns
-      }
-
-      compareValue = direction === "asc" ? compareValue : -compareValue;
-
-      switch (selectedSort) {
-        case "Date Latest to Oldest":
-          return (
-            new Date(b.sentDate).getTime() - new Date(a.sentDate).getTime()
-          );
-        case "Date Oldest to Latest":
-          return (
-            new Date(a.sentDate).getTime() - new Date(b.sentDate).getTime()
-          );
-        case "Price Low to High":
-          return a.price - b.price;
-        case "Price High to Low":
-          return b.price - a.price;
-        case "Mileage Low to High":
-          return a.milleage - b.milleage;
-        case "Mileage High to Low":
-          return b.milleage - a.milleage;
-        default:
-          return compareValue; // Use column sorting if no specific sort option is selected
-      }
-    });
+    return filteredCars
+      .sort((a, b) => {
+        // First, ensure hidden cars go to the bottom
+        if (a.hidden !== b.hidden) {
+          return a.hidden ? 1 : -1; // hidden cars at the bottom
+        }
+  
+        const { column, direction } = selectedSortDirection;
+  
+        let compareValue = 0;
+  
+        switch (column) {
+          case "Stock Number":
+            compareValue = a.id.localeCompare(b.id);
+            break;
+          case "Status":
+            compareValue = a.status.localeCompare(b.status);
+            break;
+          case "ETY":
+            compareValue =
+              new Date(a.soldDate).getTime() - new Date(b.soldDate).getTime();
+            break;
+          case "Price":
+            compareValue = a.price - b.price;
+            break;
+          default:
+            return 0; // No sorting applied for unspecified columns
+        }
+  
+        compareValue = direction === "asc" ? compareValue : -compareValue;
+  
+        switch (selectedSort) {
+          case "Date Latest to Oldest":
+            return (
+              new Date(b.sentDate).getTime() - new Date(a.sentDate).getTime()
+            );
+          case "Date Oldest to Latest":
+            return (
+              new Date(a.sentDate).getTime() - new Date(b.sentDate).getTime()
+            );
+          case "Price Low to High":
+            return a.price - b.price;
+          case "Price High to Low":
+            return b.price - a.price;
+          case "Mileage Low to High":
+            return a.milleage - b.milleage;
+          case "Mileage High to Low":
+            return b.milleage - a.milleage;
+          default:
+            return compareValue; // Use column sorting if no specific sort option is selected
+        }
+      });
   }, [
     sortedCars,
     selectedVisibility,
@@ -220,7 +231,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     carAvailability,
     carOptions,
     selectedSortDirection,
-  ]);
+  ]);  
 
   const displayedCars = filterCars();
 
@@ -598,7 +609,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                         <StockFlowAdminTableRow
                           customClass={`${
                             car.highlightStatus === "Sold" &&
-                            "bg-green-50 border-green-300"
+                            "bg-gray-100 border-green-300"
                           }`}
                           key={index}
                           car={car}

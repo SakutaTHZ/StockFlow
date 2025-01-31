@@ -65,7 +65,7 @@ const DropDown: React.FC<DropDownProps> = ({
         onClick={toggleDropdown}
         className={`${
           noDropDown && "hidden"
-        } inline-flex justify-between gap-1 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
+        } inline-flex justify-between text-black gap-1 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
       >
         {selectedOption}
         <FaChevronDown size={12} className="text-gray-400 flex-shrink-0" />

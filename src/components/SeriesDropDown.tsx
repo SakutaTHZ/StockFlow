@@ -81,7 +81,7 @@ const SeriesDropDown: React.FC<SeriesDropDownProps> = ({
     >
       {/* Dropdown Button */}
       <div
-        className={`flex gap-2 items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 py-1.5 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
+        className={`cursor-pointer flex gap-2 items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 py-1.5 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
         onClick={toggleDropdown}
         aria-expanded={isOpen}
       >
@@ -100,7 +100,7 @@ const SeriesDropDown: React.FC<SeriesDropDownProps> = ({
             </button>
           ))
         ) : (
-          <span className="text-gray-500 text-nowrap py-0.5">Choose Series</span>
+          <span className="text-black text-nowrap py-0.5">Choose Series</span>
         )}
         <FaChevronDown size={12} className="text-gray-400 flex-shrink-0 ml-auto" />
       </div>

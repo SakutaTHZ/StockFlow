@@ -21,7 +21,7 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
   const sliderRef = useRef<HTMLDivElement>(null);
   const [values, setValues] = useState<[number, number]>([min, max]);
   const [initialValues] = useState<[number, number]>([min, max]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(reset);
   const [isEdited, setIsEdited] = useState(false);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
 

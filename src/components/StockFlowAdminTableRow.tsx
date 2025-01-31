@@ -287,7 +287,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   return (
     <>
       <tr
-        className={`border ${customClass} ${car.hidden ? `bg-[#FDC5C5]`: car.hold ? `bg-gray-50` : ""} ${car.showExtraStatus && 'bg-[#FFC158] bg-opacity-20'}`}
+        className={`border ${customClass} ${car.hidden ? `bg-[#FDC5C5]`: car.hold ? `bg-gray-100` : ""} ${car.showExtraStatus && 'bg-[#FFC158] bg-opacity-20'}`}
         style={style}
         onClick={() =>
           onClick

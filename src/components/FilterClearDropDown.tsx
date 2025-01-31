@@ -25,11 +25,11 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
   resetFilters,
 }) => {
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(resetFilters);
   const [showAllChecked, setShowAllChecked] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  
+
   useEffect(() => {
     if (resetFilters) {
       setCheckedItems([]);

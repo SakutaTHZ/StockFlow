@@ -26,7 +26,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(resetFilters);
   const [showAllChecked, setShowAllChecked] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
 
