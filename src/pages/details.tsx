@@ -34,12 +34,11 @@ interface DetailsProps {
 }
 
 interface LocationState {
-  card: CarData; // Define the expected type for 'card'
+  card: CarData;
   cars: CarData[];
 }
 
 const Details: React.FC<DetailsProps> = () => {
-  // const { id } = useParams();
   const labelClass = `text-gray-500`;
 
   const location = useLocation();

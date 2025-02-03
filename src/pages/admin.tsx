@@ -174,9 +174,8 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
     // Apply sorting
     return filteredCars
       .sort((a, b) => {
-        // First, ensure hidden cars go to the bottom
         if (a.hidden !== b.hidden) {
-          return a.hidden ? 1 : -1; // hidden cars at the bottom
+          return a.hidden ? 1 : -1;
         }
   
         const { column, direction } = selectedSortDirection;
@@ -198,7 +197,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
             compareValue = a.price - b.price;
             break;
           default:
-            return 0; // No sorting applied for unspecified columns
+            return 0;
         }
   
         compareValue = direction === "asc" ? compareValue : -compareValue;
@@ -221,7 +220,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
           case "Mileage High to Low":
             return b.milleage - a.milleage;
           default:
-            return compareValue; // Use column sorting if no specific sort option is selected
+            return compareValue;
         }
       });
   }, [
@@ -282,11 +281,11 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
 
   const handleSelectionChangeWrapper = (selectedItems: string[]) => {
     if (handleMakeSelection) {
-      handleMakeSelection(selectedItems); // Call the existing function
+      handleMakeSelection(selectedItems);
     }
 
     if (handleUpdateFilter) {
-      handleUpdateFilter("model", selectedItems); // Call the other function with the required arguments
+      handleUpdateFilter("model", selectedItems);
     }
   };
 

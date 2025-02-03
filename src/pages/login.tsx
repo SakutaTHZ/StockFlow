@@ -19,7 +19,6 @@ const Login: React.FC<LoginProps> = () => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    // Initialize card data
     const totalCards = Math.floor(Math.random() * 300);
     const cards = Array.from({ length: totalCards }, generateCardData);
     setCarData(cards);
@@ -32,9 +31,9 @@ const Login: React.FC<LoginProps> = () => {
     }
 
     if (username === "admin" && password === "admin") {
-      navigate("/StockFlowAdmin"); // Admin page
+      navigate("/StockFlowAdmin");
     } else {
-      navigate("/StockFlow"); // Redirect to home or another
+      navigate("/StockFlow"); 
     }
   };
 

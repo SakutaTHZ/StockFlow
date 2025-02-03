@@ -195,8 +195,8 @@ export const getRandomPackage = () => {
 };
 
 export const getRandomDate = () => {
-  const startDate = new Date(2014, 0, 1); // January 1, 2014
-  const endDate = new Date(2024, 11, 31); // December 31, 2024
+  const startDate = new Date(2014, 0, 1);
+  const endDate = new Date(2024, 11, 31);
 
   const randomTimestamp =
     startDate.getTime() +
@@ -208,13 +208,13 @@ export const getRandomDate = () => {
     month: "short",
     year: "numeric",
   };
-  return randomDate.toLocaleDateString("en-GB", options); // Formats as "22 Jul 2024"
+  return randomDate.toLocaleDateString("en-GB", options);
 };
 
 const generateFormattedDate = (): string => {
   const date = new Date();
   const year = date.getFullYear();
-  const month = date.toLocaleString("default", { month: "short" }); // Get full month name
+  const month = date.toLocaleString("default", { month: "short" });
   const day = date.getDate().toString().padStart(2, "0")  ;
 
   return `${year} ${month} ${day}`;
@@ -223,7 +223,7 @@ const generateFormattedDate = (): string => {
 const generateFormattedDate2 = (): string => {
   const date = new Date();
   const year = date.getFullYear();
-  const month = date.toLocaleString("default", { month: "long" }); // Get full month name
+  const month = date.toLocaleString("default", { month: "long" });
   const day = date.getDate();
 
   return `${day}-${month}-${year}`;
@@ -343,8 +343,6 @@ export const generateCardData = (): CarData => {
 
 // Sort Options
 export const sortOptions = [
-  // "Most Relevant",
-  // "Date Latest to Oldest",
   "Date Oldest to Latest",
   "Price Low to High",
   "Price High to Low",

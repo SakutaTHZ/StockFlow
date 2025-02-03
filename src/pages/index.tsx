@@ -238,18 +238,21 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               max={2025}
               boxName={"Registration Year"}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
+              reset={false}
             />
             <RangeSlider_V2
               min={0}
               max={10000}
               boxName={"Mileage km"}
               customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
+              reset={false}
             />
             <RangeSlider_V2
               min={0}
               max={99999}
               boxName={"Price ¥"}
               customClass={"bg-slate-50 price border-b border-b-gray-200"}
+              reset={false}
             />
 
             <FilterClearDropDown
