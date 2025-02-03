@@ -458,7 +458,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
             <RangeSlider_V2
               min={0}
               max={99999}
-              boxName={"Price ¥"}
+              boxName={"Price"}
               customClass={"bg-slate-50 price border-b border-b-gray-200"}
               reset={resetFilters}
             />
@@ -602,7 +602,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       // .slice(20 * currentPage - 20, 20 * currentPage)
                       .map((car, index: number) => (
                         <StockFlowAdminTableRow
-                          customClass={`${
+                          customClass={`cursor-pointer ${
                             car.highlightStatus === "Sold" &&
                             "bg-gray-100 border-green-300"
                           }`}
@@ -615,7 +615,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                 </table>
               </div>
             ) : (
-              <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full h-full">
+              <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 w-full h-full">
                 {displayedCars
                   // .slice(20 * currentPage - 20, 20 * currentPage)
                   .map((car, index: number) => (
@@ -623,7 +623,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
                       key={index}
                       car={car}
                       extraStatus={car.showExtraStatus}
-                      customClass={` ${
+                      customClass={`cursor-pointer ${
                         car.hidden && `bg-[#FDC5C5] border-red-400`
                       } transition-all`}
                       style={{

@@ -1,5 +1,10 @@
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
-import { FaWheelchair, FaRegCheckCircle, FaChevronDown, FaRegPauseCircle } from "react-icons/fa";
+import {
+  FaWheelchair,
+  FaRegCheckCircle,
+  FaChevronDown,
+  FaRegPauseCircle,
+} from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";
 import { BsThreeDots } from "react-icons/bs";
@@ -10,10 +15,12 @@ import JapanFlag from "../assets/JP.svg";
 import UKFlag from "../assets/GB.svg";
 import Hybrid from "../assets/hybrid.png";
 import {
+  MdAddCircleOutline,
   MdAirlineSeatReclineNormal,
   MdOutlineCalendarMonth,
   MdOutlineNewReleases,
   MdOutlineTimer,
+  MdRemoveCircleOutline,
 } from "react-icons/md";
 import {
   PiCalendarDots,
@@ -32,10 +39,11 @@ import Trans from "../assets/transmission.png";
 import Engine from "../assets/EnginePower.svg";
 import CarAvailability from "../assets/check availability.svg";
 import { LuMapPin } from "react-icons/lu";
-import { IoCarOutline } from "react-icons/io5";
+import { IoCarOutline, IoEyeOutline } from "react-icons/io5";
 import { yards, promotionText, highlightStatus } from "../data/generateData";
 import DropDown from "./DropDown";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import dayjs from "dayjs";
 
 interface StockFlowAdminTableRowProps {
   customClass?: string;
@@ -50,9 +58,8 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   style,
   car,
   onClick,
-  collapse
+  collapse,
 }) => {
-
   const statusPill = (status: string) => {
     return status === "Arrived" ? (
       <span className={`flex gap-2 items-center`}>
@@ -60,8 +67,10 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
         {status}
       </span>
     ) : status === "Transit" ? (
-      <span className={`flex gap-2 items-center font-bold text-blue-800 text-shadow-md`}>
-        <RiShipLine/>
+      <span
+        className={`flex gap-2 items-center font-bold text-blue-800 text-shadow-md`}
+      >
+        <RiShipLine />
         {status}
       </span>
     ) : status === "In Japan" ? (
@@ -122,13 +131,6 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
         <PiChartLineDownBold /> {car.highlightStatus}
       </span>
     ) : status === "Sold" ? (
-      // <span
-      //   className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
-      //     car.hold && "hidden"
-      //   }`}
-      // >
-      //   <FaMoneyBillTrendUp /> {car.highlightStatus}
-      // </span>
       <span
         className={`stat flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
           car.hold && "hidden"
@@ -209,6 +211,8 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   const toggleCardOptions = (cardId: string) => {
     setOpenOptions((prev) => (prev === cardId ? null : cardId));
   };
+  
+  const [isCarHidden, setIsCarHidden] = useState(car.hidden);
 
   const cardOptionBox = (cardId: string) => {
     return (
@@ -227,6 +231,41 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             openOptions === cardId ? "absolute" : "hidden"
           }`}
         >
+          {isCarHidden ? (
+            <div className="w-full flex border-b">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsCarHidden(false);
+                }}
+                className="flex items-center justify-center gap-1 border-r font-semibold w-1/2 text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
+                <MdAddCircleOutline size={20} className="flex-shrink-0" />
+                On List
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsCarHidden(false);
+                }}
+                className="flex items-center justify-center gap-1 font-semibold  w-1/2 text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
+                <MdRemoveCircleOutline size={20} className="flex-shrink-0" />
+                Off List
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsCarHidden(true);
+              }}
+              className="border-b flex items-center gap-2 font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+            >
+              <IoEyeOutline size={20} className="flex-shrink-0" />
+              Hide
+            </button>
+          )}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -271,23 +310,21 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       </div>
     );
   };
-  const formatDate = (dateString:string) => {
-    // Convert the input date string to a Date object
-    const date = new Date(dateString);
-  
-    // Extract year, month, and day
-    const year = date.getFullYear();
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = String(date.getDate()).padStart(2, "0");
-  
-    // Return the formatted date as yyyy:MM:DD
-    return `${year}-${month}-${day}`;
+  const formatDate = (dateString: string) => {
+    dayjs.locale("en");
+    const date = dayjs(dateString);
+
+    if (!date.isValid()) return "Invalid Date";
+
+    return date.format("YYYY-MMM-DD");
   };
 
   return (
     <>
       <tr
-        className={`border ${customClass} ${car.hidden ? `bg-[#FDC5C5]`: car.hold ? `bg-gray-100` : ""} ${car.showExtraStatus && 'bg-[#FFC158] bg-opacity-20'}`}
+        className={`border ${customClass} ${
+          isCarHidden ? `bg-[#FDC5C5]` : car.hold ? `bg-gray-100` : ""
+        } ${car.showExtraStatus && "bg-[#FFC158] bg-opacity-20"}`}
         style={style}
         onClick={() =>
           onClick
@@ -319,7 +356,9 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             <img
               src={car.image}
               alt="car Image"
-              className={`rounded-md w-44 h-28 object-cover ${car.hold && 'opacity-50'}`}
+              className={`rounded-md w-44 h-28 object-cover ${
+                (car.hold || car.highlightStatus === "Sold") && "opacity-50"
+              }`}
               loading="lazy"
             />
             <span
@@ -373,8 +412,11 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             {formatDate(car.soldDate)}
           </p>
           <p>
-            {car.milleage.toLocaleString()} km, <span className="capitalize">{car.exteriorColor.split("#")[0]}</span>
-            </p>
+            {car.milleage.toLocaleString()} km,{" "}
+            <span className="capitalize">
+              {car.exteriorColor.split("#")[0]}
+            </span>
+          </p>
           <p>
             {car.enginePower.toLocaleString()} cc, {car.fuelType}
           </p>
@@ -390,7 +432,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           </p>
         </td>
         <td className="border px-4 leading-6">
-          <p className={`relative ${car.hold && 'hidden'}`}>
+          <p className={`relative ${car.hold && "hidden"}`}>
             <span
               className={`text-2xl font-bold ${
                 car.discount === 0 ? "text-blue-950" : "text-red-600"
@@ -407,15 +449,16 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
               }`}
             >
               CIF
-            </span>
-            {" "}
+            </span>{" "}
             {car.discount != 0 && (
               <span className="line-through text-gray-400">
                 ¥{car.price.toLocaleString()}
               </span>
             )}
           </p>
-          <p className={`text-sm text-gray-500 ${car.hold && 'hidden'}`}>$6,000 UK duty/ VAT paid!</p>
+          <p className={`text-sm text-gray-500 ${car.hold && "hidden"}`}>
+            $6,000 UK duty/ VAT paid!
+          </p>
         </td>
         <td className="border">{cardOptionBox(car.id)}</td>
       </tr>
@@ -435,7 +478,8 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             </p>
 
             <p>
-              <span className="w-28 text-gray-500">ETD:</span> {formatDate(car.sentDate)}
+              <span className="w-28 text-gray-500">ETD:</span>{" "}
+              {formatDate(car.sentDate)}
             </p>
 
             <p>
@@ -463,8 +507,13 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             </div>
             <div className="grid grid-cols-2 gap-4 my-4">
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0 transform scale-x-[-1]" />
-                <span className="capitalize">{car.exteriorColor.split("#")[0]}</span>
+                <PiCarProfile
+                  size={20}
+                  className="flex-shrink-0 transform scale-x-[-1]"
+                />
+                <span className="capitalize">
+                  {car.exteriorColor.split("#")[0]}
+                </span>
               </p>
               <p className="flex gap-2 items-center">
                 <img src={Vin} alt="" className="brightness-50" />
@@ -499,7 +548,11 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
                 {car.transmission}
               </p>
               <p className="flex gap-2 items-center">
-                <img src={CarAvailability} alt="engine" className="flex-shrink-0" />
+                <img
+                  src={CarAvailability}
+                  alt="engine"
+                  className="flex-shrink-0"
+                />
                 {car.status}
               </p>
               <p className="flex gap-2 items-center">
@@ -511,7 +564,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
               </p>
               <p className="flex gap-2 items-center">
                 <LuMapPin size={20} className="flex-shrink-0" />
-                {car.yard}
+                {car.vesselTo}
               </p>
             </div>
             <button

@@ -32,9 +32,9 @@ const RangeSlider_V2: React.FC<RangeSliderProps> = ({
 
       newValues[index] = numericValue;
 
-      if (index === 1 && newValues[1] > max) {
-        newValues[1] = max;
-      }
+      // if (index === 1 && newValues[1] > max) {
+      //   newValues[1] = max;
+      // }
       if (index === 0 && newValues[0] < min) {
         newValues[0] = min;
       }

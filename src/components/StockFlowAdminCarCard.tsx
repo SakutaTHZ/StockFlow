@@ -43,6 +43,7 @@ import { IoCarOutline, IoEyeOutline } from "react-icons/io5";
 import DropDown from "./DropDown";
 import { highlightStatus, promotionText, yards } from "../data/generateData";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import dayjs from "dayjs";
 
 interface CarCardProps {
   customClass?: string;
@@ -59,7 +60,6 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   car,
   onClick,
 }) => {
-
   const [isCarHidden, setIsCarHidden] = useState(car.hidden);
   const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 ${
     isCarHidden ? `bg-red-200 border-transparent shadow-sm` : `border-gray-300`
@@ -72,7 +72,9 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
         {status}
       </span>
     ) : status === "Transit" ? (
-      <span className={` font-semibold border flex gap-1 items-center w-fit px-2 rounded-md text-blue-800`}>
+      <span
+        className={` font-semibold border flex gap-1 items-center w-fit px-2 rounded-md text-blue-800`}
+      >
         <RiShipLine />
         {status}
       </span>
@@ -124,7 +126,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
       <div className="relative" ref={dropdownRef}>
         <button
           className="option z-20 absolute right-2 -bottom-4 bg-white p-3 rounded-full shadow-md border"
-          onClick={()=>setcardOption(true)}
+          onClick={() => setcardOption(true)}
         >
           <BsThreeDots />
         </button>
@@ -136,24 +138,33 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           {isCarHidden ? (
             <div className="w-full flex border-b">
               <button
-              onClick={()=>{setIsCarHidden(false)}}
+                onClick={() => {
+                  setIsCarHidden(false);
+                }}
                 className="flex items-center justify-center gap-1 border-r font-semibold w-1/2 text-nowrap text-left p-2 px-4 hover:bg-gray-100"
               >
-                <MdAddCircleOutline size={20} className="flex-shrink-0"/>On List
+                <MdAddCircleOutline size={20} className="flex-shrink-0" />
+                On List
               </button>
               <button
-              onClick={()=>{setIsCarHidden(false)}}
+                onClick={() => {
+                  setIsCarHidden(false);
+                }}
                 className="flex items-center justify-center gap-1 font-semibold  w-1/2 text-nowrap text-left p-2 px-4 hover:bg-gray-100"
               >
-                <MdRemoveCircleOutline size={20} className="flex-shrink-0"/>Off List
+                <MdRemoveCircleOutline size={20} className="flex-shrink-0" />
+                Off List
               </button>
             </div>
           ) : (
             <button
-              onClick={()=>{setIsCarHidden(true)}}
+              onClick={() => {
+                setIsCarHidden(true);
+              }}
               className="border-b flex items-center gap-2 font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
             >
-              <IoEyeOutline size={20} className="flex-shrink-0"/>Hide
+              <IoEyeOutline size={20} className="flex-shrink-0" />
+              Hide
             </button>
           )}
           <button
@@ -272,34 +283,34 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   const [cars] = useAtom(carAtom);
 
   const handleCardClick = (carData: CarData, toPath: string) => {
-      console.log("clicked" + carData.id);
-      navigate(toPath, {
-        state: { card: carData, cars: cars },
-      });
-    };
+    console.log("clicked" + carData.id);
+    navigate(toPath, {
+      state: { card: carData, cars: cars },
+    });
+  };
 
-    
-    const formatDate = (dateString: string) => {
-      const date = new Date(dateString);
-    
-      const year = date.getFullYear();
-      const month = date.toLocaleString("en-US", { month: "short" });
-      const day = String(date.getDate()).padStart(2, "0");
-    
-      return `${year}-${month}-${day}`;
-    };
+  const formatDate = (dateString: string) => {
+    dayjs.locale("en");
+    const date = dayjs(dateString);
+
+    if (!date.isValid()) return "Invalid Date";
+
+    return date.format("YYYY-MMM-DD");
+  };
   return (
     <>
       <div
-        className={`card relative animate-slideUp transition-all w-full rounded-lg border-2 ${customClass} ${
-          (extraStatus && (car.hidden === false && car.highlightStatus != "Sold")) ? "border-[#FFC158] border-[3px]" : "border-gray-100"
+        className={`card relative animate-slideUp transition-all w-full rounded-lg border-2 cursor-pointer ${customClass} ${
+          extraStatus && car.hold === false && car.highlightStatus != "Sold"
+            ? "border-[#FFC158] border-[3px]"
+            : "border-gray-100"
         } ${car.hold && " opacity-15 border-[#FFC158]"} ${
           car.highlightStatus === "Sold" && ``
         } ${isCarHidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
         style={style}
       >
         <div
-          className="ClickArea absolute z-10 w-full h-full"
+          className="ClickArea absolute z-10 w-full h-full cursor-pointer"
           onClick={() =>
             onClick
               ? onClick()
@@ -357,7 +368,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           <p className="text-lg font-semibold">
             {car.name} {car.type}
           </p>
-          <p className={`${car.hold && 'opacity-0 -my-3'}`}>
+          <p className={`${car.hold && "opacity-0"}`}>
             <span
               className={`text-2xl font-bold ${
                 car.discount === 0 ? "text-blue-950" : "text-red-600"
@@ -384,21 +395,25 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           <div className="flex flex-wrap gap-2 mt-2">
             {statusPill(car.status)}
             <span className={` ${pillClass}`}>
-              <FaRegStar />
-              {car.rating}
-            </span>
-            <span className={` ${pillClass}`}>
               <TbRoad />
               {car.milleage.toLocaleString()} km
             </span>
-            <span className={` ${pillClass}`}>
-              <img src={Vin} alt="" />
-              {car.vim}
-            </span>
-            <span className={` ${pillClass}`}>
-              <RiShipLine />
-              {car.yard}
-            </span>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <span className={` ${pillClass}`}>
+                  <FaRegStar />
+                  {car.rating}
+                </span>
+                <span className={` ${pillClass}`}>
+                  <img src={Vin} alt="" />
+                  {car.vim}
+                </span>
+              </div>
+              <span className={` ${pillClass}`}>
+                <RiShipLine />
+                {car.yard}
+              </span>
+            </div>
 
             {/* <span className={`${pillClass}`}>
               <MdOutlinePinDrop />
@@ -429,7 +444,9 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
                   size={20}
                   className="flex-shrink-0 transform scale-x-[-1]"
                 />
-                <span className="capitalize">{car.exteriorColor.split("#")[0]}</span>
+                <span className="capitalize">
+                  {car.exteriorColor.split("#")[0]}
+                </span>
               </p>
               <p className="flex gap-2 items-center">
                 <img src={Vin} alt="" className="brightness-50" />
@@ -480,11 +497,12 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
               </p>
               <p className="flex gap-2 items-center">
                 <LuMapPin size={20} className="flex-shrink-0" />
-                {car.vesselFrom}
+                {car.vesselTo}
               </p>
             </div>
             <button
-              className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold" onClick={() =>
+              className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold"
+              onClick={() =>
                 onClick
                   ? onClick()
                   : handleCardClick(car, `/StockDetail/${car.id.slice(1)}`)
