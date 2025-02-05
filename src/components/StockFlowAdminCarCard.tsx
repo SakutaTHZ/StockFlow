@@ -44,6 +44,7 @@ import DropDown from "./DropDown";
 import { highlightStatus, promotionText, yards } from "../data/generateData";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import dayjs from "dayjs";
+import { BiPlus } from "react-icons/bi";
 
 interface CarCardProps {
   customClass?: string;
@@ -213,6 +214,11 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   const openPromotionPopup = () => setIsPromotionPopupOpen(true);
   const closePromotionPopup = () => setIsPromotionPopupOpen(false);
 
+  const [isStockOfferPopupOpen, setIsStockOfferPopupOpen] = useState(false);
+
+  const openStockOfferPopup = () => setIsStockOfferPopupOpen(true);
+  const closeStockOfferPopup = () => setIsStockOfferPopupOpen(false);
+
   const [isBannerPopupOpen, setIsBannerPopupOpen] = useState(false);
 
   const openBannerPopup = () => setIsBannerPopupOpen(true);
@@ -346,9 +352,10 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           )}
           {extraStatus && (
             <span
-              className={`status absolute top-2 right-0 flex items-center gap-2 text-sm font-semibold border-2 border-[#FFC158] rounded-s-full px-3 py-1 bg-gradient-to-r from-[#FFF3DE] to-[#FFC158] ${
+              className={`z-50 status absolute top-2 right-0 flex items-center gap-2 text-sm font-semibold border-2 border-[#FFC158] rounded-s-full px-3 py-1 bg-gradient-to-r from-[#FFF3DE] to-[#FFC158] ${
                 (car.hold || car.highlightStatus === "Sold") && "hidden"
               }`}
+              onClick={openStockOfferPopup}
             >
               <RiDiscountPercentLine /> Stock Offer
             </span>
@@ -401,12 +408,12 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             <div className="flex flex-col gap-2">
               <div className="flex gap-2">
                 <span className={` ${pillClass}`}>
-                  <FaRegStar />
-                  {car.rating}
-                </span>
-                <span className={` ${pillClass}`}>
                   <img src={Vin} alt="" />
                   {car.vim}
+                </span>
+                <span className={` ${pillClass}`}>
+                  <FaRegStar />
+                  {car.rating}
                 </span>
               </div>
               <span className={` ${pillClass}`}>
@@ -570,6 +577,57 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
                 className="py-2 w-full bg-gray-200 font-semibold rounded-md"
               >
                 Cancel
+              </button>
+            </div>
+          </>
+        }
+      />
+
+      <Popup
+        isOpen={isStockOfferPopupOpen}
+        onClose={closeStockOfferPopup}
+        title="Promotion"
+        customClass="m-2 md:w-1/3 sm:w-[75%]"
+        content={
+          <>
+            <div className="flex flex-col gap-5 py-3">
+              <div className="flex flex-col">
+                <div className="flex gap-3 items-start">
+                  <RiDiscountPercentLine
+                    size={20}
+                    className="shrink-0 translate-y-0.5"
+                  />
+                  <div className="flex flex-col w-full gap-1">
+                    <p className="font-semibold">NG Trading Ltd</p>
+                    <p>
+                      <span>Stock Offer : </span>
+                      <span>¥{car.price.toLocaleString()}</span>
+                    </p>
+                  </div>
+                  <p className="text-gray-500 text-nowrap">24 Jun, 2:45 pm</p>
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex gap-3 items-start">
+                  <RiDiscountPercentLine
+                    size={20}
+                    className="shrink-0 translate-y-0.5"
+                  />
+                  <div className="flex flex-col w-full gap-1">
+                    <p className="font-semibold">NG Trading Ltd</p>
+                    <p>
+                      <span>Stock Offer : </span>
+                      <span>¥{car.price.toLocaleString()}</span>
+                    </p>
+                  </div>
+                  <p className="text-gray-500 text-nowrap">24 Jun, 2:45 pm</p>
+                </div>
+              </div>
+              <button
+                onClick={openPromotionPopup}
+                className="flex items-center gap-2 font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+              >
+                <BiPlus/>Add Promotion
               </button>
             </div>
           </>
