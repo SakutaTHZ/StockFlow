@@ -7,7 +7,7 @@ import CarCard from "../components/CarCard";
 import { carStatus, exteriorColor, yardArea } from "../data/generateData";
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
-import Pagination from "../components/Pagination";
+// import Pagination from "../components/Pagination";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaCarTunnel } from "react-icons/fa6";
 import CarRow from "../components/CarRow";
@@ -43,15 +43,15 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
   const location = useLocation() as unknown as Location & {
     state: LocationState;
   };
-  const [currentPage, setCurrentPage] = useState(location.state?.page || 1);
-  const totalPages = Math.ceil(cars.length / 20);
+  const [currentPage, ] = useState(location.state?.page || 1);
+  // const totalPages = Math.ceil(cars.length / 20);
   const navigate = useNavigate();
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  // const handlePageChange = (page: number) => {
+  //   setCurrentPage(page);
 
-    return navigate(`/StockFlow`, { state: { cars, page: page } });
-  };
+  //   return navigate(`/StockFlow`, { state: { cars, page: page } });
+  // };
 
   const [filteredModels, setFilteredModels] = useState<Model[]>([]);
 
@@ -294,7 +294,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
             ) : isTableView ? (
               <div className="rightBox flex flex-col gap-4 w-full h-full transition ease-in-out  duration-300">
                 {cars
-                  .slice(20 * currentPage - 20, 20 * currentPage)
+                  // .slice(20 * currentPage - 20, 20 * currentPage)
                   .map((car, index: number) => (
                     <CarRow
                       key={index}
@@ -321,7 +321,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                 }}
               >
                 {cars
-                  .slice(20 * currentPage - 20, 20 * currentPage)
+                  // .slice(20 * currentPage - 20, 20 * currentPage)
                   .map((car, index: number) => (
                     <CarCard
                       key={index}
@@ -342,11 +342,11 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               </div>
             )}
 
-            <Pagination
+            {/* <Pagination
               totalPages={totalPages}
               currentPage={currentPage}
               onPageChange={handlePageChange}
-            />
+            /> */}
           </div>
         </div>
       </div>
