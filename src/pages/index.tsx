@@ -302,7 +302,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                       extraStatus={car.showExtraStatus}
                       customClass={`${
                         car.highlightStatus === "Sold" &&
-                        "bg-yellow-50 border-2 border-yellow-50"
+                        "bg-gray-100 border-2 border-gray-100"
                       }`}
                       style={{
                         animationDelay: `${

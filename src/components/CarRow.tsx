@@ -4,6 +4,8 @@ import {
   FaRegCheckCircle,
   FaRegStar,
   FaRegPauseCircle,
+  FaCalendarAlt,
+  FaCalendar,
 } from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";
@@ -14,7 +16,7 @@ import { CarData } from "../data/types";
 import JapanFlag from "../assets/JP.svg";
 import UKFlag from "../assets/GB.svg";
 import Hybrid from "../assets/hybrid.png";
-import { MdAirlineSeatReclineNormal, MdOutlineNewReleases, MdOutlineTimer } from "react-icons/md";
+import { MdAirlineSeatReclineNormal, MdOutlineCalendarMonth, MdOutlineNewReleases, MdOutlinePinDrop, MdOutlineTimer } from "react-icons/md";
 import { PiCalendarDots, PiCar, PiCarProfile, PiChartLineDownBold, PiGasCan, PiStar } from "react-icons/pi";
 import Popup from "./Popup";
 import { IoIosArrowForward } from "react-icons/io";
@@ -155,7 +157,7 @@ const CarRow: React.FC<CarRowProps> = ({
   return (
     <>
       <div
-        className={`card opacity-0 animate-slideRight transition-all  flex w-full h-44 shadow-md rounded-lg border-2 bg-white ${customClass} ${
+        className={`card opacity-0 animate-slideRight transition-all  flex w-full h-44 shadow-md rounded-lg border-2 ${customClass} ${
           extraStatus ? "border-[#FFC158]" : "border-gray-100"
         } ${car.hold && "opacity-50 pointer-events-none"} transition-all`}
         style={style}
@@ -235,6 +237,14 @@ const CarRow: React.FC<CarRowProps> = ({
           <div className="flex flex-wrap gap-2 mt-2">
             {statusPill(car.status)}
             <span className={` ${pillClass}`}>
+              <MdOutlineCalendarMonth />
+              2021
+            </span>
+            <span className={` ${pillClass}`}>
+              <img src={Vin} alt="" className="brightness-0"/>
+              {car.vim}
+            </span>
+            <span className={` ${pillClass}`}>
               <FaRegStar />
               {car.rating}
             </span>
@@ -242,13 +252,13 @@ const CarRow: React.FC<CarRowProps> = ({
               <TbRoad />
               {car.milleage.toLocaleString()} km
             </span>
-            <span className={` ${pillClass}`}>
-              <img src={Vin} alt="" />
-              {car.vim}
+             <span className={`${pillClass}`}>
+              <MdOutlinePinDrop />
+              {car.vesselFrom}
             </span>
           </div>
           <button
-            className={`w-fit px-4 py-2 bg-gray-100 mt-3 rounded-md font-semibold z-20 relative`}
+            className={`w-fit px-4 py-2 bg-gray-100 mt-3 rounded-md font-semibold z-20 relative cursor-pointer transition-colors hover:bg-gray-200`}
             onClick={openCheckPopup}
           >
             Check Availability
@@ -262,7 +272,7 @@ const CarRow: React.FC<CarRowProps> = ({
         title="Overview"
         customClass="m-2"
         content={
-          <>
+          <> 
             <div className="imageContainer flex justify-center w-full h-80 overflow-hidden rounded-md">
               <img
                 src={car.image}
