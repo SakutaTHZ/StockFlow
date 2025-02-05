@@ -624,8 +624,11 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
                 </div>
               </div>
               <button
-                onClick={openPromotionPopup}
-                className="flex items-center gap-2 font-semibold text-nowrap text-left p-2 px-4 hover:bg-gray-100"
+                onClick={()=>{
+                  closeStockOfferPopup();
+                  openPromotionPopup();
+                }}
+                className="text-[#997435] flex items-center gap-2 font-semibold text-nowrap text-left p-2 px-4 "
               >
                 <BiPlus/>Add Promotion
               </button>
