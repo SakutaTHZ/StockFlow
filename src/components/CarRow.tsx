@@ -4,8 +4,6 @@ import {
   FaRegCheckCircle,
   FaRegStar,
   FaRegPauseCircle,
-  FaCalendarAlt,
-  FaCalendar,
 } from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";

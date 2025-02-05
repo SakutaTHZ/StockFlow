@@ -126,7 +126,7 @@ const CarCard: React.FC<CarCardProps> = ({
       >
         <MdOutlineNewReleases /> {car.highlightStatus}
       </span>
-    ): status === "Sold" ? (
+    ) : status === "Sold" ? (
       <span
         className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
           car.hold && "hidden"
@@ -169,7 +169,7 @@ const CarCard: React.FC<CarCardProps> = ({
   return (
     <>
       <div
-        className={`card pb-2 relative animate-slideUp transition-all w-full h-fit min-h-32 shadow-md rounded-lg border-2 bg-white ${customClass} ${
+        className={`card pb-2 flex flex-col relative animate-slideUp transition-all w-full min-h-32 shadow-md rounded-lg border-2 bg-white ${customClass} ${
           extraStatus ? "border-[#FFC158]" : "border-gray-100"
         } ${car.hold && "opacity-15 pointer-events-none"} transition-all`}
         style={style}
@@ -219,48 +219,50 @@ const CarCard: React.FC<CarCardProps> = ({
             <BsThreeDots />
           </button>
         </div>
-        <div className="body p-2">
-          <p className="text-lg font-semibold">
-            {car.name} {car.type}
-          </p>
-          <p>
-            <span
-              className={`text-2xl font-bold ${
-                car.discount === 0 ? "text-blue-950" : "text-red-600"
-              }`}
-            >
-              ¥
-              {car.discount === 0
-                ? car.price.toLocaleString()
-                : (car.price - car.discount).toLocaleString()}
-            </span>{" "}
-            <span
-              className={`font-normal ${
-                car.discount === 0 ? "text-blue-950" : "text-red-600"
-              }`}
-            >
-              CIF
-            </span>
-            {car.discount != 0 && (
-              <span className="ml-2 line-through text-gray-400">
-                {car.price.toLocaleString()}
+        <div className="body flex flex-col h-full justify-between p-2">
+          <div>
+            <p className="text-lg font-semibold">
+              {car.name} {car.type}
+            </p>
+            <p>
+              <span
+                className={`text-2xl font-bold ${
+                  car.discount === 0 ? "text-blue-950" : "text-red-600"
+                }`}
+              >
+                ¥
+                {car.discount === 0
+                  ? car.price.toLocaleString()
+                  : (car.price - car.discount).toLocaleString()}
+              </span>{" "}
+              <span
+                className={`font-normal ${
+                  car.discount === 0 ? "text-blue-950" : "text-red-600"
+                }`}
+              >
+                CIF
               </span>
-            )}
-          </p>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {statusPill(car.status)}
-            <span className={` ${pillClass}`}>
-              <FaRegStar />
-              {car.rating}
-            </span>
-            <span className={` ${pillClass}`}>
-              <TbRoad />
-              {car.milleage.toLocaleString()} km
-            </span>
-            <span className={` ${pillClass}`}>
-              <img src={Vin} alt="" />
-              {car.vim}
-            </span>
+              {car.discount != 0 && (
+                <span className="ml-2 line-through text-gray-400">
+                  {car.price.toLocaleString()}
+                </span>
+              )}
+            </p>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {statusPill(car.status)}
+              <span className={` ${pillClass}`}>
+                <FaRegStar />
+                {car.rating}
+              </span>
+              <span className={` ${pillClass}`}>
+                <TbRoad />
+                {car.milleage.toLocaleString()} km
+              </span>
+              <span className={` ${pillClass}`}>
+                <img src={Vin} alt="" />
+                {car.vim}
+              </span>
+            </div>
           </div>
           <button
             className={`w-full py-2 bg-gray-100 mt-3 rounded-md font-semibold z-20 relative ${
@@ -341,8 +343,10 @@ const CarCard: React.FC<CarCardProps> = ({
                 {car.vesselFrom}
               </p>
             </div>
-            <button className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold" 
-          onClick={() => handleCardClick(car)}>
+            <button
+              className="flex justify-center items-center gap-2 bg-[#FFC158] py-2 w-full rounded-md font-semibold"
+              onClick={() => handleCardClick(car)}
+            >
               View All Details <IoIosArrowForward />
             </button>
           </>
