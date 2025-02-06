@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { CarData } from "./types";
 
 // carStatus
@@ -361,3 +362,12 @@ export const series =[
   'C',
   'M'
 ]
+
+export const formatDate = (dateString: string) => {
+    dayjs.locale("en");
+    const date = dayjs(dateString);
+
+    if (!date.isValid()) return "Invalid Date";
+
+    return date.format("YYYY-MMM-DD");
+  };

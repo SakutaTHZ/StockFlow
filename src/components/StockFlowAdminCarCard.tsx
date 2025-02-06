@@ -434,7 +434,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
         isOpen={isPopupOpen}
         onClose={closePopup}
         title="Overview"
-        customClass="m-2 w-1/3"
+        customClass="m-2"
         content={
           <>
             <div className="imageContainer flex justify-center w-full h-80 overflow-hidden rounded-md">

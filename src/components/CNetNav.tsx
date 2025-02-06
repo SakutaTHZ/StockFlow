@@ -27,7 +27,7 @@ const CNetNav: React.FC<CNetNavProps> = ({
 
   return (
     <nav
-      className={`flex flex-col md:flex-row items-center justify-between w-full min-h-16 bg-[#F8F5EF] px-10 py-3 ${customClass}`}
+      className={`sticky top-0 flex flex-col md:flex-row items-center justify-between w-full min-h-16 bg-[#F8F5EF] px-10 py-3 z-[11] ${customClass}`}
     >
       {/* Logo and Nav links */}
       <div className="flex items-center justify-between md:justify-normal w-full md:w-auto">

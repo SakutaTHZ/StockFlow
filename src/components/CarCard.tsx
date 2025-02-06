@@ -14,6 +14,7 @@ import { CarData } from "../data/types";
 import JapanFlag from "../assets/JP.svg";
 import UKFlag from "../assets/GB.svg";
 import Hybrid from "../assets/hybrid.png";
+import CarAvailability from "../assets/check availability.svg";
 import {
   MdOutlineTimer,
   MdOutlineNewReleases,
@@ -36,6 +37,7 @@ import { carAtom } from "../data/atoms";
 import Trans from "../assets/transmission.png";
 import { LuMapPin } from "react-icons/lu";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { formatDate } from "../data/generateData";
 
 interface CarCardProps {
   customClass?: string;
@@ -54,11 +56,10 @@ const CarCard: React.FC<CarCardProps> = ({
   car,
   onClick,
 }) => {
-  const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md border-gray-300`;
 
   const statusPill = (status: string) => {
     return status === "Arrived" ? (
-      <span className={`bg-gray-50 border-gray-400 text-gray-500 ${pillClass}`}>
+      <span className={`bg-gray-50 border-gray-300 text-gray-500 ${pillClass}`}>
         <FaRegCheckCircle />
         {status}
       </span>
@@ -68,17 +69,17 @@ const CarCard: React.FC<CarCardProps> = ({
         {status}
       </span>
     ) : status === "In Japan" ? (
-      <span className={`bg-gray-50 border-gray-400 text-gray-500 ${pillClass}`}>
+      <span className={`bg-gray-50 border-gray-300 text-gray-500 ${pillClass}`}>
         <img src={JapanFlag} alt="Jp flag" className="h-4" />
         {status}
       </span>
     ) : status === "Clearance UK" ? (
-      <span className={`bg-gray-50 border-gray-400 text-gray-500 ${pillClass}`}>
+      <span className={`bg-gray-50 border-gray-300 text-gray-500 ${pillClass}`}>
         <img src={UKFlag} alt="UK flag" className="h-4" />
         {status}
       </span>
     ) : (
-      <span className={`bg-gray-50 border-gray-400 text-gray-500 ${pillClass}`}>
+      <span className={`bg-gray-50 border-gray-300 text-gray-500 ${pillClass}`}>
         <FaRegCheckCircle />
         Unknown Status
       </span>
@@ -165,14 +166,22 @@ const CarCard: React.FC<CarCardProps> = ({
       state: { card: carData, cars: cars },
     });
   };
+  const [isCarHidden, ] = useState(car.hidden);
+  const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 ${
+    isCarHidden ? `bg-red-200 border-transparent shadow-sm` : `border-gray-300`
+  }`;
 
   return (
     <>
       <div
-        className={`card pb-2 flex flex-col relative animate-slideUp transition-all w-full min-h-32 shadow-md rounded-lg border-2 bg-white ${customClass} ${
-          extraStatus ? "border-[#FFC158]" : "border-gray-100"
-        } ${car.hold && "opacity-15 pointer-events-none"} transition-all`}
-        style={style}
+        className={`card pb-2 flex flex-col relative animate-slideUp transition-all w-full min-h-32 rounded-lg border-2 ${customClass} ${
+        extraStatus && car.hold === false && car.highlightStatus != "Sold"
+                    ? "border-[#FFC158] border-[3px]"
+                    : "border-gray-100"
+                } ${car.hold && " opacity-15 border-[#FFC158]"} ${
+                  car.highlightStatus === "Sold" && ``
+                } ${isCarHidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
+                style={style}
       >
         <div
           className="ClickArea absolute z-10 w-full h-full"
@@ -224,7 +233,7 @@ const CarCard: React.FC<CarCardProps> = ({
             <p className="text-lg font-semibold">
               {car.name} {car.type}
             </p>
-            <p>
+            <p className={`${car.hold && 'opacity-0'}`}>
               <span
                 className={`text-2xl font-bold ${
                   car.discount === 0 ? "text-blue-950" : "text-red-600"
@@ -265,7 +274,7 @@ const CarCard: React.FC<CarCardProps> = ({
             </div>
           </div>
           <button
-            className={`w-full py-2 bg-gray-100 mt-3 rounded-md font-semibold z-20 relative ${
+            className={`w-full transition-colors py-2 bg-gray-100 hover:bg-gray-200 mt-3 rounded-md font-semibold z-20 relative ${
               isAdmin && "hidden"
             }`}
             onClick={openCheckPopup}
@@ -292,8 +301,11 @@ const CarCard: React.FC<CarCardProps> = ({
             </div>
             <div className="grid grid-cols-2 gap-4 my-4">
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0" />
-                {car.exteriorColor.split("#")[0]}
+                <PiCarProfile size={20} className="flex-shrink-0  scale-x-[-1]" />
+                
+                <span className="capitalize">
+                  {car.exteriorColor.split("#")[0]}
+                </span>
               </p>
               <p className="flex gap-2 items-center">
                 <img src={Vin} alt="" className="brightness-50" />
@@ -301,7 +313,7 @@ const CarCard: React.FC<CarCardProps> = ({
               </p>
               <p className="flex gap-2 items-center">
                 <PiCalendarDots size={20} className="flex-shrink-0" />
-                {car.registerDate}
+                {formatDate(car.registerDate)}
               </p>
               <p className="flex gap-2 items-center">
                 <PiCar size={20} className="flex-shrink-0" />
@@ -325,10 +337,14 @@ const CarCard: React.FC<CarCardProps> = ({
               </p>
               <p className="flex gap-2 items-center">
                 <img src={Trans} />
-                Automatic Transmission
+                Auto
               </p>
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0" />
+                <img
+                  src={CarAvailability}
+                  alt="engine"
+                  className="flex-shrink-0"
+                />
                 {car.status}
               </p>
               <p className="flex gap-2 items-center">
