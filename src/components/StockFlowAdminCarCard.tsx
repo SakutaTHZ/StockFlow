@@ -440,7 +440,7 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
             <div className="imageContainer flex justify-center w-full h-80 overflow-hidden rounded-md">
               <img
                 src={car.image}
-                alt="car Image"
+                alt="Car Image"
                 className="rounded-md w-full object-cover"
                 loading="lazy"
               />
