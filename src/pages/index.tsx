@@ -293,7 +293,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                   // .slice(20 * currentPage - 20, 20 * currentPage)
                   .map(
                     (car, index: number) =>
-                      (car.highlightStatus === "Sold" || !car.hidden) && (
+                      car.highlightStatus === "Sold" || !car.hidden && (
                         <CarRow
                           key={index}
                           car={car}
