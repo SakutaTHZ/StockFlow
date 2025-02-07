@@ -2246,16 +2246,17 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             <SalesCommentBox />
           </div>
           <div className="col-3 flex flex-col gap-4">
-            <div className="flex flex-col gap-4 bg-gray-100 p-4 rounded-md border border-gray-300">
+            <div className={`flex flex-col gap-4 p-4 rounded-md border border-gray-300 ${cardData.highlightStatus==="Sold" ?'bg-gray-100':'bg-[#E2E8DD]'}`}>
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between">
                   <p className="text-lg font-bold text-blue-950">
                     {cardData.customer}
                   </p>
+                  {cardData.highlightStatus==="Sold" &&
                   <p className="flex items-center gap-2 border border-gray-400 rounded-md px-2">
                     <RiCarLine />
                     Sold
-                  </p>
+                  </p>}
                 </div>
                 <p className="text-gray-500 text-sm">
                   Sold Date:{" "}
