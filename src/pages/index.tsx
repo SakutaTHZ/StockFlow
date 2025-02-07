@@ -13,7 +13,6 @@ import {
 import { useAtom } from "jotai";
 import { carAtom } from "../data/atoms";
 // import Pagination from "../components/Pagination";
-import { useLocation, useNavigate } from "react-router-dom";
 import { FaCarTunnel } from "react-icons/fa6";
 import CarRow from "../components/CarRow";
 import FilterOptionDropDown from "../components/FilterOptionDropDown";
@@ -21,16 +20,23 @@ import { makeBrandData, Model } from "../data/arrayData";
 import FilterClearDropDown from "../components/FilterClearDropDown";
 import CNetNav from "../components/CNetNav";
 import RangeSlider_V2 from "../components/RangeSlider_V2";
+import React from "react";
 
 interface indexPageProps {
   customClass?: string;
 }
-interface LocationState {
-  page?: number;
-}
 
 const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
   const [cars] = useAtom(carAtom);
+  const sortedCars = cars.slice().sort((a, b) => {
+    const aHidden = a.hidden === true;
+    const bHidden = b.hidden === true;
+
+    if (aHidden === bHidden) {
+      return 0;
+    }
+    return aHidden ? 1 : -1;
+  });
 
   const [isFilterOn, setIsFilterOn] = useState(false);
   const [isTableView, setIsTableView] = useState(false);
@@ -39,24 +45,23 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
     setIsFilterOn(!isFilterOn);
   };
 
+  const [resetFilters, setResetFilters] = useState(false);
   const handleClearAll = () => {
-    navigate(`/StockFlow`, { state: { cars, page: currentPage } });
+    setResetFilters(true);
+    setTimeout(() => setResetFilters(false), 0);
+
+    setChosenFilter({
+      status: [],
+      price: { from: 0, to: 0 },
+      market: [],
+      makeBrand: [],
+      model: [],
+      registrationYear: { from: 1900, to: 2025 },
+      mileage: { from: 0, to: 99999 },
+      yardArea: [],
+      exteriorColor: [],
+    });
   };
-
-  // Pagination
-
-  const location = useLocation() as unknown as Location & {
-    state: LocationState;
-  };
-  const [currentPage] = useState(location.state?.page || 1);
-  // const totalPages = Math.ceil(cars.length / 20);
-  const navigate = useNavigate();
-
-  // const handlePageChange = (page: number) => {
-  //   setCurrentPage(page);
-
-  //   return navigate(`/StockFlow`, { state: { cars, page: page } });
-  // };
 
   const [filteredModels, setFilteredModels] = useState<Model[]>([]);
 
@@ -91,11 +96,133 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
     setFilteredModels(models);
   };
 
-  const sortOptions2 = [
-    `All Vehicles (${cars.length})`,
-    `Available vehicles (${cars.filter((car) => car.hold === true).length})`,
-    `Unavailable vehicles (${cars.filter((car) => car.hold === true).length})`,
-  ];
+  const [, setChosenFilter] = useState({
+    status: [],
+    price: { from: 0, to: 0 },
+    market: [],
+    makeBrand: [],
+    model: [],
+    registrationYear: { from: 1900, to: 2025 },
+    mileage: { from: 0, to: 99999 },
+    yardArea: [],
+    exteriorColor: [],
+  });
+  const handleUpdateFilter = (
+    key: string,
+    value: string | number | string[] | { from: number; to: number }
+  ) => {
+    setChosenFilter((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleSelectionChangeWrapper = (selectedItems: string[]) => {
+    if (handleMakeSelection) {
+      handleMakeSelection(selectedItems);
+    }
+
+    if (handleUpdateFilter) {
+      handleUpdateFilter("model", selectedItems);
+    }
+  };
+
+  const carOptions = React.useMemo(
+      () => [
+        `All Vehicles (${sortedCars.length})`,
+        `Available vehicles (${
+          sortedCars.filter((car) => car.hold === false).length
+        })`,
+        `Unavailable vehicles (${
+          sortedCars.filter((car) => car.hold === true).length
+        })`,
+      ],
+      [sortedCars]
+    );
+  
+  const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
+  const handleSortChange = (option: string) => {
+    setSelectedSort(option);
+  };
+  const [carAvailability, setCarAvailability] = useState(carOptions[0]);
+    const handleCarAvailabilityChange = (option: string) => {
+      setCarAvailability(option);
+    };
+    const [selectedSortDirection, ] = useState<{
+        column: string;
+        direction: "asc" | "desc";
+      }>({ column: "Stock Number", direction: "asc" });
+
+  // Sort the cars
+  const filterCars = React.useCallback(() => {
+    let filteredCars = sortedCars;
+
+    // Apply car availability filter
+    if (carAvailability === carOptions[1]) {
+      filteredCars = filteredCars.filter((car) => !car.hold);
+    } else if (carAvailability === carOptions[2]) {
+      filteredCars = filteredCars.filter((car) => car.hold);
+    }
+
+    // Apply sorting
+    return filteredCars.sort((a, b) => {
+      if (a.hidden !== b.hidden) {
+        return a.hidden ? 1 : -1;
+      }
+
+      const { column, direction } = selectedSortDirection;
+
+      let compareValue = 0;
+
+      switch (column) {
+        case "Stock Number":
+          compareValue = a.id.localeCompare(b.id);
+          break;
+        case "Status":
+          compareValue = a.status.localeCompare(b.status);
+          break;
+        case "ETY":
+          compareValue =
+            new Date(a.soldDate).getTime() - new Date(b.soldDate).getTime();
+          break;
+        case "Price":
+          compareValue = a.price - b.price;
+          break;
+        default:
+          return 0;
+      }
+
+      compareValue = direction === "asc" ? compareValue : -compareValue;
+
+      switch (selectedSort) {
+        case "Date Latest to Oldest":
+          return (
+            new Date(b.sentDate).getTime() - new Date(a.sentDate).getTime()
+          );
+        case "Date Oldest to Latest":
+          return (
+            new Date(a.sentDate).getTime() - new Date(b.sentDate).getTime()
+          );
+        case "Price Low to High":
+          return a.price - b.price;
+        case "Price High to Low":
+          return b.price - a.price;
+        case "Mileage Low to High":
+          return a.milleage - b.milleage;
+        case "Mileage High to Low":
+          return b.milleage - a.milleage;
+        default:
+          return compareValue;
+      }
+    });
+  }, [
+    sortedCars,
+    selectedSort,
+    carAvailability,
+    carOptions,
+    selectedSortDirection,
+  ]);
+  const displayedCars = filterCars();
 
   return (
     <>
@@ -109,10 +236,11 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                 {cars.length != 0 && (
                   <>
                     Showing{" "}
-                    <b>
-                      {20 * currentPage - 20 + 1}-{20 * currentPage - 1}
-                    </b>{" "}
-                    of <b>{cars.length}</b> listings
+                    {/* <b>
+                    {20 * currentPage - 20 + 1}-{20 * currentPage - 1}
+                  </b>{" "}
+                  of  */}
+                    <b>{displayedCars.length}</b> listings
                   </>
                 )}
               </p>
@@ -160,19 +288,18 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                 <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
               </div>
               <div className="flex gap-2 items-center w-full">
-                <DropDown
+                
+              <DropDown
                   options={sortOptions}
-                  customClass="my-custom-class"
-                  optionClass="my-option-class"
-                  optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
+                  optionBoxClass="md:w-fit h-fit right-0 z-50"
                   buttonClass="py-2"
+                  onSelectionChange={handleSortChange}
                 />
                 <DropDown
-                  options={sortOptions2}
-                  customClass="my-custom-class"
-                  optionClass="my-option-class"
+                  options={carOptions}
                   optionBoxClass="custom-scrollbar md:w-fit h-fit right-0 z-50"
                   buttonClass="py-2"
+                  onSelectionChange={handleCarAvailabilityChange}
                 />
               </div>
             </div>
@@ -198,10 +325,14 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
 
             <FilterClearDropDown
               customClass={
-                "bg-slate-50 makeBrand transmission border-b border-b-gray-200"
+                "bg-slate-50 transmission border-b border-b-gray-200"
               }
               boxName="Market"
               listData={market}
+              resetFilters={resetFilters}
+              onSelectionChange={(selectedItems: string[]) =>
+                handleUpdateFilter("market", selectedItems)
+              }
             />
 
             <FilterOptionDropDown
@@ -212,7 +343,8 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               }))}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
               placeholder={"Search Make/Brand"}
-              onSelectionChange={handleMakeSelection}
+              resetFilters={resetFilters}
+              onSelectionChange={handleSelectionChangeWrapper}
             />
 
             {filteredModels.length > 0 && (
@@ -226,6 +358,10 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                   "animate-slideRight bg-slate-50 model border-b border-b-gray-200"
                 }
                 placeholder={"Search Model"}
+                resetFilters={resetFilters}
+                onSelectionChange={(selectedItems: string[]) =>
+                  handleUpdateFilter("model", selectedItems)
+                }
               />
             )}
 
@@ -234,21 +370,21 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               max={2025}
               boxName={"Registration Year"}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
-              reset={false}
+              reset={resetFilters}
             />
             <RangeSlider_V2
               min={0}
-              max={10000}
+              max={99999}
               boxName={"Mileage km"}
               customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
-              reset={false}
+              reset={resetFilters}
             />
             <RangeSlider_V2
               min={0}
               max={99999}
               boxName={"Price"}
               customClass={"bg-slate-50 price border-b border-b-gray-200"}
-              reset={false}
+              reset={resetFilters}
             />
 
             <FilterClearDropDown
@@ -257,6 +393,10 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               }
               boxName="Status"
               listData={filteredCarStatus}
+              resetFilters={resetFilters}
+              onSelectionChange={(selectedItems: string[]) =>
+                handleUpdateFilter("status", selectedItems)
+              }
             />
 
             <FilterClearDropDown
@@ -265,6 +405,10 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               }
               boxName="Yard Area"
               listData={filteredYardArea}
+              resetFilters={resetFilters}
+              onSelectionChange={(selectedItems: string[]) =>
+                handleUpdateFilter("yardArea", selectedItems)
+              }
             />
 
             <FilterClearDropDown
@@ -274,12 +418,16 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               boxName="Exterior Color"
               listData={filteredExteriorColor}
               color={true}
+              resetFilters={resetFilters}
+              onSelectionChange={(selectedItems: string[]) =>
+                handleUpdateFilter("exteriorColor", selectedItems)
+              }
             />
           </div>
 
           {/* Right Scrollable Content */}
           <div className="flex-1 flex flex-wrap justify-evenly align-top gap-2 mt-6 lg:mt-0 transition-all">
-            {cars.length == 0 ? (
+            {displayedCars.length == 0 ? (
               <div className="w-full h-96 flex flex-col md:flex-row gap-2 md:gap-5 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
                 <FaCarTunnel size={30} className="text-gray-400" />
                 <p className="text-center text-gray-400 font-semibold">
@@ -289,11 +437,12 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               </div>
             ) : isTableView ? (
               <div className="rightBox flex flex-col gap-4 w-full h-full transition ease-in-out  duration-300">
-                {cars
+                {displayedCars
                   // .slice(20 * currentPage - 20, 20 * currentPage)
                   .map(
                     (car, index: number) =>
-                      car.highlightStatus === "Sold" || !car.hidden && (
+                      car.highlightStatus === "Sold" ||
+                      (!car.hidden && (
                         <CarRow
                           key={index}
                           car={car}
@@ -309,7 +458,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                             animationFillMode: "forwards",
                           }}
                         />
-                      )
+                      ))
                   )}
               </div>
             ) : (
@@ -319,25 +468,28 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                   transition: "0.5s linear",
                 }}
               >
-                {cars
+                {displayedCars
                   // .slice(20 * currentPage - 20, 20 * currentPage)
-                  .map((car, index: number) =>
-                    car.highlightStatus === "Sold" || !car.hidden && (
-                    <CarCard
-                      key={index}
-                      car={car}
-                      extraStatus={car.showExtraStatus}
-                      customClass={`cursor-pointer transition ease-in-out duration-300 ${
-                        car.hidden && `bg-[#FDC5C5] border-red-400`
-                      } transition-all`}
-                      style={{
-                        animationDelay: `${
-                          index === 0 ? "0s" : `${index * 0.1}s`
-                        }`,
-                        animationFillMode: "forwards",
-                      }}
-                    />
-                  ))}
+                  .map(
+                    (car, index: number) =>
+                      car.highlightStatus === "Sold" ||
+                      (!car.hidden && (
+                        <CarCard
+                          key={index}
+                          car={car}
+                          extraStatus={car.showExtraStatus}
+                          customClass={`cursor-pointer transition ease-in-out duration-300 ${
+                            car.hidden && `bg-[#FDC5C5] border-red-400`
+                          } transition-all`}
+                          style={{
+                            animationDelay: `${
+                              index === 0 ? "0s" : `${index * 0.1}s`
+                            }`,
+                            animationFillMode: "forwards",
+                          }}
+                        />
+                      ))
+                  )}
               </div>
             )}
 

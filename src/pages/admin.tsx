@@ -34,9 +34,6 @@ import RangeSlider_V2 from "../components/RangeSlider_V2";
 interface adminPageProps {
   customClass?: string;
 }
-// interface LocationState {
-//   page?: number; // Optional since it might not always exist
-// }
 
 const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const [cars] = useAtom(carAtom);
@@ -57,22 +54,6 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
   const toggleFilter = () => {
     setIsFilterOn(!isFilterOn);
   };
-
-  // const navigate = useNavigate();
-
-  // Pagination
-
-  // const location = useLocation() as unknown as Location & {
-  //   state: LocationState;
-  // };
-  // const [currentPage, setCurrentPage] = useState(location.state?.page || 1);
-  // const totalPages = Math.ceil(cars.length / 20);
-
-  // const handlePageChange = (page: number) => {
-  //   setCurrentPage(page);
-
-  //   return navigate(`/StockFlowAdmin`, { state: { cars, page: page } });
-  // };
 
   const [filteredModels, setFilteredModels] = useState<Model[]>([]);
 

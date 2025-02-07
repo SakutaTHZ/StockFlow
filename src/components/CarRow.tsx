@@ -45,27 +45,27 @@ const CarRow: React.FC<CarRowProps> = ({
 
   const statusPill = (status: string) => {
     return status === "Arrived" ? (
-      <span className={`bg-gray-50 border-gray-300 text-gray-500 ${pillClass}`}>
+      <span className={` border-gray-300 text-gray-500 ${pillClass}`}>
         <FaRegCheckCircle />
         {status}
       </span>
     ) : status === "Transit" ? (
-      <span className={` text-blue-800 bg-blue-50 border-blue-200 ${pillClass}`}>
+      <span className={` text-blue-800 border-blue-200 ${pillClass}`}>
         <RiShipLine />
         {status}
       </span>
     ) : status === "In Japan" ? (
-      <span className={`bg-gray-50 border-gray-300 text-gray-500 ${pillClass}`}>
+      <span className={` border-gray-300 text-gray-500 ${pillClass}`}>
         <img src={JapanFlag} alt="Jp flag" className="h-4" />
         {status}
       </span>
     ) : status === "Clearance UK" ? (
-      <span className={`bg-gray-50 border-gray-300 text-gray-500 ${pillClass}`}>
+      <span className={` border-gray-300 text-gray-500 ${pillClass}`}>
         <img src={UKFlag} alt="UK flag" className="h-4" />
         {status}
       </span>
     ) : (
-      <span className={`bg-gray-50 border-gray-300 text-gray-500 ${pillClass}`}>
+      <span className={` border-gray-300 text-gray-500 ${pillClass}`}>
         <FaRegCheckCircle />
         Unknown Status
       </span>
