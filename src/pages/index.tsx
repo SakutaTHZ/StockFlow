@@ -291,23 +291,26 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               <div className="rightBox flex flex-col gap-4 w-full h-full transition ease-in-out  duration-300">
                 {cars
                   // .slice(20 * currentPage - 20, 20 * currentPage)
-                  .map((car, index: number) => (
-                    <CarRow
-                      key={index}
-                      car={car}
-                      extraStatus={car.showExtraStatus}
-                      customClass={`${
-                        car.highlightStatus === "Sold" &&
-                        "bg-gray-100 border-2 border-gray-100"
-                      }`}
-                      style={{
-                        animationDelay: `${
-                          index === 0 ? "0s" : `${index * 0.1}s`
-                        }`,
-                        animationFillMode: "forwards",
-                      }}
-                    />
-                  ))}
+                  .map(
+                    (car, index: number) =>
+                      (car.highlightStatus === "Sold" || !car.hidden) && (
+                        <CarRow
+                          key={index}
+                          car={car}
+                          extraStatus={car.showExtraStatus}
+                          customClass={`${
+                            car.highlightStatus === "Sold" &&
+                            "bg-gray-100 border-2 border-gray-100"
+                          }`}
+                          style={{
+                            animationDelay: `${
+                              index === 0 ? "0s" : `${index * 0.1}s`
+                            }`,
+                            animationFillMode: "forwards",
+                          }}
+                        />
+                      )
+                  )}
               </div>
             ) : (
               <div
@@ -318,7 +321,8 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               >
                 {cars
                   // .slice(20 * currentPage - 20, 20 * currentPage)
-                  .map((car, index: number) => (
+                  .map((car, index: number) =>
+                    car.highlightStatus === "Sold" || !car.hidden && (
                     <CarCard
                       key={index}
                       car={car}
