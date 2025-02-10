@@ -56,11 +56,11 @@ export const getRandomYardArea = () => {
 
 // imagelinks
 export const imageLink: string[] = [
-  "https://cosmo-images.azureedge.net/stock/original/our_78146_b49d9285-cc91-4b89-92a6-1e4d2a9e310b.jpg?preset=bigimage",
-  "https://cosmo-images.azureedge.net/stock/original/our_52747_7521ddc6-a312-4852-a12e-2d4a928f1b05.jpg?preset=bigimage",
-  "https://cosmo-images.azureedge.net/stock/original/our_79596_1e6432cd-8248-48b8-ab1f-0a785b8b764d.jpg?preset=bigimage",
-  "https://cosmo-images.azureedge.net/stock/original/our_53383_754f972b-a419-4f53-8ea4-1691ce7fb661.jpg?preset=bigimage",
-  "https://cosmo-images.azureedge.net/stock/original/our_51498_ec5f8b8d-7ca6-4eb7-a424-fd9ac0cf8403.jpg?preset=bigimage",
+  "https://cosmo-images-ejawf4gsh8fae3c3.z02.azurefd.net/stock/original/our_83677_5c2b6269-1017-40b2-b5a4-c9eb947626fb.jpg?preset=bigimage",
+  "https://cosmo-images-ejawf4gsh8fae3c3.z02.azurefd.net/stock/original/our_83708_7a3fe97a-2f9c-4c3c-a1ef-b182d1010949.jpg?preset=bigimage",
+  "https://cosmo-images-ejawf4gsh8fae3c3.z02.azurefd.net/stock/original/our_84061_21956c7c-7de6-4a3a-af8b-04c35cf03157.jpg?preset=bigimage",
+  "https://cosmo-images-ejawf4gsh8fae3c3.z02.azurefd.net/stock/original/our_84143_e8bc7ee7-7451-473e-b649-25d60982678d.jpg?preset=bigimage",
+  "https://cosmo-images-ejawf4gsh8fae3c3.z02.azurefd.net/stock/original/our_84249_cea41aac-2b97-4606-808e-397e288333eb.jpg?preset=bigimage",
 ];
 export const getRandomImageLink = () => {
   return imageLink[Math.floor(Math.random() * imageLink.length)];
