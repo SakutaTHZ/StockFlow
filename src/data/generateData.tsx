@@ -72,7 +72,7 @@ export const highlightStatus: string[] = [
   "Sold",
   "On Hold",
   "E-power",
-  "Coming soon",
+  "Coming soon",  
   "Hybrid",
   "Reduced",
   "New",
