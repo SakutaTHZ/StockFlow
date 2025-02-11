@@ -25,6 +25,7 @@ import Trans from "../assets/transmission.png";
 import Engine from "../assets/EnginePower.svg";
 import { LuMapPin } from "react-icons/lu";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import placeholderImage from "../assets/images/stock/00165048_01.jpg";
 
 interface CarRowProps {
   customClass?: string;
@@ -170,6 +171,9 @@ const CarRow: React.FC<CarRowProps> = ({
             alt="car Image"
             className={`rounded-s-md h-full ${car.hold && "opacity-50 pointer-events-none"}`}
             loading="lazy"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = placeholderImage;
+              }}
           />
           {car.hold && (
             <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-1 py-2">

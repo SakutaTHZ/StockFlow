@@ -38,6 +38,7 @@ import Trans from "../assets/transmission.png";
 import { LuMapPin } from "react-icons/lu";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { formatDate } from "../data/generateData";
+import placeholderImage from "../assets/images/stock/00165048_01.jpg";
 
 interface CarCardProps {
   customClass?: string;
@@ -56,7 +57,6 @@ const CarCard: React.FC<CarCardProps> = ({
   car,
   onClick,
 }) => {
-
   const statusPill = (status: string) => {
     return status === "Arrived" ? (
       <span className={` border-gray-300 text-gray-500 ${pillClass}`}>
@@ -166,7 +166,7 @@ const CarCard: React.FC<CarCardProps> = ({
       state: { card: carData, cars: cars },
     });
   };
-  const [isCarHidden, ] = useState(car.hidden);
+  const [isCarHidden] = useState(car.hidden);
   const pillClass = `border flex gap-1 items-center w-fit px-2 rounded-md text-gray-500 ${
     isCarHidden ? `bg-red-200 border-transparent shadow-sm` : `border-gray-300`
   }`;
@@ -175,27 +175,32 @@ const CarCard: React.FC<CarCardProps> = ({
     <>
       <div
         className={`card pb-2 flex flex-col relative animate-slideUp transition-all w-full min-h-32 rounded-lg border-2 ${customClass} ${
-        extraStatus && car.hold === false && car.highlightStatus != "Sold"
-                    ? "border-[#FFC158] border-[3px]"
-                    : "border-gray-100"
-                } ${car.hold && " opacity-15 border-[#FFC158]"} ${
-                  car.highlightStatus === "Sold" && ``
-                } ${isCarHidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
-                style={style}
+          extraStatus && car.hold === false && car.highlightStatus != "Sold"
+            ? "border-[#FFC158] border-[3px]"
+            : "border-gray-100"
+        } ${car.hold && " opacity-15 border-[#FFC158]"} ${
+          car.highlightStatus === "Sold" && ``
+        } ${isCarHidden && `bg-[#FDC5C5] border-red-400`} transition-all`}
+        style={style}
       >
         <div
           className="ClickArea absolute z-10 w-full h-full"
           onClick={() => (onClick ? onClick() : handleCardClick(car))}
         ></div>
-        <div className="head relative flex h-42">
-          <img
-            src={car.image}
-            alt="car Image"
-            className={`rounded-t-md min-h-42 bg-gray-50 ${
-              car.hold && "opacity-50 pointer-events-none"
-            }`}
-            loading="lazy"
-          />
+        <div className="head relative">
+          <div className=" w-full bg-gray-50">
+            <img
+              src={car.image}
+              alt="car Image"
+              className={`rounded-t-md min-h-42 bg-gray-50 ${
+                car.hold && "opacity-50 pointer-events-none"
+              }`}
+              loading="lazy"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = placeholderImage;
+              }}
+            />
+          </div>
           {car.hold && (
             <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-1 py-2">
               <FaRegPauseCircle />
@@ -233,7 +238,7 @@ const CarCard: React.FC<CarCardProps> = ({
             <p className="text-lg font-semibold">
               {car.name} {car.type}
             </p>
-            <p className={`${car.hold && 'opacity-0'}`}>
+            <p className={`${car.hold && "opacity-0"}`}>
               <span
                 className={`text-2xl font-bold ${
                   car.discount === 0 ? "text-blue-950" : "text-red-600"
@@ -301,8 +306,11 @@ const CarCard: React.FC<CarCardProps> = ({
             </div>
             <div className="grid grid-cols-2 gap-4 my-4">
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0  scale-x-[-1]" />
-                
+                <PiCarProfile
+                  size={20}
+                  className="flex-shrink-0  scale-x-[-1]"
+                />
+
                 <span className="capitalize">
                   {car.exteriorColor.split("#")[0]}
                 </span>

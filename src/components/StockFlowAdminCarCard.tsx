@@ -45,6 +45,7 @@ import { highlightStatus, promotionText, yards } from "../data/generateData";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import dayjs from "dayjs";
 import { BiPlus } from "react-icons/bi";
+import placeholderImage from "../assets/images/stock/00165048_01.jpg";
 
 interface CarCardProps {
   customClass?: string;
@@ -333,6 +334,9 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
                 : car.hold && "opacity-50 pointer-events-none"
             }`}
             loading="lazy"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = placeholderImage;
+              }}
           />
           {car.highlightStatus === "Sold" ? (
             <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-2 py-2">

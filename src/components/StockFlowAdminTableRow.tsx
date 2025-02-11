@@ -44,6 +44,7 @@ import { yards, promotionText, highlightStatus } from "../data/generateData";
 import DropDown from "./DropDown";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import dayjs from "dayjs";
+import placeholderImage from "../assets/images/stock/00165048_01.jpg";
 
 interface StockFlowAdminTableRowProps {
   customClass?: string;
@@ -360,6 +361,9 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
                 (car.hold || car.highlightStatus === "Sold") && "opacity-50"
               }`}
               loading="lazy"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = placeholderImage;
+              }}
             />
             <span
               className={`id absolute top-3 left-3 flex items-center gap-2 text-sm  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
