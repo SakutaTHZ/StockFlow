@@ -1857,7 +1857,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               <div className="flex items-center gap-2 mt-4">
                 <button
                   onClick={closePromotionPopup}
-                  className="py-2 w-full bg-yellow-400 font-semibold rounded-md"
+                  className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
                 >
                   Add
                 </button>
@@ -1910,7 +1910,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               <div className="flex items-center gap-2 mt-8">
                 <button
                   onClick={closeBannerPopup}
-                  className="py-2 w-full bg-yellow-400 font-semibold rounded-md"
+                  className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
                 >
                   Add
                 </button>
@@ -1940,7 +1940,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
         />
       )}
 
-      <div className="flex flex-col gap-6 px-4 md:px-24 py-8">
+      <div className="flex flex-col gap-6 px-4 md:px-56 py-8">
         <div className="flex items-center gap-1 font-medium">
           <Link to="/StockFlowAdmin" className="text-gray-500">
             Car stock
@@ -1951,7 +1951,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
         <div className="flex justify-between">
           <div className="flex flex-col gap-3">
             <p className="text-3xl font-bold flex items-center gap-2 text-blue-950">
-              {cardData.name}
+              {cardData.type} {cardData.name}
               <IoMdEye size={20} className="text-green-600" />
             </p>
             <p className="font-medium text-blue-950">
