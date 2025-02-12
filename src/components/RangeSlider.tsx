@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
 interface RangeSliderProps {
@@ -6,6 +6,7 @@ interface RangeSliderProps {
   min: number;
   max: number;
   customClass?: string;
+  reset: boolean;
 }
 
 const RangeSlider: React.FC<RangeSliderProps> = ({
@@ -13,6 +14,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   min,
   max,
   customClass,
+  reset,
 }) => {
   const halfPoint = Math.round((min + max) / 2);
   const [minValue, setMinValue] = useState(min);
@@ -20,27 +22,40 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
 
+  const checkOriginalValues = () => {
+    return minValue != min && maxValue != max;
+  }
+
   const handleMinChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Math.min(Number(e.target.value), maxValue - 1);
     setMinValue(value);
-    setIsEdited(true);
+    setIsEdited(checkOriginalValues);
   };
 
   const handleMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Math.max(Number(e.target.value), minValue + 1);
     setMaxValue(value);
-    setIsEdited(true);
+    setIsEdited(checkOriginalValues);
   };
 
   const handleMinSlider = (e: ChangeEvent<HTMLInputElement>) => {
     setMinValue(Number(e.target.value));
-    setIsEdited(true);
+    setIsEdited(checkOriginalValues);
   };
 
   const handleMaxSlider = (e: ChangeEvent<HTMLInputElement>) => {
     setMaxValue(Number(e.target.value));
-    setIsEdited(true);
+    setIsEdited(checkOriginalValues);
   };
+
+  useEffect(() => { 
+    if (reset) {
+      setMinValue(min);
+      setMaxValue(max);
+      setIsEdited(false); // Reset the edited state as well
+    }
+  }, [reset, min, max]);
+  
 
   return (
     <div className={`px-4 py-2 bg-gray-50 ${customClass}`}>
@@ -69,6 +84,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
                 type="number"
                 value={minValue}
                 onChange={handleMinChange}
+  onClick={(e) => e.stopPropagation()}
                 className="pl-2 pr-4 py-2 rounded-md w-full bg-gray-100 outline-none"
               />
               <span>to</span>
@@ -76,6 +92,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
                 type="number"
                 value={maxValue}
                 onChange={handleMaxChange}
+                onClick={(e) => e.stopPropagation()}
                 className="pl-2 pr-4 py-2 rounded-md w-full bg-gray-100 outline-none"
               />
             </div>
@@ -89,6 +106,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
                 step="1"
                 value={minValue}
                 onChange={handleMinSlider}
+                onClick={(e) => e.stopPropagation()}
                 className="rangeSlider rounded-lg w-full translate-x-1.5 appearance-none"
               />
               {/* Max Slider */}
@@ -99,6 +117,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
                 step="1"
                 value={maxValue}
                 onChange={handleMaxSlider}
+                onClick={(e) => e.stopPropagation()}
                 className="rangeSlider rounded-lg w-full -translate-x-1.5 appearance-none focus:outline-none"
               />
             </div>

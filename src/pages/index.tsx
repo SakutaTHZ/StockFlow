@@ -19,8 +19,9 @@ import FilterOptionDropDown from "../components/FilterOptionDropDown";
 import { makeBrandData, Model } from "../data/arrayData";
 import FilterClearDropDown from "../components/FilterClearDropDown";
 import CNetNav from "../components/CNetNav";
-import RangeSlider_V2 from "../components/RangeSlider_V2";
+// import RangeSlider_V2 from "../components/RangeSlider_V2";
 import React from "react";
+import RangeSlider from "../components/RangeSlider";
 
 interface indexPageProps {
   customClass?: string;
@@ -128,30 +129,30 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
   };
 
   const carOptions = React.useMemo(
-      () => [
-        `All Vehicles (${sortedCars.length})`,
-        `Available vehicles (${
-          sortedCars.filter((car) => car.hold === false).length
-        })`,
-        `Unavailable vehicles (${
-          sortedCars.filter((car) => car.hold === true).length
-        })`,
-      ],
-      [sortedCars]
-    );
-  
+    () => [
+      `All Vehicles (${sortedCars.length})`,
+      `Available vehicles (${
+        sortedCars.filter((car) => car.hold === false).length
+      })`,
+      `Unavailable vehicles (${
+        sortedCars.filter((car) => car.hold === true).length
+      })`,
+    ],
+    [sortedCars]
+  );
+
   const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
   const handleSortChange = (option: string) => {
     setSelectedSort(option);
   };
   const [carAvailability, setCarAvailability] = useState(carOptions[0]);
-    const handleCarAvailabilityChange = (option: string) => {
-      setCarAvailability(option);
-    };
-    const [selectedSortDirection, ] = useState<{
-        column: string;
-        direction: "asc" | "desc";
-      }>({ column: "Stock Number", direction: "asc" });
+  const handleCarAvailabilityChange = (option: string) => {
+    setCarAvailability(option);
+  };
+  const [selectedSortDirection] = useState<{
+    column: string;
+    direction: "asc" | "desc";
+  }>({ column: "Stock Number", direction: "asc" });
 
   // Sort the cars
   const filterCars = React.useCallback(() => {
@@ -288,8 +289,7 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                 <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
               </div>
               <div className="flex gap-2 items-center w-full">
-                
-              <DropDown
+                <DropDown
                   options={sortOptions}
                   optionBoxClass="md:w-fit h-fit right-0 z-50"
                   buttonClass="py-2"
@@ -365,21 +365,21 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
               />
             )}
 
-            <RangeSlider_V2
+            <RangeSlider
               min={1900}
               max={2025}
               boxName={"Registration Year"}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
               reset={resetFilters}
             />
-            <RangeSlider_V2
+            <RangeSlider
               min={0}
               max={99999}
               boxName={"Mileage km"}
               customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
               reset={resetFilters}
             />
-            <RangeSlider_V2
+            <RangeSlider
               min={0}
               max={99999}
               boxName={"Price"}

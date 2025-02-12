@@ -29,7 +29,8 @@ import CNetAdminNav from "../components/CNetAdminNav";
 import { TiArrowSortedDown } from "react-icons/ti";
 import SeriesDropDown from "../components/SeriesDropDown";
 import React from "react";
-import RangeSlider_V2 from "../components/RangeSlider_V2";
+// import RangeSlider_V2 from "../components/RangeSlider_V2";
+import RangeSlider from "../components/RangeSlider";
 
 interface adminPageProps {
   customClass?: string;
@@ -422,21 +423,21 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
               />
             )}
 
-            <RangeSlider_V2
+            <RangeSlider
               min={1900}
               max={2025}
               boxName={"Registration Year"}
               customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
               reset={resetFilters}
             />
-            <RangeSlider_V2
+            <RangeSlider
               min={0}
               max={99999}
               boxName={"Mileage km"}
               customClass={"bg-slate-50 mileage border-b border-b-gray-200"}
               reset={resetFilters}
             />
-            <RangeSlider_V2
+            <RangeSlider
               min={0}
               max={99999}
               boxName={"Price"}
