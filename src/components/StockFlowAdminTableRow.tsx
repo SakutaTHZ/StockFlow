@@ -45,6 +45,7 @@ import DropDown from "./DropDown";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import dayjs from "dayjs";
 import placeholderImage from "../assets/images/stock/00165048_01.jpg";
+import { BiPlus } from "react-icons/bi";
 
 interface StockFlowAdminTableRowProps {
   customClass?: string;
@@ -173,6 +174,11 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   const openBannerPopup = () => setIsBannerPopupOpen(true);
   const closeBannerPopup = () => setIsBannerPopupOpen(false);
 
+  const [isStockOfferPopupOpen, setIsStockOfferPopupOpen] = useState(false);
+  
+    const openStockOfferPopup = () => setIsStockOfferPopupOpen(true);
+    const closeStockOfferPopup = () => setIsStockOfferPopupOpen(false);
+
   const navigate = useNavigate();
   const [cars] = useAtom(carAtom);
 
@@ -212,7 +218,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
   const toggleCardOptions = (cardId: string) => {
     setOpenOptions((prev) => (prev === cardId ? null : cardId));
   };
-  
+
   const [isCarHidden, setIsCarHidden] = useState(car.hidden);
 
   const cardOptionBox = (cardId: string) => {
@@ -366,9 +372,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
               }}
             />
             <span
-              className={`id absolute top-3 left-3 flex items-center gap-2 text-sm  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-                car.hold && "hidden"
-              }`}
+              className={`id absolute top-3 left-3 flex items-center gap-2 text-sm  rounded-full px-3 py-1 text-white bg-black bg-opacity-40`}
             >
               {car.id}
             </span>
@@ -400,6 +404,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
                   className={`status flex items-center gap-2 text-sm font-semibold rounded-md bg-[#FFC158] px-3 py-1  ${
                     car.hold && "hidden"
                   }`}
+                  onClick={(e)=>{e.stopPropagation();openStockOfferPopup()}}
                 >
                   <RiDiscountPercentLine /> Stock Offer
                 </span>
@@ -691,6 +696,61 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
                 className="py-2 w-full bg-gray-200 font-semibold rounded-md"
               >
                 Cancel
+              </button>
+            </div>
+          </>
+        }
+      />
+
+      <Popup
+        isOpen={isStockOfferPopupOpen}
+        onClose={closeStockOfferPopup}
+        title="Promotion"
+        customClass="m-2 md:w-1/3 sm:w-[75%]"
+        content={
+          <>
+            <div className="flex flex-col gap-5 py-3">
+              <div className="flex flex-col">
+                <div className="flex gap-3 items-start">
+                  <RiDiscountPercentLine
+                    size={20}
+                    className="shrink-0 translate-y-0.5"
+                  />
+                  <div className="flex flex-col w-full gap-1">
+                    <p className="font-semibold">NG Trading Ltd</p>
+                    <p>
+                      <span>Stock Offer : </span>
+                      <span>¥{car.price.toLocaleString()}</span>
+                    </p>
+                  </div>
+                  <p className="text-gray-500 text-nowrap">24 Jun, 2:45 pm</p>
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex gap-3 items-start">
+                  <RiDiscountPercentLine
+                    size={20}
+                    className="shrink-0 translate-y-0.5"
+                  />
+                  <div className="flex flex-col w-full gap-1">
+                    <p className="font-semibold">NG Trading Ltd</p>
+                    <p>
+                      <span>Stock Offer : </span>
+                      <span>¥{car.price.toLocaleString()}</span>
+                    </p>
+                  </div>
+                  <p className="text-gray-500 text-nowrap">24 Jun, 2:45 pm</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  closeStockOfferPopup();
+                  openPromotionPopup();
+                }}
+                className="text-[#997435] flex items-center gap-2 font-semibold text-nowrap text-left p-2 px-4 "
+              >
+                <BiPlus />
+                Add Promotion
               </button>
             </div>
           </>

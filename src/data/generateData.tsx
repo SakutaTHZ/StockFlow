@@ -138,7 +138,7 @@ export const getRandomYard = () => {
 };
 
 // fuelType
-export const fuelType: string[] = ["Petrol", "Gas", "Electric", "Methol"];
+export const fuelType: string[] = ["Petrol", "Gas", "Electric"];
 
 export const promotionText: string[] = [
   "Stock Offer",

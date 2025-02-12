@@ -278,8 +278,6 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                 <MdTune size={18} />
                 Filters
               </button>
-            </div>
-            <div className="w-full md:w-auto flex flex-col md:flex-row gap-2 items-center">
               <div className="relative w-full md:w-auto border rounded-md border-gray-300">
                 <input
                   type="text"
@@ -288,6 +286,8 @@ const indexPage: React.FC<indexPageProps> = ({ customClass }) => {
                 />
                 <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
               </div>
+            </div>
+            <div className="w-full md:w-auto flex flex-col md:flex-row gap-2 items-center">
               <div className="flex gap-2 items-center w-full">
                 <DropDown
                   options={sortOptions}
