@@ -153,6 +153,7 @@ export const getFuelType = () => {
 };
 
 export const types = ["Service", "Parts", "Labor", "Accessories", "Inspection"];
+export const extraCost = ["Car Cost", "Claims", "Iternal", "YT - Car Cost", "YT - Internal"];
 
 export const descriptions = [
   "Oil change",

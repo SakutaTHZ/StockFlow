@@ -28,17 +28,10 @@ import {
   IoMdPhotos,
 } from "react-icons/io";
 import { BiImages } from "react-icons/bi";
-import {
-  RiCarLine,
-  RiTruckLine,
-} from "react-icons/ri";
+import { RiCarLine, RiTruckLine } from "react-icons/ri";
 import { HiOutlineChartBar } from "react-icons/hi";
 import { useState } from "react";
-import {
-  IoCarOutline,
-  IoClose,
-  IoLanguage,
-} from "react-icons/io5";
+import { IoCarOutline, IoClose, IoLanguage } from "react-icons/io5";
 import Gallery from "../components/Gallery";
 import Popup from "../components/Popup";
 
@@ -50,6 +43,7 @@ import DropDown from "../components/DropDown";
 import {
   carTypes,
   descriptions,
+  extraCost,
   highlightStatus,
   promotionText,
   types,
@@ -1165,7 +1159,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     const [editMode, setEditMode] = useState(false);
     const [collapse, setCollapse] = useState(false);
     const [extras, setExtras] = useState(() =>
-      types.map((type, index) => ({
+      extraCost.map((type, index) => ({
         Type: type,
         Description: descriptions[index],
         Estimate: Math.round(Math.random() * (999999 - 100000) + 100000),
@@ -1245,7 +1239,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                     <td className={`${colClass}`}>
                       {editMode ? (
                         <DropDown
-                          options={types}
+                          options={extraCost}
                           selected={extra.Type}
                           onSelectionChange={(selected) =>
                             handleInputChange(index, "Type", selected)
@@ -1372,7 +1366,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                   </tr>
                 )}
                 <tr>
-                  <td colSpan={2} className={`${colClass} font-semibold`}>
+                  <td colSpan={2} className={`${colClass} font-bold`}>
                     Total
                   </td>
                   <td className={`${colClass} font-semibold`}>
@@ -2099,72 +2093,80 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 mt-2">
-                <p className="flex gap-2 items-center">
-                  <PiCarProfile size={20} className="flex-shrink-0" />
-                  {cardData.exteriorColor.split("#")[0]}
-                </p>
-                <p className="flex gap-2 items-center">
-                  <img
-                    src={Vin}
-                    alt="engine"
-                    className="brightness-0 flex-shrink-0"
-                  />
-                  {cardData.vim}
-                </p>
-                <p className="flex gap-2 items-center">
-                  <img src={Engine} alt="engine" className="flex-shrink-0" />
-                  {cardData.enginePower.toLocaleString()} cc
-                </p>
-                <p className="flex gap-2 items-center">
-                  <PiCalendarDots size={20} className="flex-shrink-0" />
-                  {cardData.registerDate}
-                </p>
-                <p className="flex gap-2 items-center">
-                  <PiGasCan size={20} className="flex-shrink-0" />
-                  {cardData.fuelType}
-                </p>
-                <p className="flex gap-2 items-center">
-                  <TbRoad size={20} className="flex-shrink-0" />
-                  {cardData.milleage.toLocaleString()} km
-                </p>
+              <div className="flex flex-col">
+                <div className="grid grid-cols-2 gap-4 mt-2 mb-3">
+                  <p className="flex gap-2 items-center">
+                    <PiCarProfile
+                      size={20}
+                      className="flex-shrink-0  scale-x-[-1]"
+                    />
+                    {cardData.exteriorColor.split("#")[0]}
+                  </p>
+                  <p className="flex gap-2 items-center">
+                    <img
+                      src={Vin}
+                      alt="engine"
+                      className="brightness-0 flex-shrink-0"
+                    />
+                    {cardData.vim}
+                  </p>
+                  <p className="flex gap-2 items-center">
+                    <img src={Engine} alt="engine" className="flex-shrink-0" />
+                    {cardData.enginePower.toLocaleString()} cc
+                  </p>
+                  <p className="flex gap-2 items-center">
+                    <PiCalendarDots size={20} className="flex-shrink-0" />
+                    {cardData.registerDate}
+                  </p>
+                  <p className="flex gap-2 items-center">
+                    <PiGasCan size={20} className="flex-shrink-0" />
+                    {cardData.fuelType}
+                  </p>
+                  <p className="flex gap-2 items-center">
+                    <TbRoad size={20} className="flex-shrink-0" />
+                    {cardData.milleage.toLocaleString()} km
+                  </p>
 
-                <p className="flex gap-2 items-center">
-                  <img
-                    src={Transmission}
-                    alt="engine"
-                    className="flex-shrink-0"
-                  />
-                  {cardData.transmission}
-                </p>
-                <p className="flex gap-2 items-center">
-                  <PiStar size={20} className="flex-shrink-0" />
-                  {cardData.rating}
-                </p>
-                <p className="flex gap-2 items-center">
-                  <MdAirlineSeatReclineNormal
-                    size={20}
-                    className="flex-shrink-0"
-                  />
-                  {cardData.seats} Seater
-                </p>
-                <p className="flex gap-2 items-center">
-                  <PiGearFine size={20} className="flex-shrink-0" />
-                  {cardData.extraParts}
-                </p>
-                <p className="flex gap-2 items-center">
-                  <MdInsertPhoto className="flex-shrink-0" />
-                  Base: <span>{cardData.picturesBaseDate}</span>
-                </p>
-                <p className="flex gap-2 items-center">
-                  <IoMdPhotos className="flex-shrink-0" />
-                  Extra: <span>{cardData.picturesExtraDate}</span>
-                </p>
+                  <p className="flex gap-2 items-center">
+                    <img
+                      src={Transmission}
+                      alt="engine"
+                      className="flex-shrink-0"
+                    />
+                    {cardData.transmission}
+                  </p>
+                  <p className="flex gap-2 items-center">
+                    <PiStar size={20} className="flex-shrink-0" />
+                    {cardData.rating}
+                  </p>
+                  <p className="flex gap-2 items-center">
+                    <MdAirlineSeatReclineNormal
+                      size={20}
+                      className="flex-shrink-0"
+                    />
+                    {cardData.seats} Seater
+                  </p>
+                  <p className="flex gap-2 items-center">
+                    <PiGearFine size={20} className="flex-shrink-0" />
+                    {cardData.extraParts}
+                  </p>
+                </div>
+                <hr />
+                <div className="grid grid-cols-2 gap-4 mt-3">
+                  <p className="flex gap-2 items-center">
+                    <MdInsertPhoto className="flex-shrink-0" />
+                    Base: <span>{cardData.picturesBaseDate}</span>
+                  </p>
+                  <p className="flex gap-2 items-center">
+                    <IoMdPhotos className="flex-shrink-0" />
+                    Extra: <span>{cardData.picturesExtraDate}</span>
+                  </p>
+                </div>
               </div>
             </div>
             <div className="flex flex-col md:flex-row w-full gap-4">
               <div className="flex flex-col align-top w-full border rounded-md py-6 px-4 gap-4 shadow-sm flex-grow-0">
-                <p className="font-bold text-lg">Certificate</p>
+                <p className="font-bold text-lg">Export Certificate</p>
                 <div>
                   <img
                     src={Certificate}
@@ -2174,24 +2176,25 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 </div>
               </div>
               <div className="flex flex-col w-full border rounded-md py-6 px-4 gap-4 shadow-sm">
-                <p className="font-bold text-lg">Parcel</p>
+                <p className="font-bold text-lg">Parcels</p>
                 <div className="flex flex-col gap-3">
-                  <div className="flex justify-between">
+                  <div className="flex gap-2">
+                    <p className={labelClass}>BL:</p>
+                    <p>Surrendered</p>
+                  </div>
+                  <p className="text-base italic text-gray-500">
+                    Sent {cardData.soldDate} to {cardData.customer}
+                  </p>
+                  <hr />
+                  <div className="flex gap-2">
                     <p className={labelClass}>EC:</p>
-                    <p>{cardData.ec}</p>
+                    <p>
+                      {cardData.ec} ({cardData.trackingNumber})
+                    </p>
                   </div>
-                  <div className="flex justify-between">
-                    <p className={labelClass}>Tracking Number:</p>
-                    <p>{cardData.trackingNumber}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className={labelClass}>Sent Date:</p>
-                    <p>{cardData.soldDate}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className={labelClass}>Customer:</p>
-                    <p>{cardData.customer}</p>
-                  </div>
+                  <p className="text-base italic text-gray-500">
+                    Sent {cardData.soldDate} to {cardData.customer}
+                  </p>
                 </div>
               </div>
             </div>
@@ -2212,6 +2215,38 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 </p>
                 <p>$9,327 UK VAT Duty Paid!</p>
               </div>
+              {cardData.highlightStatus === "Sold" && (
+                <div className="flex flex-col gap-3">
+                  <hr />
+                  <p className="font-bold text-lg">Invoice Breakdown</p>
+                  <div className="flex justify-between">
+                    <p className={labelClass}>23-JM271</p>
+                    <p> ¥{cardData.price.toLocaleString()}</p>
+                  </div>
+                  <div className="flex justify-between">
+                    <p className={labelClass}>23-JM271</p>
+                    <p> ¥{cardData.price.toLocaleString()}</p>
+                  </div>
+                  <div className="flex justify-between">
+                    <p className={labelClass}>23-JM271</p>
+                    <p className="text-red-500">
+                      - ¥{cardData.price.toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex justify-between">
+                    <p className={labelClass}>X-Rate Diff</p>
+                    <p className="font-semibold">
+                      ¥{(cardData.price - 500000).toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex justify-between">
+                    <p className={labelClass}>Total</p>
+                    <p className="font-semibold">
+                      ¥{(cardData.price + 200000).toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              )}
               <hr />
               <div className="flex flex-col gap-3">
                 <div className="flex justify-between">
@@ -2246,17 +2281,24 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             <SalesCommentBox />
           </div>
           <div className="col-3 flex flex-col gap-4">
-            <div className={`flex flex-col gap-4 p-4 rounded-md border border-gray-300 ${cardData.highlightStatus==="Sold" ?'bg-gray-100':'bg-[#E2E8DD]'}`}>
+            <div
+              className={`flex flex-col gap-4 p-4 rounded-md border border-gray-300 ${
+                cardData.highlightStatus === "Sold"
+                  ? "bg-gray-100"
+                  : "bg-[#E2E8DD]"
+              }`}
+            >
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between">
                   <p className="text-lg font-bold text-blue-950">
                     {cardData.customer}
                   </p>
-                  {cardData.highlightStatus==="Sold" &&
-                  <p className="flex items-center gap-2 border border-gray-400 rounded-md px-2">
-                    <RiCarLine />
-                    Sold
-                  </p>}
+                  {cardData.highlightStatus === "Sold" && (
+                    <p className="flex items-center gap-2 border border-gray-400 rounded-md px-2">
+                      <RiCarLine />
+                      Sold
+                    </p>
+                  )}
                 </div>
                 <p className="text-gray-500 text-sm">
                   Sold Date:{" "}

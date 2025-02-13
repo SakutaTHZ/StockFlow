@@ -50,7 +50,7 @@ const BuyingTaskBox: React.FC<BuyingTaskBoxProps> = ({ customClass }) => {
         className={`relative inline-block w-1/2 border p-4 rounded-md bg-white ${customClass}`}
       >
         <div className="head flex justify-between items-center">
-          <p className="font-bold text-xl">Yard Task</p>
+          <p className="font-bold text-xl">Buying Task</p>
           <button
             className="flex items-center gap-1 font-semibold text-[#997435]"
             onClick={() => setShowTaskEditor(true)}
