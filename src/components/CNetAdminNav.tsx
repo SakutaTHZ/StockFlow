@@ -11,12 +11,14 @@ interface CNetAdminNavProps {
   customClass?: string;
   navClass?: string;
   activeNavClass?: string;
+  breadcrumb?: boolean;
 }
 
 const CNetAdminNav: React.FC<CNetAdminNavProps> = ({
   customClass,
   navClass,
   activeNavClass,
+  breadcrumb
 }) => {
   navClass = `font-semibold px-2 ${navClass}`;
   activeNavClass = `h-full text-[#997435] font-bold ${activeNavClass}`;
@@ -148,6 +150,9 @@ const CNetAdminNav: React.FC<CNetAdminNavProps> = ({
           </div>
         </ul>
       </div>
+      
+      {/* Breadcrumb */}
+      {breadcrumb && (
       <div className="flex px-10 py-3 border-b">
         <p className="flex items-center gap-2">Menu <MdArrowForward  className="translate-y-0.5"/></p>
 
@@ -194,6 +199,7 @@ const CNetAdminNav: React.FC<CNetAdminNavProps> = ({
           </li>
         </ul>
       </div>
+      )}
     </nav>
   );
 };

@@ -11,6 +11,7 @@ import Details from "./pages/details";
 import StockDetails from "./pages/adminCarStockDetails";
 import Login from "./pages/login";
 import Admin from "./pages/admin"
+import CarImages from "./pages/CarImages";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/detail/:id" element={<Details />} />
         <Route path="/StockDetail/:id" element={<StockDetails />} />
         <Route path="/StockFlowAdmin" element={<Admin />} />
+        <Route path="/StockFlowAdmin/Images/:id" element={<CarImages />} />
 
         <Route path="/login" element={<Login />} />
 

@@ -145,6 +145,10 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   const [isInnerCargoPopupOpen, setIsInnerCargoPopupOpen] = useState(false);
   const openInnerCargoPopup = () => setIsInnerCargoPopupOpen(true);
   const closeInnerCargoPopup = () => setIsInnerCargoPopupOpen(false);
+  
+  const navigate = useNavigate();
+
+  const [cars] = useAtom(carAtom);
 
   const CommentBox = () => {
     const [editMode, setEditMode] = useState(false);
@@ -1742,9 +1746,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     );
   };
   const SalesDropDown = () => {
-    const navigate = useNavigate();
-
-    const [cars] = useAtom(carAtom);
 
     const handleCardClick = (carData: CarData) => {
       console.log("clicked" + carData.id);
@@ -1921,10 +1922,15 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </>
     );
   };
+  const goToImages = (carData: CarData) => {
+    navigate(`/StockFlowAdmin/Images/${carData.id.slice(1)}`, {
+      state: { card: carData, cars: cars },
+    });
+  };
 
   return (
     <>
-      <CNetAdminNav />
+      <CNetAdminNav breadcrumb={true} />
       {isInnerCargoPopupOpen && <InnerCargoPopup />}
 
       {showGallery && (
@@ -1970,7 +1976,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
               <MdEdit size={20} />
               <p className="font-semibold">Edit</p>
             </button>
-            <button className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md">
+            <button onClick={()=>goToImages(cardData)} className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md">
               <BiImages size={20} />
               <p className="font-semibold">Images</p>
             </button>
