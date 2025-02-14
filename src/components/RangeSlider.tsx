@@ -16,7 +16,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   customClass,
   reset,
 }) => {
-  const halfPoint = Math.round((min + max) / 2);
+  // const halfPoint = Math.round((min + max) / 2);
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -27,13 +27,15 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
   }
 
   const handleMinChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Math.min(Number(e.target.value), maxValue - 1);
+    // const value = Math.min(Number(e.target.value), maxValue - 1);
+    const value = Number(e.target.value);
     setMinValue(value);
     setIsEdited(checkOriginalValues);
   };
 
   const handleMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(Number(e.target.value), minValue + 1);
+    // const value = Math.max(Number(e.target.value), minValue + 1);
+    const value = Number(e.target.value);
     setMaxValue(value);
     setIsEdited(checkOriginalValues);
   };
@@ -84,7 +86,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
                 type="number"
                 value={minValue}
                 onChange={handleMinChange}
-  onClick={(e) => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
                 className="pl-2 pr-4 py-2 rounded-md w-full bg-gray-100 outline-none"
               />
               <span>to</span>
@@ -102,7 +104,8 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
               <input
                 type="range"
                 min={min}
-                max={halfPoint}
+                // max={halfPoint}
+                max={max}
                 step="1"
                 value={minValue}
                 onChange={handleMinSlider}
@@ -112,7 +115,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
               {/* Max Slider */}
               <input
                 type="range"
-                min={halfPoint}
+                min={min}
                 max={max}
                 step="1"
                 value={maxValue}
