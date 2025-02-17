@@ -17,6 +17,7 @@ import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import { BsEyeFill, BsStarFill } from "react-icons/bs";
 import StatusState from "../components/adminComponents/StausState";
+import Gallery from "../components/Gallery";
 
 interface CarImagesProps {
   customClass?: string;
@@ -125,9 +126,21 @@ const CarImages: React.FC<CarImagesProps> = () => {
     );
   };
 
+  const [showGallery, setShowGallery] = useState(false);
+
+  function toggleGallery() {
+    setShowGallery(() => !showGallery);
+  }
+
   return (
     <>
       <CNetAdminNav />
+      {showGallery && (
+        <Gallery
+          customClass="animate-appear animate-slideUp"
+          closeBox={toggleGallery}
+        />
+      )}
 
       <div className="flex flex-col px-4 md:px-20">
         {/* Top Nav */}
@@ -238,7 +251,10 @@ const CarImages: React.FC<CarImagesProps> = () => {
               <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="text-lg font-semibold w-32">Auction Images</h2>
-                  <button className="flex items-center gap-2 bg-[#FFDA9B] p-1.5 px-3 rounded-md font-semibold">
+                  <button
+                    className="flex items-center gap-2 bg-[#FFDA9B] p-1.5 px-3 rounded-md font-semibold"
+                    onClick={toggleGallery}
+                  >
                     <BsEyeFill size={20} className="flex-shrink-0" /> Check
                     Details
                   </button>
@@ -252,7 +268,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
                   <p>Show Auction Images</p>
                 </div>
               </div>
-              <div className="flex flex-wrap border-4 gap-2 min-h-32 border-dotted p-4 rounded-md">
+              <div className="ImagesContainer flex flex-wrap border-4 gap-2 min-h-32 border-dotted p-4 rounded-md">
                 {Array(8)
                   .fill(null)
                   .map((_: number, index: number) => (
@@ -260,28 +276,30 @@ const CarImages: React.FC<CarImagesProps> = () => {
                   ))}
               </div>
             </div>
-            
+
             {/* Yard Images Box */}
             <div className="flex flex-col gap-2">
               <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="text-lg font-semibold w-32">Yard Images</h2>
-                  <button className="flex items-center gap-2 bg-[#FFDA9B] p-1.5 px-3 rounded-md font-semibold">
+                  <button
+                    className="flex items-center gap-2 bg-[#FFDA9B] p-1.5 px-3 rounded-md font-semibold"
+                    onClick={toggleGallery}
+                  >
                     <BsEyeFill size={20} className="flex-shrink-0" /> Check
                     Details
                   </button>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  
                   <StatusState
-                    data={'Yard Base'}
-                    status={'Pending'}
+                    data={"Yard Base"}
+                    status={"Pending"}
                     customClass="list-none"
                   />
                   <StatusState
-                    data={'CJP Extra'}
-                    status={'Pending'}
+                    data={"CJP Extra"}
+                    status={"Pending"}
                     customClass="list-none"
                   />
                   <label className="inline-flex items-center cursor-pointer">
@@ -291,7 +309,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
                   <p>Show Yard Images</p>
                 </div>
               </div>
-              <div className="flex flex-wrap border-4 gap-2 min-h-32 border-dotted p-4 rounded-md">
+              <div className="ImagesContainer flex flex-wrap border-4 gap-2 min-h-32 border-dotted p-4 rounded-md">
                 {Array(52)
                   .fill(null)
                   .map((_: number, index: number) => (
@@ -315,7 +333,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
                   <p>Show Shitami Images</p>
                 </div>
               </div>
-              <div className="flex flex-wrap border-4 gap-2 min-h-32 border-dotted p-4 rounded-md">
+              <div className="ImagesContainer flex flex-wrap border-4 gap-2 min-h-32 border-dotted p-4 rounded-md">
                 {Array(0)
                   .fill(null)
                   .map((_: number, index: number) => (
@@ -335,7 +353,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
                     <h2 className="text-lg font-semibold">Sheet</h2>
                   </div>
                 </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                <div className="ImagesContainer flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
                   {Array(0)
                     .fill(null)
                     .map((_: number, index: number) => (
@@ -350,7 +368,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
                     <h2 className="text-lg font-semibold">EC</h2>
                   </div>
                 </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted p-4 min-h-32 rounded-md">
+                <div className="ImagesContainer flex flex-wrap border-4 gap-2 border-dotted p-4 min-h-32 rounded-md">
                   {Array(0)
                     .fill(null)
                     .map((_: number, index: number) => (
@@ -359,7 +377,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="flex flex-col md:flex-row gap-2 md:gap-4">
               {/* Cosmo Check Sheet Box */}
               <div className="w-full md:w-1/2 flex flex-col gap-2">
@@ -368,7 +386,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
                     <h2 className="text-lg font-semibold">Cosmo Check Sheet</h2>
                   </div>
                 </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                <div className="ImagesContainer flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
                   {Array(1)
                     .fill(null)
                     .map((_: number, index: number) => (
@@ -383,7 +401,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
                     <h2 className="text-lg font-semibold">VIN</h2>
                   </div>
                 </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted p-4 min-h-32 rounded-md">
+                <div className="ImagesContainer flex flex-wrap border-4 gap-2 border-dotted p-4 min-h-32 rounded-md">
                   {Array(0)
                     .fill(null)
                     .map((_: number, index: number) => (
@@ -393,70 +411,69 @@ const CarImages: React.FC<CarImagesProps> = () => {
               </div>
             </div>
 
-            
-              {/* Inner Cargo Box */}
-              <div className="w-full flex flex-col gap-2">
-                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
-                  <div className="flex items-center justify-between gap-3">
-                    <h2 className="text-lg font-semibold">Inner Cargo</h2>
-                  </div>
-                </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
-                  {Array(1)
-                    .fill(null)
-                    .map((_: number, index: number) => (
-                      <ImageBox key={index} />
-                    ))}
+            {/* Inner Cargo Box */}
+            <div className="w-full flex flex-col gap-2">
+              <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="text-lg font-semibold">Inner Cargo</h2>
                 </div>
               </div>
+              <div className="ImagesContainer flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                {Array(1)
+                  .fill(null)
+                  .map((_: number, index: number) => (
+                    <ImageBox key={index} />
+                  ))}
+              </div>
+            </div>
 
-              {/* Lashing Box */}
-              <div className="w-full flex flex-col gap-2">
-                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
-                  <div className="flex items-center justify-between gap-3">
-                    <h2 className="text-lg font-semibold">Lashing</h2>
-                  </div>
-                </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
-                  {Array(0)
-                    .fill(null)
-                    .map((_: number, index: number) => (
-                      <ImageBox key={index} />
-                    ))}
+            {/* Lashing Box */}
+            <div className="w-full flex flex-col gap-2">
+              <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="text-lg font-semibold">Lashing</h2>
                 </div>
               </div>
+              <div className="ImagesContainer flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                {Array(0)
+                  .fill(null)
+                  .map((_: number, index: number) => (
+                    <ImageBox key={index} />
+                  ))}
+              </div>
+            </div>
 
-              {/* Hidden Images Box */}
-              <div className="w-full flex flex-col gap-2">
-                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
-                  <div className="flex items-center justify-between gap-3">
-                    <h2 className="text-lg font-semibold">Hidden Images</h2>
-                  </div>
-                </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
-                  {Array(0)
-                    .fill(null)
-                    .map((_: number, index: number) => (
-                      <ImageBox key={index} />
-                    ))}
+            {/* Hidden Images Box */}
+            <div className="w-full flex flex-col gap-2">
+              <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="text-lg font-semibold">Hidden Images</h2>
                 </div>
               </div>
+              <div className="ImagesContainer flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                {Array(0)
+                  .fill(null)
+                  .map((_: number, index: number) => (
+                    <ImageBox key={index} />
+                  ))}
+              </div>
+            </div>
 
-              {/* Deleted Images Box */}
-              <div className="w-full flex flex-col gap-2">
-                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
-                  <div className="flex items-center justify-between gap-3">
-                    <h2 className="text-lg font-semibold">Deleted Images</h2>
-                  </div>
-                </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md bg-red-50 border-red-300">
-                  {Array(2)
-                    .fill(null)
-                    .map((_: number, index: number) => (
-                      <ImageBox key={index} />
-                    ))}
+            {/* Deleted Images Box */}
+            <div className="w-full flex flex-col gap-2">
+              <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="text-lg font-semibold">Deleted Images</h2>
                 </div>
               </div>
+              <div className="ImagesContainer flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md bg-red-50 border-red-300">
+                {Array(2)
+                  .fill(null)
+                  .map((_: number, index: number) => (
+                    <ImageBox key={index} />
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
