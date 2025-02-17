@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface StatusStateProps {
+  customClass?: string;
   data?: string;
   status: string;
-  onStatusChange: (newStatus: string) => void;
+  onStatusChange?: (newStatus: string) => void;
 }
 
-const StatusState: React.FC<StatusStateProps> = ({ data, status, onStatusChange }) => {
+const StatusState: React.FC<StatusStateProps> = ({ customClass, data, status, onStatusChange }) => {
   const statusList = [
     { name: "Pending", style: "text-blue-500 font-semibold" },
     { name: "In Progress", style: "text-black font-semibold" },
@@ -14,19 +15,25 @@ const StatusState: React.FC<StatusStateProps> = ({ data, status, onStatusChange 
     { name: "Cancelled", style: "text-green-600 font-semibold line-through" },
   ];
 
-  const currentStatusIndex = statusList.findIndex((s) => s.name === status);
+  const [tempStatus, setTempStatus] = useState(status); // Initialize state with status
+
+  const currentStatusIndex = statusList.findIndex((s) => s.name === tempStatus); // Use tempStatus instead of status
+
   const handleStatusChange = () => {
     const newIndex = (currentStatusIndex + 1) % statusList.length;
     const newStatus = statusList[newIndex].name;
-    onStatusChange(newStatus);
+    setTempStatus(newStatus); // Update state correctly
+    if (onStatusChange) {
+      onStatusChange(newStatus);
+    }
   };
 
   return (
     <li
-      className={`cursor-pointer ${statusList[currentStatusIndex].style}`}
+      className={`cursor-pointer ${customClass} ${statusList[currentStatusIndex]?.style || ""}`}
       onClick={handleStatusChange}
     >
-      {status !== "Pending" ? `${data} 済` : `${data}`}
+      {tempStatus !== "Pending" ? `${data} 済` : `${data}`}
     </li>
   );
 };

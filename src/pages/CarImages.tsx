@@ -16,6 +16,7 @@ import { FaRegSave } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import { BsEyeFill, BsStarFill } from "react-icons/bs";
+import StatusState from "../components/adminComponents/StausState";
 
 interface CarImagesProps {
   customClass?: string;
@@ -114,7 +115,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
           className="w-20 aspect-square object-cover shadow-md"
         />
         <p
-          className={`-bottom-8 group-hover:bottom-0 text-sm bg-white absolute w-full left-0 text-center transition-all duration-300 rounded-md ${
+          className={`-bottom-8 group-hover:bottom-0 text-sm absolute w-full left-0 text-center transition-all duration-300 rounded-md ${
             isSelected ? "bg-[#0B66E4] text-white" : "text-black bg-white"
           }`}
         >
@@ -229,13 +230,14 @@ const CarImages: React.FC<CarImagesProps> = () => {
         </div>
 
         {/* Main Content */}
-        <div className="grid md:grid-cols-[2fr_1fr] min-h-20 gap-4 py-2">
-          <div className="flex flex-col gap-4">
+        <div className="grid md:grid-cols-[2fr_1fr] min-h-20 gap-4 py-2 pb-8">
+          {/* Column 1 */}
+          <div className="flex flex-col gap-2 md:gap-4">
             {/* Auction Images Box */}
             <div className="flex flex-col gap-2">
               <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
                 <div className="flex items-center justify-between gap-3">
-                  <h2 className="text-lg font-semibold">Auction Images</h2>
+                  <h2 className="text-lg font-semibold w-32">Auction Images</h2>
                   <button className="flex items-center gap-2 bg-[#FFDA9B] p-1.5 px-3 rounded-md font-semibold">
                     <BsEyeFill size={20} className="flex-shrink-0" /> Check
                     Details
@@ -250,7 +252,7 @@ const CarImages: React.FC<CarImagesProps> = () => {
                   <p>Show Auction Images</p>
                 </div>
               </div>
-              <div className="flex flex-wrap border-4 gap-2 min-h-[134px] border-dotted p-4 rounded-md">
+              <div className="flex flex-wrap border-4 gap-2 min-h-32 border-dotted p-4 rounded-md">
                 {Array(8)
                   .fill(null)
                   .map((_: number, index: number) => (
@@ -258,17 +260,82 @@ const CarImages: React.FC<CarImagesProps> = () => {
                   ))}
               </div>
             </div>
+            
+            {/* Yard Images Box */}
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="text-lg font-semibold w-32">Yard Images</h2>
+                  <button className="flex items-center gap-2 bg-[#FFDA9B] p-1.5 px-3 rounded-md font-semibold">
+                    <BsEyeFill size={20} className="flex-shrink-0" /> Check
+                    Details
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  
+                  <StatusState
+                    data={'Yard Base'}
+                    status={'Pending'}
+                    customClass="list-none"
+                  />
+                  <StatusState
+                    data={'CJP Extra'}
+                    status={'Pending'}
+                    customClass="list-none"
+                  />
+                  <label className="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" />
+                    <div className="relative w-9 h-5 bg-gray-200 rounded-full peer-checked:bg-[#FFC158] peer-checked:after:translate-x-full peer-focus:outline-none after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all" />
+                  </label>
+                  <p>Show Yard Images</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap border-4 gap-2 min-h-32 border-dotted p-4 rounded-md">
+                {Array(52)
+                  .fill(null)
+                  .map((_: number, index: number) => (
+                    <ImageBox key={index} />
+                  ))}
+              </div>
+            </div>
+
+            {/* Shitami Images Box */}
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="text-lg font-semibold w-32">Shitami Images</h2>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <label className="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" />
+                    <div className="relative w-9 h-5 bg-gray-200 rounded-full peer-checked:bg-[#FFC158] peer-checked:after:translate-x-full peer-focus:outline-none after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all" />
+                  </label>
+                  <p>Show Shitami Images</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap border-4 gap-2 min-h-32 border-dotted p-4 rounded-md">
+                {Array(0)
+                  .fill(null)
+                  .map((_: number, index: number) => (
+                    <ImageBox key={index} />
+                  ))}
+              </div>
+            </div>
           </div>
+
+          {/* Column 2 */}
           <div className="flex flex-col gap-2">
-            <div className="flex gap-4">
+            <div className="flex flex-col md:flex-row gap-2 md:gap-4">
               {/* Sheet Box */}
-              <div className="w-1/2 flex flex-col gap-2">
+              <div className="w-full md:w-1/2 flex flex-col gap-2">
                 <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
                   <div className="flex items-center justify-between gap-3">
                     <h2 className="text-lg font-semibold">Sheet</h2>
                   </div>
                 </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-[134px] p-4 rounded-md">
+                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
                   {Array(0)
                     .fill(null)
                     .map((_: number, index: number) => (
@@ -277,13 +344,13 @@ const CarImages: React.FC<CarImagesProps> = () => {
                 </div>
               </div>
               {/* EC Box */}
-              <div className="w-1/2 flex flex-col gap-2">
+              <div className="w-full md:w-1/2 flex flex-col gap-2">
                 <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
                   <div className="flex items-center justify-between gap-3">
                     <h2 className="text-lg font-semibold">EC</h2>
                   </div>
                 </div>
-                <div className="flex flex-wrap border-4 gap-2 border-dotted p-4 min-h-[134px] rounded-md">
+                <div className="flex flex-wrap border-4 gap-2 border-dotted p-4 min-h-32 rounded-md">
                   {Array(0)
                     .fill(null)
                     .map((_: number, index: number) => (
@@ -292,6 +359,104 @@ const CarImages: React.FC<CarImagesProps> = () => {
                 </div>
               </div>
             </div>
+            
+            <div className="flex flex-col md:flex-row gap-2 md:gap-4">
+              {/* Cosmo Check Sheet Box */}
+              <div className="w-full md:w-1/2 flex flex-col gap-2">
+                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-lg font-semibold">Cosmo Check Sheet</h2>
+                  </div>
+                </div>
+                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                  {Array(1)
+                    .fill(null)
+                    .map((_: number, index: number) => (
+                      <ImageBox key={index} />
+                    ))}
+                </div>
+              </div>
+              {/* VIN Box */}
+              <div className="w-full md:w-1/2 flex flex-col gap-2">
+                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-lg font-semibold">VIN</h2>
+                  </div>
+                </div>
+                <div className="flex flex-wrap border-4 gap-2 border-dotted p-4 min-h-32 rounded-md">
+                  {Array(0)
+                    .fill(null)
+                    .map((_: number, index: number) => (
+                      <ImageBox key={index} />
+                    ))}
+                </div>
+              </div>
+            </div>
+
+            
+              {/* Inner Cargo Box */}
+              <div className="w-full flex flex-col gap-2">
+                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-lg font-semibold">Inner Cargo</h2>
+                  </div>
+                </div>
+                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                  {Array(1)
+                    .fill(null)
+                    .map((_: number, index: number) => (
+                      <ImageBox key={index} />
+                    ))}
+                </div>
+              </div>
+
+              {/* Lashing Box */}
+              <div className="w-full flex flex-col gap-2">
+                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-lg font-semibold">Lashing</h2>
+                  </div>
+                </div>
+                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                  {Array(0)
+                    .fill(null)
+                    .map((_: number, index: number) => (
+                      <ImageBox key={index} />
+                    ))}
+                </div>
+              </div>
+
+              {/* Hidden Images Box */}
+              <div className="w-full flex flex-col gap-2">
+                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-lg font-semibold">Hidden Images</h2>
+                  </div>
+                </div>
+                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                  {Array(0)
+                    .fill(null)
+                    .map((_: number, index: number) => (
+                      <ImageBox key={index} />
+                    ))}
+                </div>
+              </div>
+
+              {/* Deleted Images Box */}
+              <div className="w-full flex flex-col gap-2">
+                <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-lg font-semibold">Deleted Images</h2>
+                  </div>
+                </div>
+                <div className="flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md bg-red-50 border-red-300">
+                  {Array(2)
+                    .fill(null)
+                    .map((_: number, index: number) => (
+                      <ImageBox key={index} />
+                    ))}
+                </div>
+              </div>
           </div>
         </div>
       </div>
