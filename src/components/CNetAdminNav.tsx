@@ -144,7 +144,7 @@ const CNetAdminNav: React.FC<CNetAdminNavProps> = ({
             </button>
             <div className="time flex items-center gap-2">
               <img src={JapanFlag} alt="flag" />
-              {new Date().toLocaleTimeString()}
+              {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </div>
             <ProfileDropDown username="John Dude" />
           </div>
