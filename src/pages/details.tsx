@@ -21,7 +21,7 @@ import {
 import { TbFaceIdError, TbRoad } from "react-icons/tb";
 import Hybrid from "../assets/hybrid.png";
 import Engine from "../assets/EnginePower.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Gallery from "../components/Gallery";
 import { IoLanguage } from "react-icons/io5";
 import { IoMdInformationCircleOutline, IoMdPhotos } from "react-icons/io";
@@ -42,6 +42,10 @@ const Details: React.FC<DetailsProps> = () => {
 
   const location = useLocation();
   const cardData = (location.state as LocationState)?.card;
+
+  useEffect(() => {
+    document.title = `${(cardData.id).substring(1)}`;
+  }, [cardData.id]);
 
   const highlightPill = (status: string) => {
     return status === "Welcab" ? (

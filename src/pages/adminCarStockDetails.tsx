@@ -30,7 +30,7 @@ import {
 import { BiImages } from "react-icons/bi";
 import { RiCarLine, RiTruckLine } from "react-icons/ri";
 import { HiOutlineChartBar } from "react-icons/hi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoCarOutline, IoClose, IoLanguage } from "react-icons/io5";
 import Gallery from "../components/Gallery";
 import Popup from "../components/Popup";
@@ -71,6 +71,10 @@ const labelClass = `text-gray-500`;
 const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   const location = useLocation();
   const cardData = (location.state as LocationState)?.card;
+  
+  useEffect(() => {
+      document.title = `${(cardData.id).substring(1)}`;
+    }, [cardData.id]);
 
   const highlightPill = (status: string) => {
     return status === "Welcab" ? (
@@ -2741,3 +2745,4 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
 };
 
 export default AdminCarStockDetails;
+

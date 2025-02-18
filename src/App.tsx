@@ -15,12 +15,14 @@ import CarImages from "./pages/CarImages";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import PageTitleUpdater from "./components/PageTitleUpdater";
 
 function App() {
   return (
     <>
       <ScrollToTopButton customClass={""} />
 
+      <PageTitleUpdater />
       <Routes>
         {/* Default route redirecting to /StockFlow/login */}
         <Route path="/" element={<Navigate to="/StockFlow/login" replace />} />

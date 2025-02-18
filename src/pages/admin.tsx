@@ -273,7 +273,7 @@ const adminPage: React.FC<adminPageProps> = ({ customClass }) => {
 
   return (
     <>
-      <CNetAdminNav customClass="sticky top-0" />
+      <CNetAdminNav customClass="sticky top-0" breadcrumb={true} />
       <div className={`px-12 py-5 flex flex-col gap-6 ${customClass}`}>
         <div className="sticky top-28 py-4 z-10 transition-all bg-white flex flex-col gap-4">
           <div className="flex items-center justify-between">
