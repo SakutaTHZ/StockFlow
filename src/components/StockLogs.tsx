@@ -62,8 +62,8 @@ const StockLogs: React.FC<StockLogsProps> = ({
         {/* Popup content */}
         <div className="overflow-x-auto overflow-y-auto h-full custom-scrollbar">
           <table className="w-full rounded-md border border-gray-300">
-            <thead>
-              <tr className="bg-[#FFE6BC]">
+            <thead className="sticky top-0 bg-gray-100 ">
+              <tr className="bg-[#FFE6BC] border border-gray-300">
                 <th className={tableColumnClass}>User</th>
                 <th className={tableColumnClass}>ID</th>
                 <th className={tableColumnClass}>stockID</th>

@@ -1238,7 +1238,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 {extras.map((extra, index) => (
                   <tr
                     key={index}
-                    className={`${index % 2 === 1 && "bg-gray-50"}`}
+                    // className={`${index % 2 === 1 && "bg-gray-50"}`}
                   >
                     <td className={`${colClass}`}>
                       {editMode ? (
@@ -1951,7 +1951,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
         <div className="flex justify-between">
           <div className="flex flex-col gap-3">
             <p className="text-3xl font-bold flex items-center gap-2 text-blue-950">
-              {cardData.type} {cardData.name}
+              Audi {cardData.name}
               <IoMdEye size={20} className="text-green-600" />
             </p>
             <p className="font-medium text-blue-950">
@@ -2185,7 +2185,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 <p className="font-bold text-lg">Parcels</p>
                 <div className="flex flex-col gap-3">
                   <div className="flex gap-2">
-                    <p className={labelClass}>BL:</p>
+                    <p>BL :</p>
                     <p>Surrendered</p>
                   </div>
                   <p className="text-base italic text-gray-500">
@@ -2193,7 +2193,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                   </p>
                   <hr />
                   <div className="flex gap-2">
-                    <p className={labelClass}>EC:</p>
+                    <p>EC :</p>
                     <p>
                       {cardData.ec} ({cardData.trackingNumber})
                     </p>
@@ -2260,14 +2260,14 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                   <p>{cardData.soldDate}</p>
                 </div>
                 <div className="flex justify-between">
-                  <p className={labelClass}>ETY:</p>
-                  <p>{cardData.soldDate}</p>
-                </div>
-                <div className="flex justify-between">
                   <p className={labelClass}>Vessel:</p>
                   <p>
                     {cardData.vessel}, {cardData.yardArea}
                   </p>
+                </div>
+                <div className="flex justify-between">
+                  <p className={labelClass}>ETY:</p>
+                  <p>{cardData.soldDate}</p>
                 </div>
                 <div className="flex justify-between">
                   <p className={labelClass}>From:</p>
