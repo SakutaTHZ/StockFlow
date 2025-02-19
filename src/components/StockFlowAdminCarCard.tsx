@@ -3,7 +3,6 @@ import {
   FaWheelchair,
   FaRegCheckCircle,
   FaRegStar,
-  FaRegPauseCircle,
 } from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";
@@ -340,13 +339,11 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
           />
           {car.highlightStatus === "Sold" ? (
             <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-2 py-2">
-              <FaMoneyBillTrendUp />
               Sold
             </div>
           ) : (
             car.hold && (
               <div className="absolute w-full bottom-0 flex items-center bg-black bg-opacity-40 text-white font-semibold justify-center gap-2 py-2">
-                <FaRegPauseCircle />
                 On Hold
               </div>
             )
