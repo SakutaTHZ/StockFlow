@@ -1,9 +1,5 @@
 import React, { CSSProperties, useState } from "react";
-import {
-  FaWheelchair,
-  FaRegCheckCircle,
-  FaRegStar,
-} from "react-icons/fa";
+import { FaWheelchair, FaRegCheckCircle, FaRegStar } from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";
 import { BsThreeDots } from "react-icons/bs";
@@ -219,10 +215,10 @@ const CarCard: React.FC<CarCardProps> = ({
           )}
           <span
             className={`id absolute bottom-1.5 left-2 flex items-center gap-2 text-sm  rounded-full px-3 py-1 text-white bg-black bg-opacity-40  ${
-                          car.hold || car.highlightStatus === "Sold"
-                            ? "bg-white bg-opacity-20"
-                            : "bg-black bg-opacity-40"
-                        }`}
+              car.hold || car.highlightStatus === "Sold"
+                ? "bg-white bg-opacity-20"
+                : "bg-black bg-opacity-40"
+            }`}
           >
             {car.id}
           </span>

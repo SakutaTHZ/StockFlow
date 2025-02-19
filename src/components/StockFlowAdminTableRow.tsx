@@ -3,7 +3,6 @@ import {
   FaWheelchair,
   FaRegCheckCircle,
   FaChevronDown,
-  FaRegPauseCircle,
 } from "react-icons/fa";
 
 import { RiDiscountPercentLine, RiShipLine } from "react-icons/ri";
@@ -42,7 +41,6 @@ import { LuMapPin } from "react-icons/lu";
 import { IoCarOutline, IoEyeOutline } from "react-icons/io5";
 import { yards, promotionText, highlightStatus } from "../data/generateData";
 import DropDown from "./DropDown";
-import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import dayjs from "dayjs";
 import placeholderImage from "../assets/images/stock/00165048_01.jpg";
 import { BiPlus } from "react-icons/bi";
@@ -114,7 +112,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
       <span
         className={`stat flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40`}
       >
-        <FaRegPauseCircle /> {car.highlightStatus}
+        {car.highlightStatus}
       </span>
     ) : status === "Hybrid" ? (
       <span
@@ -138,7 +136,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           car.hold && "hidden"
         }`}
       >
-        <FaMoneyBillTrendUp /> {car.highlightStatus}
+        {car.highlightStatus}
       </span>
     ) : status === "New" ? (
       <span
