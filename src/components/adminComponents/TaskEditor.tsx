@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import DropDown from "../DropDown";
 import { status, tasks } from "../../data/generateData";
@@ -29,17 +29,25 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
   }
 
   const [taskList, setTaskList] = useState<Task[]>(data.map(task => ({ task, status: status[0] })));
+  const lastTaskRef = useRef<HTMLTableRowElement | null>(null);
+  const taskContainerRef = useRef<HTMLDivElement | null>(null);
+
   const addNewTask = (newTask: string): void => {
-    setTaskList([...taskList, { task: newTask, status: status[0] }]);
+    setTaskList(prev => [...prev, { task: newTask, status: status[0] }]);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (lastTaskRef.current) {
+      lastTaskRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [taskList]);
+
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -59,11 +67,11 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
 
   return (
     <div
-      className={`fixed inset-0 bg-gray-800 backdrop-blur-sm bg-opacity-50 flex justify-center items-center z-[100]`}
+      className="fixed inset-0 bg-gray-800 backdrop-blur-sm bg-opacity-50 flex justify-center items-center z-[100]"
       onClick={handleBackgroundClick}
     >
       <div
-        className={`animate-slideUp h-[80dvh] bg-white p-8 md:p-12 py-8 rounded-lg shadow-lg relative min-w-96 ${customClass}`}
+        className={`flex flex-col animate-slideUp h-fit min-h-64 max-h-[80dvh] bg-white p-8 md:p-12 py-8 rounded-lg shadow-lg relative min-w-96 ${customClass}`}
       >
         <div className="w-full flex items-center justify-between mb-4">
           <p className="text-2xl font-bold">{title}</p>
@@ -77,7 +85,7 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
             </button>
             <button
               className="p-2 px-4 font-bold bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
-              onClick={() => onSave(taskList.map((task) => task.task))}
+              onClick={() => onSave(taskList.map(task => task.task))}
             >
               Save
             </button>
@@ -89,17 +97,15 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
             </button>
           </div>
         </div>
-        <div className="h-[90%] custom-scrollbar overflow-y-auto">
+        <div ref={taskContainerRef} className="h-[90%] custom-scrollbar overflow-y-auto">
           <table className="w-full border">
-            <thead className="bg-gray-100">
+            <thead className="bg-gray-100 sticky top-0 z-20">
               <tr>
                 <th className={`${tableColumnClass}`}>Task</th>
                 <th className={`${tableColumnClass}`}>Status</th>
                 <th className={`${tableColumnClass}`}>Created</th>
                 <th className={`${tableColumnClass}`}>Sent</th>
-                <th className={`${tableColumnClass}`}>
-                  Expected Completed Date
-                </th>
+                <th className={`${tableColumnClass}`}>Expected Completed Date</th>
                 <th className={`${tableColumnClass}`}>Completed</th>
                 <th className={`${tableColumnClass}`}>Comment</th>
                 <th className={`${tableColumnClass}`}>Action</th>
@@ -107,8 +113,7 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
             </thead>
             <tbody>
               {taskList.map((task, index) => (
-                // Save all the data in the tr to the tasklist as an object
-                <tr key={index}>
+                <tr key={index} ref={index === taskList.length - 1 ? lastTaskRef : null}>
                   <td className={`${tableColumnClass}`}>
                     <DropDown
                       options={tasks}
@@ -125,7 +130,7 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
                   <td className={`${tableColumnClass}`}>
                     <DropDown
                       options={status}
-                      selected={status[0]}
+                      selected={task.status}
                       optionBoxClass="md:w-full h-fit overflow-y-auto right-0 z-50"
                       buttonClass="py-1"
                       onSelectionChange={(selected) => {

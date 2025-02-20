@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { IoMdArrowDropup } from "react-icons/io";
+import { useLocation } from "react-router-dom";
 
 interface ScrollToTopButtonProps {
   customClass?: string;
@@ -7,6 +9,7 @@ interface ScrollToTopButtonProps {
 const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({
   customClass,
 }) => {
+  const { pathname } = useLocation();
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -14,6 +17,10 @@ const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({
       behavior: "smooth",
     });
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <button

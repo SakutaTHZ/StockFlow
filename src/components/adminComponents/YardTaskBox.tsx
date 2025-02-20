@@ -41,7 +41,7 @@ const YardTaskBox: React.FC<YardTaskBoxProps> = ({ customClass }) => {
           isOpen={showTaskEditor}
           onClose={() => setShowTaskEditor(false)}
           title="Add Task"
-          customClass="w-10/12"
+          customClass="w-8/12"
           data={tasks.map((task) => task.name)}
         />
       )}

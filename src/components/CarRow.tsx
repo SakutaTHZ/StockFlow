@@ -155,20 +155,20 @@ const CarRow: React.FC<CarRowProps> = ({
   return (
     <>
       <div
-        className={`card opacity-0 animate-slideRight transition-all  flex w-full h-44 shadow-md rounded-lg border-2 ${customClass} ${
+        className={`card cursor-pointer opacity-0 animate-slideRight transition-all  flex w-full h-44 shadow-md rounded-lg border-2 ${customClass} ${
           extraStatus ? "border-[#FFC158]" : "border-gray-100"
         } ${car.hold && "opacity-50 pointer-events-none"} transition-all`}
         style={style}
       >
       <div
-        className="ClickArea absolute z-10 w-full h-full"
+        className="ClickArea cursor-pointer absolute z-10 w-full h-full"
         onClick={() => (onClick ? onClick() : handleCardClick(car))}
       ></div>
         <div className="head relative flex">
           <img
             src={car.image}
             alt="car Image"
-            className={`rounded-s-md h-full ${car.hold && "opacity-50 pointer-events-none"}`}
+            className={`rounded-s-md h-full w-72 object-cover ${car.hold && "opacity-50 pointer-events-none"}`}
             loading="lazy"
               onError={(e) => {
                 (e.target as HTMLImageElement).src = placeholderImage;

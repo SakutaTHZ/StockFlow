@@ -1230,7 +1230,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           <div className="body mt-4">
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50">
+                <tr className="bg-gray-100">
                   <th className={`${colClass}`}>Type</th>
                   <th className={`${colClass}`}>Description</th>
                   <th className={`${colClass}`}>Estimate</th>
@@ -1322,7 +1322,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                   </tr>
                 ))}
                 {editMode && (
-                  <tr className="bg-gray-100">
+                  <tr className="bg-gray-50">
                     <td className={`${colClass}`}>
                       <DropDown
                         options={types}
@@ -1373,17 +1373,17 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                     </td>
                   </tr>
                 )}
-                <tr>
+                <tr className="bg-gray-100">
                   <td colSpan={2} className={`${colClass} font-bold`}>
                     Total
                   </td>
-                  <td className={`${colClass} font-semibold`}>
+                  <td className={`${colClass} font-semibold text-nowrap`}>
                     ¥{" "}
                     {extras
                       .reduce((sum, item) => sum + item.Estimate, 0)
                       .toLocaleString()}
                   </td>
-                  <td className={`${colClass} font-semibold`}>
+                  <td className={`${colClass} font-semibold text-nowrap`}>
                     ¥{" "}
                     {extras
                       .reduce((sum, item) => sum + item.Actual, 0)
