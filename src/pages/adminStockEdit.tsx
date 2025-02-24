@@ -32,6 +32,8 @@ import Certificate from "../assets/images/certificate.png";
 import Vin from "../assets/vin.svg";
 import DropDown from "../components/DropDown";
 import {
+  carNames,
+  carTypes,
   descriptions,
   extraCost,
   promotionText,
@@ -1398,8 +1400,45 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-[2.5fr_1.5fr_1.5fr] gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1.5fr_1.5fr] gap-4">
           <div className="col-1 flex flex-col gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-md shadow-sm">
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Make</p>
+                <DropDown
+                  options={carNames}
+                  selected="Audi"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="py-1 rounded bg-white"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Model</p>
+                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm" placeholder="Model"/>
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Grade</p>
+                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm" placeholder="Grade" value={cardData.name}/>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Chassis Number</p>
+                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8" placeholder="Grade" value={cardData.vim}/>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Stock number</p>
+                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8" placeholder="Grade" value={cardData.id}/>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Invoice Number</p>
+                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8" placeholder="Grade" value={cardData.auctionNumber}/>
+              </div>
+            </div>
+
             <div className="imagesContainer h-fit relative flex flex-col md:flex-row gap-4">
               {}
               <div className="animate-slideRight mainImage w-full">
