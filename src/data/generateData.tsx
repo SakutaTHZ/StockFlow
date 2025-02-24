@@ -163,6 +163,9 @@ export const descriptions = [
   "Engine inspection",
 ];
 
+export const visibility = ["Public", "Private"];
+export const published = ["Publish","Published", "Draft"];
+
 export const getRandomMileage = () => {
   return Math.floor(Math.random() * 10000000);
 };

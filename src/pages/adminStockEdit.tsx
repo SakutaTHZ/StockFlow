@@ -1,11 +1,8 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import CNetAdminNav from "../components/CNetAdminNav";
 import { CarData } from "../data/types";
-import { FaChevronDown, FaRegCommentDots, FaWheelchair } from "react-icons/fa";
+import { FaChevronDown} from "react-icons/fa";
 import {
-  MdOutlineTimer,
-  MdOutlineNewReleases,
-  MdEdit,
   MdOutlineRemoveRedEye,
   MdAirlineSeatReclineNormal,
   MdInsertPhoto,
@@ -15,24 +12,18 @@ import {
 import {
   PiCalendarDots,
   PiCarProfile,
-  PiChartLineDownBold,
   PiGasCan,
   PiGearFine,
   PiStar,
 } from "react-icons/pi";
-import { TbFaceIdError, TbRoad } from "react-icons/tb";
-import Hybrid from "../assets/hybrid.png";
+import { TbRoad } from "react-icons/tb";
 import {
-  IoMdEye,
   IoMdInformationCircleOutline,
   IoMdPhotos,
 } from "react-icons/io";
-import { BiImages } from "react-icons/bi";
-import { RiCarLine, RiTruckLine } from "react-icons/ri";
-import { HiOutlineChartBar } from "react-icons/hi";
+import { RiCarLine} from "react-icons/ri";
 import { useEffect, useState } from "react";
-import { IoCarOutline, IoClose, IoLanguage } from "react-icons/io5";
-import Gallery from "../components/Gallery";
+import {IoClose, IoLanguage } from "react-icons/io5";
 import Popup from "../components/Popup";
 
 import Transmission from "../assets/transmission.png";
@@ -41,20 +32,19 @@ import Certificate from "../assets/images/certificate.png";
 import Vin from "../assets/vin.svg";
 import DropDown from "../components/DropDown";
 import {
-  carTypes,
   descriptions,
   extraCost,
-  highlightStatus,
   promotionText,
+  published,
   types,
+  visibility,
   yards,
 } from "../data/generateData";
-import { AiOutlineClose } from "react-icons/ai";
-import { carAtom } from "../data/atoms";
-import { useAtom } from "jotai";
-import LogsDropDown from "../components/adminComponents/LogsDropDown";
+// import { carAtom } from "../data/atoms";
+// import { useAtom } from "jotai";
 import YardTaskBox from "../components/adminComponents/YardTaskBox";
 import BuyingTaskBox from "../components/adminComponents/BuyingTaskBox";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 interface DetailsProps {
   customClass?: string;
@@ -68,65 +58,13 @@ interface LocationState {
 const colClass = `border p-2 px-4 text-left`;
 const labelClass = `text-gray-500`;
 
-const AdminCarStockDetails: React.FC<DetailsProps> = () => {
+const AdminStockEdit: React.FC<DetailsProps> = () => {
   const location = useLocation();
   const cardData = (location.state as LocationState)?.card;
-  
-  useEffect(() => {
-      document.title = `${(cardData.id).substring(1)}`;
-    }, [cardData.id]);
 
-  const highlightPill = (status: string) => {
-    return status === "Welcab" ? (
-      <span
-        className={`stat flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          cardData.hold && "hidden"
-        }`}
-      >
-        <FaWheelchair /> {cardData.highlightStatus}
-      </span>
-    ) : status === "Coming soon" ? (
-      <span
-        className={`stat flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          cardData.hold && "hidden"
-        }`}
-      >
-        <MdOutlineTimer /> {cardData.highlightStatus}
-      </span>
-    ) : status === "Hybrid" ? (
-      <span
-        className={`stat flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          cardData.hold && "hidden"
-        }`}
-      >
-        <img src={Hybrid} alt="Hybrid" /> {cardData.highlightStatus}
-      </span>
-    ) : status === "Reduced" ? (
-      <span
-        className={`stat flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-red-600 bg-red-200 ${
-          cardData.hold && "hidden"
-        }`}
-      >
-        <PiChartLineDownBold /> {cardData.highlightStatus}
-      </span>
-    ) : status === "New" ? (
-      <span
-        className={`stat flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
-          cardData.hold && "hidden"
-        }`}
-      >
-        <MdOutlineNewReleases /> {cardData.highlightStatus}
-      </span>
-    ) : (
-      <span
-        className={`stat flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          cardData.hold && "hidden"
-        }`}
-      >
-        <TbFaceIdError /> {cardData.highlightStatus}
-      </span>
-    );
-  };
+  useEffect(() => {
+    document.title = `${cardData.id.substring(1)}`;
+  }, [cardData.id]);
 
   const [showGallery, setShowGallery] = useState(false);
 
@@ -142,17 +80,9 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   const openAuctionGradePopup = () => setIsAuctionGradePopupOpen(true);
   const closeAuctionGradePopup = () => setIsAuctionGradePopupOpen(false);
 
-  const [isCommentsPopupOpen, setIsCommentsPopupOpen] = useState(false);
-  const openCommentsPopup = () => setIsCommentsPopupOpen(true);
-  const closeCommentsPopup = () => setIsCommentsPopupOpen(false);
-
-  const [isInnerCargoPopupOpen, setIsInnerCargoPopupOpen] = useState(false);
-  const openInnerCargoPopup = () => setIsInnerCargoPopupOpen(true);
-  const closeInnerCargoPopup = () => setIsInnerCargoPopupOpen(false);
-  
   const navigate = useNavigate();
 
-  const [cars] = useAtom(carAtom);
+//   const [cars] = useAtom(carAtom);
 
   const CommentBox = () => {
     const [editMode, setEditMode] = useState(false);
@@ -1415,597 +1345,56 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </div>
     );
   };
-  const InnerCargoPopup = () => {
-    const handleBackgroundClick = (
-      e: React.MouseEvent<HTMLDivElement, MouseEvent>
-    ) => {
-      if (e.target === e.currentTarget) {
-        closeInnerCargoPopup();
-      }
-    };
 
-    const [editMode, setEditMode] = useState(false);
-    const [extras, setExtras] = useState(() =>
-      carTypes.map((type) => ({
-        Description: "Description",
-        PartNo: `Pt-` + Math.round(Math.random() * (999 - 1) + 1),
-        Manufacture: type,
-        Units: Math.round(Math.random() * (999 - 1) + 1),
-        Weight: Math.round(Math.random() * (999 - 100) + 100),
-        Value: Math.round(Math.random() * (99999 - 100) + 100),
-      }))
-    );
-
-    const [newRow, setNewRow] = useState({
-      Description: "",
-      PartNo: "",
-      Manufacture: "",
-      Units: 0,
-      Weight: 0,
-      Value: 0,
-    });
-    const handleInputChange = (
-      index: number,
-      key: string,
-      value: string | number
-    ) => {
-      const updatedExtras = [...extras];
-      updatedExtras[index] = { ...updatedExtras[index], [key]: value };
-      setExtras(updatedExtras);
-    };
-
-    const handleNewRowChange = (key: string, value: string | number) => {
-      setNewRow((prev) => ({ ...prev, [key]: value }));
-    };
-
-    const handleAddNewRow = () => {
-      if (newRow.Manufacture && newRow.Description) {
-        setExtras((prev) => [...prev, { ...newRow }]);
-        setNewRow({
-          Description: "",
-          PartNo: "",
-          Manufacture: "",
-          Units: 0,
-          Weight: 0,
-          Value: 0,
-        });
-      }
-    };
-
-    const handleDeleteRow = (index: number) => {
-      const updatedExtras = extras.filter((_, i) => i !== index);
-      setExtras(updatedExtras);
-    };
-
-    return (
-      <div
-        className={`fixed inset-0 bg-gray-800 backdrop-blur-sm bg-opacity-50 flex justify-center items-center z-[100]`}
-        onClick={handleBackgroundClick}
-      >
-        <div
-          className={`custom-scrollbar overflow-y-scroll animate-slideUp bg-white p-8 md:p-12 py-8 rounded-lg shadow-lg relative min-w-96 m-2 w-3/5 max-h-[80%]`}
-        >
-          <div className="w-full flex items-center justify-between mb-4">
-            <p className="text-2xl font-bold">Inner Cargo</p>
-
-            {}
-            <button
-              className="text-lg bg-gray-100 hover:bg-gray-200 text-gray-800 p-1 rounded-full transition-all"
-              onClick={closeInnerCargoPopup}
-            >
-              <AiOutlineClose />
-            </button>
-          </div>
-          {}
-          <div>
-            <div className="w-full">
-              <p className="text-sm mb-2">Inner Cargo comment</p>
-              <textarea
-                rows={3}
-                className="border w-full rounded-md p-2 resize-none"
-                placeholder="Comments here"
-              />
-            </div>
-            <table className="w-full mt-6">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className={`${colClass}`}>Description</th>
-                  <th className={`${colClass}`}>Part No</th>
-                  <th className={`${colClass}`}>Manufacturer</th>
-                  <th className={`${colClass}`}>Units</th>
-                  <th className={`${colClass}`}>Weight</th>
-                  <th className={`${colClass}`}>Value</th>
-                  <th className={`${colClass} text-center`}>
-                    {!editMode && (
-                      <button
-                        onClick={() => setEditMode((prevMode) => !prevMode)}
-                      >
-                        <MdModeEditOutline size={18} />
-                      </button>
-                    )}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {extras.map((extra, index) => (
-                  <tr
-                    key={index}
-                    className={`${index % 2 === 1 && "bg-gray-50"}`}
-                  >
-                    <td className={`${colClass}`}>
-                      {editMode ? (
-                        <input
-                          type="text"
-                          className="w-full border px-2 rounded-md"
-                          value={extra.Description}
-                          onChange={(e) =>
-                            handleInputChange(
-                              index,
-                              "Description",
-                              e.target.value
-                            )
-                          }
-                        />
-                      ) : (
-                        <p>{extra.Description}</p>
-                      )}
-                    </td>
-                    <td className={`${colClass}`}>
-                      {editMode ? (
-                        <input
-                          type="text"
-                          className="w-full border px-2 rounded-md"
-                          value={extra.PartNo}
-                          onChange={(e) =>
-                            handleInputChange(index, "PartNo", e.target.value)
-                          }
-                        />
-                      ) : (
-                        <p>{extra.PartNo}</p>
-                      )}
-                    </td>
-                    <td className={`${colClass}`}>
-                      {editMode ? (
-                        <input
-                          type="text"
-                          className="w-full border px-2 rounded-md"
-                          value={extra.Manufacture}
-                          onChange={(e) =>
-                            handleInputChange(
-                              index,
-                              "Manufacture",
-                              e.target.value
-                            )
-                          }
-                        />
-                      ) : (
-                        <>¥ {extra.Weight.toLocaleString()}</>
-                      )}
-                    </td>
-                    <td className={`${colClass}`}>
-                      {editMode ? (
-                        <input
-                          type="number"
-                          className="w-full border px-2 rounded-md"
-                          value={extra.Units}
-                          onChange={(e) =>
-                            handleInputChange(
-                              index,
-                              "Units",
-                              Number(e.target.value)
-                            )
-                          }
-                        />
-                      ) : (
-                        <>¥ {extra.Value.toLocaleString()}</>
-                      )}
-                    </td>
-                    <td className={`${colClass}`}>
-                      {editMode ? (
-                        <input
-                          type="number"
-                          className="w-full border px-2 rounded-md"
-                          value={extra.Weight}
-                          onChange={(e) =>
-                            handleInputChange(
-                              index,
-                              "Weight",
-                              Number(e.target.value)
-                            )
-                          }
-                        />
-                      ) : (
-                        <>¥ {extra.Units.toLocaleString()}</>
-                      )}
-                    </td>
-                    <td className={`${colClass}`}>
-                      {editMode ? (
-                        <input
-                          type="number"
-                          className="w-full border px-2 rounded-md"
-                          value={extra.Value}
-                          onChange={(e) =>
-                            handleInputChange(
-                              index,
-                              "Value",
-                              Number(e.target.value)
-                            )
-                          }
-                        />
-                      ) : (
-                        <>¥ {extra.Units.toLocaleString()}</>
-                      )}
-                    </td>
-                    <td className={`${colClass} text-center`}>
-                      <button onClick={() => handleDeleteRow(index)}>
-                        <IoClose size={20} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-                {editMode && (
-                  <tr className="bg-gray-100">
-                    <td className={`${colClass}`}>
-                      <input
-                        type="text"
-                        className="w-full border px-2 rounded-md"
-                        value={newRow.Description}
-                        onChange={(e) =>
-                          handleNewRowChange("Description", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td className={`${colClass}`}>
-                      <input
-                        type="text"
-                        className="w-full border px-2 rounded-md"
-                        value={newRow.PartNo}
-                        onChange={(e) =>
-                          handleNewRowChange("PartNo", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td className={`${colClass}`}>
-                      <input
-                        type="text"
-                        className="w-full border px-2 rounded-md"
-                        value={newRow.Manufacture}
-                        onChange={(e) =>
-                          handleNewRowChange("Manufacture", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td className={`${colClass}`}>
-                      <input
-                        type="number"
-                        className="w-full border px-2 rounded-md"
-                        value={newRow.Units}
-                        onChange={(e) =>
-                          handleNewRowChange("Units", Number(e.target.value))
-                        }
-                      />
-                    </td>
-                    <td className={`${colClass}`}>
-                      <input
-                        type="number"
-                        className="w-full border px-2 rounded-md"
-                        value={newRow.Weight}
-                        onChange={(e) =>
-                          handleNewRowChange("Weight", Number(e.target.value))
-                        }
-                      />
-                    </td>
-                    <td className={`${colClass}`}>
-                      <input
-                        type="number"
-                        className="w-full border px-2 rounded-md"
-                        value={newRow.Value}
-                        onChange={(e) =>
-                          handleNewRowChange("Value", Number(e.target.value))
-                        }
-                      />
-                    </td>
-                    <td className={`${colClass}`}>
-                      <button
-                        onClick={handleAddNewRow}
-                        className="font-semibold"
-                      >
-                        Add
-                      </button>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-            <div className="flex gap-4 justify-end mt-6">
-              <button
-                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
-                onClick={closeInnerCargoPopup}
-              >
-                Save
-              </button>
-              <button
-                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
-                onClick={() => setEditMode(false)}
-              >
-                Cancel
-              </button>
-            </div>
-
-            <div className="w-full">
-              <p className="text-sm mb-2">Photos</p>
-              <input
-                type="file"
-                className="border w-full rounded-md p-2 resize-none"
-                placeholder="Comments here"
-              />
-            </div>
-            <div className="flex gap-2 text-gray-500 mt-2 px-2 text-sm">
-              <input type="checkbox" />
-              <p>Invinsible to end user</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  const SalesDropDown = () => {
-
-    const handleCardClick = (carData: CarData) => {
-      console.log("clicked" + carData.id);
-      navigate(`/detail/${carData.id.slice(1)}`, {
-        state: { card: carData, cars: cars },
-      });
-    };
-
-    const [dropDownOpen, setDropDownOpen] = useState(false);
-    const buttonClass = "p-2 px-4 text-left hover:bg-gray-100";
-
-    const [isPromotionPopupOpen, setIsPromotionPopupOpen] = useState(false);
-
-    const openPromotionPopup = () => {
-      console.log("open");
-      setIsPromotionPopupOpen(true);
-    };
-    const closePromotionPopup = () => setIsPromotionPopupOpen(false);
-
-    const [isBannerPopupOpen, setIsBannerPopupOpen] = useState(false);
-
-    const openBannerPopup = () => setIsBannerPopupOpen(true);
-    const closeBannerPopup = () => setIsBannerPopupOpen(false);
-
-    const toggle = () => {
-      setDropDownOpen(!dropDownOpen);
-    };
-    return (
-      <>
-        <div className="relative">
-          <button
-            className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
-            onClick={toggle}
-          >
-            <HiOutlineChartBar size={20} />
-            <p className="flex items-center gap-1 font-semibold">
-              Sales <FaChevronDown size={10} className="translate-y-0.5" />
-            </p>
-          </button>
-          {dropDownOpen && (
-            <div
-              className={`border bg-white shadow-sm absolute right-0 translate-y-2 flex flex-col text-nowrap rounded-md`}
-            >
-              <button className={buttonClass} onClick={openPromotionPopup}>
-                Add Promotion
-              </button>
-              <button className={buttonClass} onClick={openBannerPopup}>
-                Update Banner
-              </button>
-              <button
-                className={buttonClass}
-                onClick={() => handleCardClick(cardData)}
-              >
-                Customer View
-              </button>
-            </div>
-          )}
-        </div>
-        <Popup
-          isOpen={isPromotionPopupOpen}
-          onClose={closePromotionPopup}
-          title="Add Promotion"
-          customClass="m-2 w-1/3"
-          content={
-            <>
-              <div className="flex gap-2 items-center text-gray-500">
-                <IoCarOutline size={20} />
-                <p>
-                  {cardData.name} {cardData.type} {cardData.package} (
-                  {cardData.id})
-                </p>
-              </div>
-
-              <div className="mt-4 flex flex-col gap-2">
-                <p className="font-semibold">Customer</p>
-
-                <DropDown
-                  options={yards}
-                  optionClass="w-full"
-                  optionBoxClass="md:w-full right-0 z-50"
-                  buttonClass="py-2"
-                />
-                <div className="flex items-center gap-2">
-                  <input type="checkbox" name="" id="" />
-                  <p>Include all customers in dropdown</p>
-                </div>
-              </div>
-
-              <div className="mt-4 flex flex-col gap-2">
-                <p className="font-semibold">Promotion text</p>
-
-                <DropDown
-                  options={promotionText}
-                  optionClass="w-full"
-                  optionBoxClass="md:w-full right-0 z-50"
-                  buttonClass="py-2"
-                />
-                <div className="flex items-center gap-2">
-                  <input type="checkbox" name="" id="" />
-                  <p>Visible to the selected customer</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 mt-4">
-                <button
-                  onClick={closePromotionPopup}
-                  className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
-                >
-                  Add
-                </button>
-                <button
-                  onClick={closePromotionPopup}
-                  className="py-2 w-full bg-gray-200 font-semibold rounded-md"
-                >
-                  Cancel
-                </button>
-              </div>
-            </>
-          }
-        />
-
-        <Popup
-          isOpen={isBannerPopupOpen}
-          onClose={closeBannerPopup}
-          title="Update Banner"
-          customClass="m-2 w-1/3"
-          content={
-            <>
-              <div className="flex gap-2 items-center text-gray-500">
-                <IoCarOutline size={20} />
-                <p>
-                  {cardData.name} {cardData.type} {cardData.package} (
-                  {cardData.id})
-                </p>
-              </div>
-
-              <div className="mt-4 flex flex-col gap-2">
-                <p className="font-semibold">Banner</p>
-
-                <DropDown
-                  options={highlightStatus}
-                  optionClass="w-full"
-                  optionBoxClass="md:w-full right-0 z-50"
-                  buttonClass="py-2"
-                />
-              </div>
-
-              <div className="mt-4 flex flex-col gap-2">
-                <p className="font-semibold">Previous Price</p>
-                <input
-                  type="text"
-                  className="border p-2 rounded-md border-gray-300"
-                  placeholder="Enter previous Price"
-                />
-              </div>
-
-              <div className="flex items-center gap-2 mt-8">
-                <button
-                  onClick={closeBannerPopup}
-                  className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
-                >
-                  Add
-                </button>
-                <button
-                  onClick={closeBannerPopup}
-                  className="py-2 w-full bg-gray-200 font-semibold rounded-md"
-                >
-                  Cancel
-                </button>
-              </div>
-            </>
-          }
-        />
-      </>
-    );
-  };
-  const goToImages = (carData: CarData) => {
-    navigate(`/StockFlowAdmin/Images/${carData.id.slice(1)}`, {
-      state: { card: carData, cars: cars },
-    });
-  };
-  const goToEdit = (carData: CarData) => {
-    console.log('Go to Edit Page')
-    navigate(`/StockEdit/${carData.id.slice(1)}`, {
-      state: { card: carData, cars: cars },
-    });
+  const goBack = () => {
+    navigate(-1); // Redirects to the previous page
   };
 
   return (
     <>
       <CNetAdminNav breadcrumb={true} />
-      {isInnerCargoPopupOpen && <InnerCargoPopup />}
-
-      {showGallery && (
-        <Gallery
-          customClass="animate-appear animate-slideUp"
-          closeBox={toggleGallery}
-        />
-      )}
 
       <div className="flex flex-col gap-6 px-4 md:px-56 py-8">
         <div className="flex items-center gap-1 font-medium">
+          <button className="hidden md:block mr-2 text-gray-500" onClick={goBack}>
+            <FaArrowLeftLong size={15}/>
+          </button>
           <Link to="/StockFlowAdmin" className="text-gray-500">
             Car stock
           </Link>
-          <p className="text-blue-950 font-semibold">/ Car Details</p>
+          <p className="text-blue-950 font-semibold">/ Stock Edit</p>
         </div>
 
         <div className="flex justify-between">
           <div className="flex flex-col gap-3">
             <p className="text-3xl font-bold flex items-center gap-2 text-blue-950">
               Audi {cardData.name}
-              <IoMdEye size={20} className="text-green-600" />
             </p>
-            <p className="font-medium text-blue-950">
-              {cardData.package} / {cardData.vim}
-            </p>
-            <div className="flex gap-2">
-              <span
-                className={`id flex items-center gap-2 text-sm rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-                  cardData.hold && "hidden"
-                }`}
-              >
-                {cardData.id}
-              </span>
-              {cardData.highlightStatus !== "" && (
-                <>{highlightPill(cardData.highlightStatus)}</>
-              )}
+            <div className="flex items-center gap-4">
+                <p className="font-medium text-blue-950 text-nowrap">
+                {cardData.package} / {cardData.vim}
+                </p>
+                
+                <DropDown
+                options={visibility}
+                customClass="fit-width"
+                optionClass="w-fit h-fit"
+                optionBoxClass="w-fit h-fit right-0 z-50"
+                buttonClass="py-1 rounded bg-white"
+              />
+              <DropDown
+                options={published}
+                customClass="fit-width"
+                optionClass="w-fit h-fit"
+                optionBoxClass="w-fit h-fit right-0 z-50"
+                buttonClass="py-1 rounded bg-white"
+              />
             </div>
           </div>
 
           <div className="flex items-end gap-2">
-            <button className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md" onClick={()=>goToEdit(cardData)}>
-              <MdEdit size={20} />
-              <p className="font-semibold">Edit</p>
-            </button>
-            <button onClick={()=>goToImages(cardData)} className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md">
-              <BiImages size={20} />
-              <p className="font-semibold">Images</p>
-            </button>
-            <button
-              className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
-              onClick={openCommentsPopup}
-            >
-              <FaRegCommentDots size={20} />
-              <p className="font-semibold">Comments</p>
-            </button>
-            <button
-              className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
-              onClick={openInnerCargoPopup}
-            >
-              <RiTruckLine size={20} />
-              <p className="font-semibold">Cargo</p>
-            </button>
-            <SalesDropDown />
-            <LogsDropDown />
+            <button className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors">Save</button>
+            <button className="bg-gray-100 hover:bg-red-100 text-[#ff5858]  p-2 px-12 rounded-md font-bold transition-colors">Delete</button>
           </div>
         </div>
 
@@ -2629,126 +2018,8 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           </div>
         }
       />
-      <Popup
-        isOpen={isCommentsPopupOpen}
-        onClose={closeCommentsPopup}
-        title="Comments"
-        customClass="m-2 w-full md:w-1/2 h-screen md:h-auto overflow-y-scroll custom-scrollbar"
-        content={
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Comments</p>
-                <textarea
-                  rows={2}
-                  placeholder="Comment"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Inner Cargo</p>
-                <textarea
-                  rows={2}
-                  placeholder="Inner Cargo"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Administrator</p>
-                <textarea
-                  rows={2}
-                  placeholder="Administrator"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Sales</p>
-                <textarea
-                  rows={2}
-                  placeholder="Sales"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Payment</p>
-                <textarea
-                  rows={2}
-                  placeholder="Payment"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Jibai</p>
-                <textarea
-                  rows={2}
-                  placeholder="Jibai"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Recycle Fee</p>
-                <textarea
-                  rows={2}
-                  placeholder="Comment"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Vehicle Tax</p>
-                <textarea
-                  rows={2}
-                  placeholder="Vehicle Tax"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Yard</p>
-                <textarea
-                  rows={2}
-                  placeholder="Yard"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Shipping</p>
-                <textarea
-                  rows={2}
-                  placeholder="Shipping"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold">Accessories</p>
-                <textarea
-                  rows={2}
-                  placeholder="Accessories"
-                  className="border rounded-md p-2 resize-none"
-                />
-              </div>
-            </div>
-
-            <div className="foot flex gap-4 justify-end">
-              <button
-                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
-                onClick={closeCommentsPopup}
-              >
-                Save
-              </button>
-              <button
-                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
-                onClick={closeCommentsPopup}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        }
-      />
     </>
   );
 };
 
-export default AdminCarStockDetails;
-
+export default AdminStockEdit;

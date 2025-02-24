@@ -13,6 +13,7 @@ import Login from "./pages/login";
 import Admin from "./pages/admin";
 import CarImages from "./pages/CarImages";
 import ErrorBoundary from "./components/ErrorBoundary";
+import StockEdit from './pages/adminStockEdit';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import PageTitleUpdater from "./components/PageTitleUpdater";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/StockFlow" element={<Home />} />
         <Route path="/detail/:id" element={<Details />} />
         <Route path="/StockDetail/:id" element={<StockDetails />} />
+        <Route path="/StockEdit/:id" element={<StockEdit />} />
         <Route path="/StockFlowAdmin" element={<Admin />} />
         <Route
           path="/StockFlowAdmin/Images/:id"
