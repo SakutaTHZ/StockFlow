@@ -25,6 +25,7 @@ import Engine from "../assets/EnginePower.svg";
 import { LuMapPin } from "react-icons/lu";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import placeholderImage from "../assets/images/stock/00165048_01.jpg";
+import CarAvailability from "../assets/check availability.svg";
 
 interface CarRowProps {
   customClass?: string;
@@ -285,7 +286,7 @@ const CarRow: React.FC<CarRowProps> = ({
             </div>
             <div className="grid grid-cols-2 gap-4 my-4">
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0" />
+                <PiCarProfile size={20} className="flex-shrink-0  scale-x-[-1]" />
                 {car.exteriorColor.split("#")[0]}
               </p>
               <p className="flex gap-2 items-center">
@@ -321,7 +322,11 @@ const CarRow: React.FC<CarRowProps> = ({
                 Automatic Transmission
               </p>
               <p className="flex gap-2 items-center">
-                <PiCarProfile size={20} className="flex-shrink-0" />
+                <img
+                  src={CarAvailability}
+                  alt="engine"
+                  className="flex-shrink-0"
+                />
                 {car.status}
               </p>
               <p className="flex gap-2 items-center">
