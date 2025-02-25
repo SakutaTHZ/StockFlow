@@ -35,6 +35,7 @@ import {
   status,
   transmissions,
   types,
+  vehicleType,
   visibility,
   yards,
 } from "../data/generateData";
@@ -1769,83 +1770,296 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">Translation</p>
                 <div className="flex gap-2">
-                  <textarea name="" id="" placeholder="Translation here" className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8 resize-none w-full" rows={6}></textarea>
+                  <textarea
+                    name=""
+                    id=""
+                    placeholder="Translation here"
+                    className="px-2 py-1 border border-gray-300 h-full rounded-md shadow-sm min-h-8 resize-none w-full"
+                    rows={6}
+                  ></textarea>
                 </div>
               </div>
-              {/* <div className="head flex flex-col gap-1 text-right">
-                <p className="text-[#CC9A46]">
-                  <span className="text-4xl font-bold">
-                    ¥{cardData.price.toLocaleString()}
-                  </span>{" "}
-                  CIF
-                </p>
-                <p>$9,327 UK VAT Duty Paid!</p>
-              </div>
-              {cardData.highlightStatus === "Sold" && (
-                <div className="flex flex-col gap-3">
-                  <hr />
-                  <p className="font-bold text-lg">Invoice Breakdown</p>
-                  <div className="flex justify-between">
-                    <p className={labelClass}>23-JM271</p>
-                    <p> ¥{cardData.price.toLocaleString()}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className={labelClass}>23-JM271</p>
-                    <p> ¥{cardData.price.toLocaleString()}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className={labelClass}>23-JM271</p>
-                    <p className="text-red-500">
-                      - ¥{cardData.price.toLocaleString()}
-                    </p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className={labelClass}>X-Rate Diff</p>
-                    <p className="font-semibold">
-                      ¥{(cardData.price - 500000).toLocaleString()}
-                    </p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className={labelClass}>Total</p>
-                    <p className="font-semibold">
-                      ¥{(cardData.price + 200000).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              )}
-              <hr />
-              <div className="flex flex-col gap-3">
-                <div className="flex justify-between">
-                  <p className={labelClass}>Sold Date:</p>
-                  <p>{cardData.soldDate}</p>
-                </div>
-                <div className="flex justify-between">
-                  <p className={labelClass}>Vessel:</p>
-                  <p>
-                    {cardData.vessel}, {cardData.yardArea}
-                  </p>
-                </div>
-                <div className="flex justify-between">
-                  <p className={labelClass}>ETY:</p>
-                  <p>{cardData.soldDate}</p>
-                </div>
-                <div className="flex justify-between">
-                  <p className={labelClass}>From:</p>
-                  <p>
-                    {cardData.vesselFrom}, {cardData.soldDate}
-                  </p>
-                </div>
-                <div className="flex justify-between">
-                  <p className={labelClass}>To:</p>
-                  <p>
-                    {cardData.vesselTo}, {cardData.soldDate}
-                  </p>
-                </div>
-              </div> */}
             </div>
             <CommentBox />
             <SalesCommentBox />
+
+            <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Inner cargo</p>
+                <div className="flex flex-col gap-2">
+                  <textarea
+                    name=""
+                    id=""
+                    className="px-2 py-1 border border-gray-300 h-full rounded-md shadow-sm min-h-8 resize-none w-full"
+                    rows={4}
+                  ></textarea>
+
+                  <div className="flex justify-between cursor-pointer transition-all">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        className="form-checkbox h-3 w-3 cursor-pointer"
+                      />
+                      <span>Publish Images</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Vehicle type</p>
+                <div className="flex flex-col gap-2">
+                  <DropDown
+                    options={vehicleType}
+                    customClass="fit-width"
+                    optionClass="w-fit h-fit"
+                    optionBoxClass="w-fit h-fit right-0 z-50"
+                    buttonClass="rounded bg-white py-1"
+                  />
+
+                  <div className="flex justify-between cursor-pointer transition-all">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        className="form-checkbox h-3 w-3 cursor-pointer"
+                      />
+                      <span>Roof racks</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-2 justify-between">
+                  <div className="flex flex-col gap-2 w-full">
+                    <p className="font-semibold">Yard Base</p>
+
+                    <input className="px-2 border rounded py-1" type="date" />
+                  </div>
+                  <div className="flex flex-col gap-2 w-full">
+                    <p className="font-semibold">CJP Extra</p>
+
+                    <input className="px-2 border rounded py-1" type="date" />
+                  </div>
+                </div>
+
+                <div className="flex justify-between cursor-pointer transition-all">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 cursor-pointer"
+                    />
+                    <span>Roof racks</span>
+                  </label>
+                </div>
+              </div>
+              <hr />
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-2 justify-between">
+                  <div className="flex flex-col gap-2 w-full">
+                    <p className="font-semibold">Nova ID</p>
+
+                    <input className="px-2 border rounded py-1" type="text" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
+              <p className="font-bold text-lg">TCV Settings</p>
+              <div className="flex gap-4 items-center">
+                Accident
+                <div className="flex justify-between cursor-pointer transition-all">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 cursor-pointer"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Mileage Option:
+                  </p>
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Mileage Option:
+                  </p>
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Exerior Color:
+                  </p>
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Interior Color:
+                  </p>
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Doors:
+                  </p>
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Body Style:
+                  </p>
+                  <div className="flex flex-col gap-2">
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+                    <DropDown
+                        options={distanceUnit}
+                        selected="-"
+                        customClass="fit-width"
+                        optionClass="w-fit h-fit"
+                        optionBoxClass="w-fit h-fit right-0 z-50"
+                        buttonClass="rounded bg-white py-1"
+                      />
+                  </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Drive Type:
+                  </p>
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Passengers:
+                  </p>
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Steering:
+                  </p>
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Model:
+                  </p>
+                  <DropDown
+                      options={distanceUnit}
+                      selected="-"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
+              </div>
+              <div className="flex flex-col gap-2">
+                  <p className="font-semibold">
+                    Price:
+                  </p>
+                  <div className="flex gap-2">
+                    
+                  <input
+                      className="p-2 py-1 w-1/2 border rounded-md border-gray-300 shadow-sm"
+                      type="text"
+                    /><input
+                    className="p-2 py-1 w-1/2 border rounded-md border-gray-300 shadow-sm"
+                    type="text"
+                  />
+                  </div>
+              </div>
+              <div className="flex gap-4 items-center">
+                Upload
+                <div className="flex justify-between cursor-pointer transition-all">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 cursor-pointer"
+                    />
+                  </label>
+                </div>
+              </div>
+              <div className="flex gap-4 items-center">
+                Uploaded:
+                {/* <div className="flex justify-between cursor-pointer transition-all">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-3 w-3 cursor-pointer"
+                    />
+                  </label>
+                </div> */}
+              </div>
+            </div>
           </div>
+
+          {/* Column 3 */}
           <div className="col-3 flex flex-col gap-4">
             <div
               className={`flex flex-col gap-4 p-4 rounded-md border border-gray-300 ${

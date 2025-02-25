@@ -189,6 +189,18 @@ export const FOB:string[] = [
   "Shipping Only"
 ]
 
+export const vehicleType:string[] = [
+  "Tow Truck",
+  "Fudo Not Rolling",
+  "Fudo Rolling",
+  "JFA NZ TRS",
+  "Jiso(Standard size)",
+  "Loader",
+  "Standard",
+  "Truck ~3t",
+  "Truck large"
+]
+
 export const currentLoaction:string[] = [
   "-","In UK","New Castle","Southampton"
 ]
