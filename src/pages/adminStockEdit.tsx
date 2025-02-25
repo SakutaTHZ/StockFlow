@@ -1887,155 +1887,133 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               </div>
 
               <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Mileage Option:
-                  </p>
-                  <DropDown
-                      options={milleageOption}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
+                <p className="font-semibold">Mileage Option:</p>
+                <DropDown
+                  options={milleageOption}
+                  selected="-"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="rounded bg-white py-1"
+                />
               </div>
               <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Mileage Option:
-                  </p>
-                  <DropDown
-                      options={distanceUnit}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
+                <p className="font-semibold">Mileage Option:</p>
+                <DropDown
+                  options={distanceUnit}
+                  selected="-"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="rounded bg-white py-1"
+                />
               </div>
               <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Exerior Color:
-                  </p>
-                  <DropDown
-                      options={color}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
+                <p className="font-semibold">Exerior Color:</p>
+                <DropDown
+                  options={color}
+                  selected="-"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="rounded bg-white py-1"
+                />
               </div>
               <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Interior Color:
-                  </p>
-                  <DropDown
-                      options={color}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
+                <p className="font-semibold">Interior Color:</p>
+                <DropDown
+                  options={color}
+                  selected="-"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="rounded bg-white py-1"
+                />
               </div>
               <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Doors:
-                  </p>
-                  <DropDown
-                      options={doors}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
+                <p className="font-semibold">Doors:</p>
+                <DropDown
+                  options={doors}
+                  selected="-"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="rounded bg-white py-1"
+                />
               </div>
               <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Body Style:
-                  </p>
-                  <div className="flex flex-col gap-2">
+                <p className="font-semibold">Body Style:</p>
+                <div className="flex flex-col gap-2">
                   <DropDown
-                      options={bodyStyle}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
-                    <DropDown
-                        options={bodyStyle}
-                        selected="-"
-                        customClass="fit-width"
-                        optionClass="w-fit h-fit"
-                        optionBoxClass="w-fit h-fit right-0 z-50"
-                        buttonClass="rounded bg-white py-1"
-                      />
-                  </div>
+                    options={bodyStyle}
+                    selected="-"
+                    customClass="fit-width"
+                    optionClass="w-fit h-fit"
+                    optionBoxClass="w-fit h-fit right-0 z-50"
+                    buttonClass="rounded bg-white py-1"
+                  />
+                  <DropDown
+                    options={bodyStyle}
+                    selected="-"
+                    customClass="fit-width"
+                    optionClass="w-fit h-fit"
+                    optionBoxClass="w-fit h-fit right-0 z-50"
+                    buttonClass="rounded bg-white py-1"
+                  />
+                </div>
               </div>
               <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Drive Type:
-                  </p>
-                  <DropDown
-                      options={driveType}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
+                <p className="font-semibold">Drive Type:</p>
+                <DropDown
+                  options={driveType}
+                  selected="-"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="rounded bg-white py-1"
+                />
               </div>
               <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Passengers:
-                  </p>
+                <p className="font-semibold">Passengers:</p>
+                <input
+                  className="p-2 py-1 w-full border rounded-md border-gray-300 shadow-sm"
+                  type="text"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Steering:</p>
+                <DropDown
+                  options={steering}
+                  selected="-"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="rounded bg-white py-1"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Model:</p>
+                <DropDown
+                  options={models}
+                  selected="-"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="rounded bg-white py-1"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Price:</p>
+                <div className="flex gap-2">
                   <input
-                      className="p-2 py-1 w-full border rounded-md border-gray-300 shadow-sm"
-                      type="text"
-                    />
-              </div>
-              <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Steering:
-                  </p>
-                  <DropDown
-                      options={steering}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
-              </div>
-              <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Model:
-                  </p>
-                  <DropDown
-                      options={models}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
-              </div>
-              <div className="flex flex-col gap-2">
-                  <p className="font-semibold">
-                    Price:
-                  </p>
-                  <div className="flex gap-2">
-                    
-                  <input
-                      className="p-2 py-1 w-1/2 border rounded-md border-gray-300 shadow-sm"
-                      type="text"
-                    /><input
                     className="p-2 py-1 w-1/2 border rounded-md border-gray-300 shadow-sm"
                     type="text"
                   />
-                  </div>
+                  <input
+                    className="p-2 py-1 w-1/2 border rounded-md border-gray-300 shadow-sm"
+                    type="text"
+                  />
+                </div>
               </div>
               <div className="flex gap-4 items-center">
                 Upload
@@ -2072,23 +2050,30 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               }`}
             >
               <div className="flex flex-col gap-2">
-                <div className="flex justify-between">
-                  <p className="text-lg font-bold text-blue-950">
-                    {cardData.customer}
+                
+              <div className="flex items-center justify-between gap-4">
+                  <p className="text-gray-500 text-md font-semibold">
+                    Customer:{" "}
                   </p>
-                  {cardData.highlightStatus === "Sold" && (
-                    <p className="flex items-center gap-2 border border-gray-400 rounded-md px-2">
-                      <RiCarLine />
-                      Sold
-                    </p>
-                  )}
+                  
+                <DropDown
+                  options={yards}
+                  selected="0CY Stock"
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="rounded bg-white py-1"
+                /> 
                 </div>
-                <p className="text-gray-500 text-sm">
-                  Sold Date:{" "}
-                  <span className="font-semibold text-blue-950">
-                    {cardData.soldDate}
-                  </span>
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-gray-500 text-md font-semibold">
+                    Sold Date:{" "}
+                  </p>
+                  <div className="border px-2 flex gap-2 items-center rounded-md shadow-sm py-1 bg-white">
+                    {cardData.sentDate}
+                    <MdCalendarMonth />
+                  </div>
+                </div>
               </div>
 
               <SupplierInfo />
