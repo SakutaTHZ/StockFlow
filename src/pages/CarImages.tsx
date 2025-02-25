@@ -758,6 +758,28 @@ const CarImages: React.FC<CarImagesProps> = () => {
               </div>
             </div>
 
+            {/* Recall Check Box */}
+            <div className="w-full flex flex-col gap-2">
+              <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">
+                <div className="flex items-center w-full justify-between gap-3">
+                  <h2 className="text-lg font-semibold">Recall Check</h2>
+                  
+                  <StatusState
+                    data={"Recall Check"}
+                    status={"Pending"}
+                    customClass="list-none"
+                  />
+                </div>
+              </div>
+              <div className="ImagesContainer flex flex-wrap border-4 gap-2 border-dotted min-h-32 p-4 rounded-md">
+                {Array(1)
+                  .fill(null)
+                  .map((_: number, index: number) => (
+                    <ImageBox key={index} />
+                  ))}
+              </div>
+            </div>
+
             {/* Inner Cargo Box */}
             <div className="w-full flex flex-col gap-2">
               <div className="flex flex-col md:flex-row gap-2 min-h-9 justify-between">

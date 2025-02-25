@@ -54,6 +54,8 @@ export const getRandomYardArea = () => {
   return yardArea[Math.floor(Math.random() * yardArea.length)];
 };
 
+export const distanceUnit = ["km", "miles", "meters", "feet", "yards"];
+
 // imagelinks
 export const imageLink: string[] = [
   "https://cosmo-images-ejawf4gsh8fae3c3.z02.azurefd.net/stock/original/our_83677_5c2b6269-1017-40b2-b5a4-c9eb947626fb.jpg?preset=bigimage",
@@ -65,6 +67,23 @@ export const imageLink: string[] = [
 export const getRandomImageLink = () => {
   return imageLink[Math.floor(Math.random() * imageLink.length)];
 };
+
+export const equipments:string[] =[
+  "AC",
+  "Ab",
+  "5-seater",
+  "PS",
+  "2ab",
+  "7-seater",
+  "Pw",
+  "Remote Key Entry",
+  "8-seater",
+  "Alloys",
+  "SR",
+  "Nav",
+  "Abs",
+  "LEATHER"
+]
 
 // highlightstatus
 export const highlightStatus: string[] = [
