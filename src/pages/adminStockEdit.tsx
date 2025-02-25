@@ -12,7 +12,6 @@ import {
 import { PiCalendarDots, PiCarProfile, PiGasCan, PiStar } from "react-icons/pi";
 import { TbRoad } from "react-icons/tb";
 import { IoMdPhotos } from "react-icons/io";
-import { RiCarLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 
