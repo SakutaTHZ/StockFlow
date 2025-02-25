@@ -319,7 +319,7 @@ const CarRow: React.FC<CarRowProps> = ({
               </p>
               <p className="flex gap-2 items-center">
                 <img src={Trans}/>
-                Automatic Transmission
+                Auto
               </p>
               <p className="flex gap-2 items-center">
                 <img
