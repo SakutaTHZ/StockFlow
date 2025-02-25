@@ -126,6 +126,11 @@ export const getRandomStatus = () => {
   return status[Math.floor(Math.random() * status.length)];
 }
 
+export const milleageOption:string[] =[
+  "Changed odometer",
+  "Unknown Mileage"
+]
+
 // exteriorColor
 export const exteriorColor: string[] = [
   "black#000000",
@@ -135,6 +140,38 @@ export const exteriorColor: string[] = [
   "gray#808080",
   "green#008000",
 ];
+export const color: string[] = [
+  "Beige",
+  "Black",
+  "Blue",
+  "Bronze",
+  "Brown",
+  "Burgundy",
+  "Champagne",
+  "Charcoal",
+  "Cream",
+  "Dark Blue",
+  "Gold",
+  "Gray",
+  "Green",
+  "Maroon",
+  "Off White",
+  "Orange",
+  "Other",
+  "Pearl",
+  "Pewter",
+  "Pink",
+  "Purple",
+  "Red",
+  "Silver",
+  "Tan",
+  "Teal",
+  "Titanium",
+  "Turquoise",
+  "White",
+  "Yellow"
+];
+
 export const getRandomExteriorColors = () => {
   return exteriorColor[Math.floor(Math.random() * exteriorColor.length)];
 };
@@ -199,6 +236,50 @@ export const vehicleType:string[] = [
   "Standard",
   "Truck ~3t",
   "Truck large"
+]
+
+export const driveType:string[] = [
+  "2wd",
+  "4wd",
+  "All wheel drive",
+]
+
+export const doors:string[] = [
+  "2",
+  "3",
+  "4",
+  "5"
+]
+
+export const bodyStyle:string[] =[
+  "Bus",
+  "Convertible",
+  "Couple",
+  "Hatchback",
+  "Machinery",
+  "Mini Vehicle",
+  "Sedan",
+  "SUV",
+  "Truck",
+  "Unspecified",
+  "Van/Minivan",
+  "Wagon",
+]
+
+export const models:string[] = [
+    "ABARTH ABARTH OTHERS",
+    "ABT ABT Others",
+    "AC Cobra AC Cobra Others",
+    "AC Schnitzer AC Schnitzer Others",
+    "Acura Acura Others",
+    "Acura CL",
+    "Acura CSX",
+    "Acura EL",
+    "Acura Integra",
+]
+
+export const steering:string[] = [
+  "Center","Left","Right","Unspecified",
 ]
 
 export const currentLoaction:string[] = [

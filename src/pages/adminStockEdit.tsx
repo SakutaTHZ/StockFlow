@@ -21,18 +21,25 @@ import Engine from "../assets/EnginePower.svg";
 import Vin from "../assets/vin.svg";
 import DropDown from "../components/DropDown";
 import {
+  bodyStyle,
   carNames,
+  color,
   currency,
   currentLoaction,
   descriptions,
   distanceUnit,
+  doors,
+  driveType,
   equipments,
   extraCost,
   FOB,
   fuelType,
+  milleageOption,
+  models,
   promotionText,
   published,
   status,
+  steering,
   transmissions,
   types,
   vehicleType,
@@ -1884,7 +1891,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     Mileage Option:
                   </p>
                   <DropDown
-                      options={distanceUnit}
+                      options={milleageOption}
                       selected="-"
                       customClass="fit-width"
                       optionClass="w-fit h-fit"
@@ -1910,7 +1917,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     Exerior Color:
                   </p>
                   <DropDown
-                      options={distanceUnit}
+                      options={color}
                       selected="-"
                       customClass="fit-width"
                       optionClass="w-fit h-fit"
@@ -1923,7 +1930,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     Interior Color:
                   </p>
                   <DropDown
-                      options={distanceUnit}
+                      options={color}
                       selected="-"
                       customClass="fit-width"
                       optionClass="w-fit h-fit"
@@ -1936,7 +1943,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     Doors:
                   </p>
                   <DropDown
-                      options={distanceUnit}
+                      options={doors}
                       selected="-"
                       customClass="fit-width"
                       optionClass="w-fit h-fit"
@@ -1950,7 +1957,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                   </p>
                   <div className="flex flex-col gap-2">
                   <DropDown
-                      options={distanceUnit}
+                      options={bodyStyle}
                       selected="-"
                       customClass="fit-width"
                       optionClass="w-fit h-fit"
@@ -1958,7 +1965,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                       buttonClass="rounded bg-white py-1"
                     />
                     <DropDown
-                        options={distanceUnit}
+                        options={bodyStyle}
                         selected="-"
                         customClass="fit-width"
                         optionClass="w-fit h-fit"
@@ -1972,7 +1979,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     Drive Type:
                   </p>
                   <DropDown
-                      options={distanceUnit}
+                      options={driveType}
                       selected="-"
                       customClass="fit-width"
                       optionClass="w-fit h-fit"
@@ -1984,13 +1991,9 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                   <p className="font-semibold">
                     Passengers:
                   </p>
-                  <DropDown
-                      options={distanceUnit}
-                      selected="-"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
+                  <input
+                      className="p-2 py-1 w-full border rounded-md border-gray-300 shadow-sm"
+                      type="text"
                     />
               </div>
               <div className="flex flex-col gap-2">
@@ -1998,7 +2001,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     Steering:
                   </p>
                   <DropDown
-                      options={distanceUnit}
+                      options={steering}
                       selected="-"
                       customClass="fit-width"
                       optionClass="w-fit h-fit"
@@ -2011,7 +2014,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     Model:
                   </p>
                   <DropDown
-                      options={distanceUnit}
+                      options={models}
                       selected="-"
                       customClass="fit-width"
                       optionClass="w-fit h-fit"
