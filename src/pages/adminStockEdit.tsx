@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import CNetAdminNav from "../components/CNetAdminNav";
 import { CarData } from "../data/types";
-import { FaChevronDown} from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
 import {
   MdOutlineRemoveRedEye,
   MdAirlineSeatReclineNormal,
@@ -9,19 +9,12 @@ import {
   MdModeEditOutline,
   MdCalendarMonth,
 } from "react-icons/md";
-import {
-  PiCalendarDots,
-  PiCarProfile,
-  PiGasCan,
-  PiStar,
-} from "react-icons/pi";
+import { PiCalendarDots, PiCarProfile, PiGasCan, PiStar } from "react-icons/pi";
 import { TbRoad } from "react-icons/tb";
-import {
-  IoMdPhotos,
-} from "react-icons/io";
-import { RiCarLine} from "react-icons/ri";
+import { IoMdPhotos } from "react-icons/io";
+import { RiCarLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
-import {IoClose } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 
 import Transmission from "../assets/transmission.png";
 import Engine from "../assets/EnginePower.svg";
@@ -29,13 +22,17 @@ import Vin from "../assets/vin.svg";
 import DropDown from "../components/DropDown";
 import {
   carNames,
+  currency,
+  currentLoaction,
   descriptions,
   distanceUnit,
   equipments,
   extraCost,
+  FOB,
   fuelType,
   promotionText,
   published,
+  status,
   transmissions,
   types,
   visibility,
@@ -73,7 +70,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
 
   const navigate = useNavigate();
 
-//   const [cars] = useAtom(carAtom);
+  //   const [cars] = useAtom(carAtom);
 
   const CommentBox = () => {
     const [editMode, setEditMode] = useState(false);
@@ -1347,8 +1344,11 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
 
       <div className="flex flex-col gap-6 px-4 md:px-56 py-8">
         <div className="flex items-center gap-1 font-medium">
-          <button className="hidden md:block mr-2 text-gray-500" onClick={goBack}>
-            <FaArrowLeftLong size={15}/>
+          <button
+            className="hidden md:block mr-2 text-gray-500"
+            onClick={goBack}
+          >
+            <FaArrowLeftLong size={15} />
           </button>
           <Link to="/StockFlowAdmin" className="text-gray-500">
             Car stock
@@ -1362,11 +1362,11 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               Audi {cardData.name}
             </p>
             <div className="flex items-center gap-4">
-                <p className="font-medium text-blue-950 text-nowrap">
+              <p className="font-medium text-blue-950 text-nowrap">
                 {cardData.package} / {cardData.vim}
-                </p>
-                
-                <DropDown
+              </p>
+
+              <DropDown
                 options={visibility}
                 customClass="fit-width"
                 optionClass="w-fit h-fit"
@@ -1384,12 +1384,17 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           </div>
 
           <div className="flex items-end gap-2">
-            <button className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors">Save</button>
-            <button className="bg-gray-100 hover:bg-red-100 text-[#ff5858]  p-2 px-12 rounded-md font-bold transition-colors">Delete</button>
+            <button className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors">
+              Save
+            </button>
+            <button className="bg-gray-100 hover:bg-red-100 text-[#ff5858]  p-2 px-12 rounded-md font-bold transition-colors">
+              Delete
+            </button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1.5fr_1.5fr] gap-4">
+          {/* Column 1 */}
           <div className="col-1 flex flex-col gap-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-md shadow-sm">
               <div className="flex flex-col gap-2">
@@ -1405,26 +1410,50 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">Model</p>
-                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm" placeholder="Model"/>
+                <input
+                  type="text"
+                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm"
+                  placeholder="Model"
+                />
               </div>
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">Grade</p>
-                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm" placeholder="Grade" value={cardData.name}/>
+                <input
+                  type="text"
+                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm"
+                  placeholder="Grade"
+                  value={cardData.name}
+                />
               </div>
-              
+
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">Chassis Number</p>
-                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8" placeholder="Grade" value={cardData.vim}/>
+                <input
+                  type="text"
+                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8"
+                  placeholder="Grade"
+                  value={cardData.vim}
+                />
               </div>
-              
+
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">Stock number</p>
-                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8" placeholder="Grade" value={cardData.id}/>
+                <input
+                  type="text"
+                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8"
+                  placeholder="Grade"
+                  value={cardData.id}
+                />
               </div>
-              
+
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">Invoice Number</p>
-                <input type="text" className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8" placeholder="Grade" value={cardData.auctionNumber}/>
+                <input
+                  type="text"
+                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8"
+                  placeholder="Grade"
+                  value={cardData.auctionNumber}
+                />
               </div>
             </div>
 
@@ -1533,7 +1562,11 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                       size={20}
                       className="flex-shrink-0  scale-x-[-1]"
                     />
-                  <input className="px-2" type="text" value= {cardData.exteriorColor.split("#")[0]}/>
+                    <input
+                      className="px-2"
+                      type="text"
+                      value={cardData.exteriorColor.split("#")[0]}
+                    />
                   </p>
                   <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
                     <img
@@ -1541,17 +1574,24 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                       alt="engine"
                       className="brightness-0 flex-shrink-0"
                     />
-                    <input className="px-2" type="text" value={cardData.vim}/>
+                    <input className="px-2" type="text" value={cardData.vim} />
                   </p>
                   <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
                     <img src={Engine} alt="engine" className="flex-shrink-0" />
-                    
-                    <input className="px-2" type="text" value={cardData.enginePower.toLocaleString()}/>
-                     cc
+                    <input
+                      className="px-2"
+                      type="text"
+                      value={cardData.enginePower.toLocaleString()}
+                    />
+                    cc
                   </p>
                   <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
                     <PiCalendarDots size={20} className="flex-shrink-0" />
-                    <input className="px-2" type="text" value={cardData.registerDate}/>
+                    <input
+                      className="px-2"
+                      type="text"
+                      value={cardData.registerDate}
+                    />
                   </p>
                   <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
                     <PiGasCan size={20} className="flex-shrink-0" />
@@ -1565,19 +1605,23 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     />
                   </p>
                   <div className="flex gap-2 items-center">
-                      <p className="flex w-full gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                        <TbRoad size={20} className="flex-shrink-0" />
-                        <input className="w-full px-2" type="text" value={cardData.milleage.toLocaleString()}/>
-                      </p>
-                  
-                      <DropDown
-                        options={distanceUnit}
-                        selected="km"
-                        customClass="fit-width"
-                        optionClass="w-fit h-fit"
-                        optionBoxClass="w-fit h-fit right-0 z-50"
-                        buttonClass="rounded bg-white py-1"
+                    <p className="flex w-full gap-2 items-center border py-1 px-2 rounded border-gray-300">
+                      <TbRoad size={20} className="flex-shrink-0" />
+                      <input
+                        className="w-full px-2"
+                        type="text"
+                        value={cardData.milleage.toLocaleString()}
                       />
+                    </p>
+
+                    <DropDown
+                      options={distanceUnit}
+                      selected="km"
+                      customClass="fit-width"
+                      optionClass="w-fit h-fit"
+                      optionBoxClass="w-fit h-fit right-0 z-50"
+                      buttonClass="rounded bg-white py-1"
+                    />
                   </div>
 
                   <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
@@ -1597,16 +1641,23 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                   </p>
                   <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
                     <PiStar size={20} className="flex-shrink-0" />
-                    <input className="px-2" type="text" value={cardData.rating}/>
-                    
+                    <input
+                      className="px-2"
+                      type="text"
+                      value={cardData.rating}
+                    />
                   </p>
                   <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
                     <MdAirlineSeatReclineNormal
                       size={20}
                       className="flex-shrink-0"
                     />
-                    <input className="px-2 w-2/3" type="text" value={cardData.seats}/>
-                     Seater
+                    <input
+                      className="px-2 w-2/3"
+                      type="text"
+                      value={cardData.seats}
+                    />
+                    Seater
                   </p>
                 </div>
                 <hr />
@@ -1621,37 +1672,107 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                   </p>
                 </div>
                 <hr />
-                
+
                 <p className="font-bold text-lg mt-2">Equipments</p>
                 <div className="grid grid-cols-3 gap-4 mt-3 border rounded p-3">
-                {equipments.length > 0 ? (
-                  equipments.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between cursor-pointer transition-all"
-                    >
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          className="form-checkbox h-3 w-3 cursor-pointer"
-                        />
-                        <span>
-                          {item}
-                        </span>
-                      </label>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-sm text-red-500">No results found</p>
-                )}
+                  {equipments.length > 0 ? (
+                    equipments.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between cursor-pointer transition-all"
+                      >
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="form-checkbox h-3 w-3 cursor-pointer"
+                          />
+                          <span>{item}</span>
+                        </label>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-red-500">No results found</p>
+                  )}
                 </div>
               </div>
             </div>
             <ExtraCostsInfo />
           </div>
+
+          {/* Column 2 */}
           <div className="col-2 flex flex-col gap-4">
             <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
-              <div className="head flex flex-col gap-1 text-right">
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Price</p>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8"
+                    placeholder="Grade"
+                    value={cardData.auctionNumber}
+                  />
+
+                  <DropDown
+                    options={currency}
+                    customClass="fit-width"
+                    optionClass="w-fit h-fit"
+                    optionBoxClass="w-fit h-fit right-0 z-50"
+                    buttonClass="rounded bg-white py-1"
+                  />
+                  <DropDown
+                    options={FOB}
+                    customClass="fit-width"
+                    optionClass="w-fit h-fit"
+                    optionBoxClass="w-fit h-fit right-0 z-50"
+                    buttonClass="rounded bg-white py-1"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Status</p>
+                <div className="flex gap-2">
+                  <DropDown
+                    options={status}
+                    selected={cardData.status}
+                    customClass="fit-width"
+                    optionClass="w-fit h-fit"
+                    optionBoxClass="w-fit h-fit right-0 z-50"
+                    buttonClass="rounded bg-white py-1"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Location</p>
+                <div className="flex gap-2">
+                  <DropDown
+                    options={currentLoaction}
+                    customClass="fit-width"
+                    optionClass="w-fit h-fit"
+                    optionBoxClass="w-fit h-fit right-0 z-50"
+                    buttonClass="rounded bg-white py-1"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Arrival Port</p>
+                <div className="flex gap-2">
+                  <DropDown
+                    options={currentLoaction}
+                    selected="Southampton"
+                    customClass="fit-width"
+                    optionClass="w-fit h-fit"
+                    optionBoxClass="w-fit h-fit right-0 z-50"
+                    buttonClass="rounded bg-white py-1"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-semibold">Translation</p>
+                <div className="flex gap-2">
+                  <textarea name="" id="" placeholder="Translation here" className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8 resize-none w-full" rows={6}></textarea>
+                </div>
+              </div>
+              {/* <div className="head flex flex-col gap-1 text-right">
                 <p className="text-[#CC9A46]">
                   <span className="text-4xl font-bold">
                     ¥{cardData.price.toLocaleString()}
@@ -1720,7 +1841,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     {cardData.vesselTo}, {cardData.soldDate}
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
             <CommentBox />
             <SalesCommentBox />
@@ -1760,7 +1881,6 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

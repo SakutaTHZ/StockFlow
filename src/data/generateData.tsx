@@ -171,6 +171,28 @@ export const getFuelType = () => {
   return fuelType[Math.floor(Math.random() * fuelType.length)];
 };
 
+export const currency:string[] = [
+  "JPY",
+  "EUR",
+  "GBP",
+  "KS",
+  "RUR",
+  "THB",
+  "USD"
+]
+
+export const FOB:string[] = [
+  "FOB",
+  "CF",
+  "CIF",
+  "Local",
+  "Shipping Only"
+]
+
+export const currentLoaction:string[] = [
+  "-","In UK","New Castle","Southampton"
+]
+
 export const types = ["Service", "Parts", "Labor", "Accessories", "Inspection"];
 export const extraCost = ["Car Cost", "Claims", "Iternal", "YT - Car Cost", "YT - Internal"];
 
