@@ -4,23 +4,24 @@ import { CarData } from "../data/types";
 import { FaChevronDown } from "react-icons/fa";
 import {
   MdOutlineRemoveRedEye,
-  MdAirlineSeatReclineNormal,
-  MdInsertPhoto,
+  // MdAirlineSeatReclineNormal,
+  // MdInsertPhoto,
   MdModeEditOutline,
   MdCalendarMonth,
 } from "react-icons/md";
-import { PiCalendarDots, PiCarProfile, PiGasCan, PiStar } from "react-icons/pi";
-import { TbRoad } from "react-icons/tb";
-import { IoMdPhotos } from "react-icons/io";
+// import { PiCalendarDots, PiCarProfile, PiGasCan, PiStar } from "react-icons/pi";
+// import { TbRoad } from "react-icons/tb";
+// import { IoMdPhotos } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 
-import Transmission from "../assets/transmission.png";
-import Engine from "../assets/EnginePower.svg";
-import Vin from "../assets/vin.svg";
+// import Transmission from "../assets/transmission.png";
+// import Engine from "../assets/EnginePower.svg";
+// import Vin from "../assets/vin.svg";
 import DropDown from "../components/DropDown";
 import {
   bodyStyle,
+  carEngines,
   carNames,
   color,
   currency,
@@ -32,14 +33,14 @@ import {
   equipments,
   extraCost,
   FOB,
-  fuelType,
+  // fuelType,
   milleageOption,
   models,
   promotionText,
   published,
   status,
   steering,
-  transmissions,
+  // transmissions,
   types,
   vehicleType,
   visibility,
@@ -48,6 +49,8 @@ import {
 // import { carAtom } from "../data/atoms";
 // import { useAtom } from "jotai";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import YardTaskBox from "../components/adminComponents/YardTaskBox";
+import BuyingTaskBox from "../components/adminComponents/BuyingTaskBox";
 
 interface DetailsProps {
   customClass?: string;
@@ -1349,7 +1352,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     <>
       <CNetAdminNav breadcrumb={true} />
 
-      <div className="flex flex-col gap-6 px-4 md:px-56 py-8">
+      <div className="flex flex-col gap-6 px-4 md:px-24 py-8">
         <div className="flex items-center gap-1 font-medium">
           <button
             className="hidden md:block mr-2 text-gray-500"
@@ -1400,7 +1403,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1.5fr_1.5fr] gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1.5fr_1.5fr] gap-8">
           {/* Column 1 */}
           <div className="col-1 flex flex-col gap-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-md shadow-sm">
@@ -1543,23 +1546,182 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               </button>
             </div>
 
+            {/* Car Details */}
             <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
+              <div className="flex flex-col">
+                <div className="grid grid-cols-2 gap-4 mt-2 mb-3">
+                  {/* First Registration */}
+                  <div className="w-full flex flex-col gap-2">
+                    <p className="font-semibold">First Registration</p>
+                    <div className="w-full flex items-center gap-1">
+                      <input
+                        className="w-full p-1 border rounded-md border-gray-300"
+                        type="text"
+                      />
+                      {"/"}
+                      <DropDown
+                        options={distanceUnit}
+                        selected="-"
+                        customClass="fit-width"
+                        optionClass="w-fit h-fit"
+                        optionBoxClass="w-fit h-fit right-0 z-50"
+                        buttonClass="rounded bg-white py-1"
+                      />
+                      {"/"}
+                      <input
+                        className="w-full p-1 border rounded-md border-gray-300"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                  {/* Manufactured */}
+                  <div className="w-full flex flex-col gap-2">
+                    <p className="font-semibold">Manufactured</p>
+                    <div className="w-full flex items-center gap-1">
+                      <input
+                        className="w-full p-1 border rounded-md border-gray-300 bg-gray-50"
+                        type="text"
+                      />
+                      {"-"}
+                      <input
+                        className="w-full p-1 border rounded-md border-gray-300 bg-gray-50"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                  {/* Engine */}
+                  <div className="w-full flex flex-col gap-2">
+                    <p className="font-semibold">Engine</p>
+                    <div className="w-full flex items-center gap-1">
+                      <DropDown
+                        options={carEngines}
+                        selected="-"
+                        customClass="fit-width"
+                        optionClass="w-fit h-fit"
+                        optionBoxClass="w-fit h-fit right-0 z-50"
+                        buttonClass="rounded bg-white py-1"
+                      />
+
+                      <input
+                        className="w-full p-1 border rounded-md border-gray-300 "
+                        type="text"
+                      />
+                      {"cc"}
+                      <DropDown
+                        options={carEngines}
+                        selected="-"
+                        customClass="fit-width"
+                        optionClass="w-fit h-fit"
+                        optionBoxClass="w-fit h-fit right-0 z-50"
+                        buttonClass="rounded bg-white py-1"
+                      />
+                    </div>
+                  </div>
+                  {/* Mileage */}
+                  <div className="w-full flex flex-col gap-2">
+                    <p className="font-semibold">Engine</p>
+                    <div className="w-full flex items-center gap-1">
+                      <input
+                        className="w-full p-1 border rounded-md border-gray-300 "
+                        type="text"
+                      />
+                      <DropDown
+                        options={carEngines}
+                        selected="-"
+                        customClass="fit-width"
+                        optionClass="w-fit h-fit"
+                        optionBoxClass="w-fit h-fit right-0 z-50"
+                        buttonClass="rounded bg-white py-1"
+                      />
+                      <DropDown
+                        options={carEngines}
+                        selected="-"
+                        customClass="fit-width"
+                        optionClass="w-fit h-fit"
+                        optionBoxClass="w-fit h-fit right-0 z-50"
+                        buttonClass="rounded bg-white py-1"
+                      />
+                    </div>
+                  </div>
+                  {/* Transmission Color */}
+                  <div className="w-full flex gap-4">
+                    <div className="w-full flex flex-col gap-2">
+                      <p className="font-semibold">Transmission</p>
+                      <div className="w-full flex items-center gap-1">
+                        <DropDown
+                          options={carEngines}
+                          selected="-"
+                          customClass="fit-width"
+                          optionClass="w-fit h-fit"
+                          optionBoxClass="w-fit h-fit right-0 z-50"
+                          buttonClass="rounded bg-white py-1"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full flex flex-col gap-2">
+                      <p className="font-semibold">Color</p>
+                      <div className="w-full flex items-center gap-1">
+                        <input
+                          className="w-full p-1 border rounded-md border-gray-300 "
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {/* Auction_Grade Plate */}
+                  <div className="w-full flex gap-4">
+                    <div className="w-full flex flex-col gap-2">
+                      <p className="font-semibold">Auction Grade</p>
+                      <div className="w-full flex items-center gap-1">
+                        <input
+                          className="w-full p-1 border rounded-md border-gray-300 "
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full flex flex-col gap-2">
+                      <p className="font-semibold">Color</p>
+                      <div className="w-full flex items-center gap-1">
+                        <input
+                          className="w-full p-1 border rounded-md border-gray-300 "
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Equipments */}
+            <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
+            <p className="font-bold text-lg mt-2">Equipments</p>
+                <div className="grid grid-cols-3 gap-4 mt-3">
+                  {equipments.length > 0 ? (
+                    equipments.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between cursor-pointer transition-all"
+                      >
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="form-checkbox h-3 w-3 cursor-pointer"
+                          />
+                          <span>{item}</span>
+                        </label>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-red-500">No results found</p>
+                  )}
+                </div>
+            </div>
+
+            {/* Car Details Old*/}
+            {/* <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
               <div className="flex flex-col md:flex-row gap-2 justify-between">
                 <p className="font-bold text-lg">Car Details</p>
-                {/* <div className="font-semibold flex gap-6">
-                  <button
-                    className="flex gap-1 items-center text-[#CC9A46]"
-                    onClick={openTranslationPopup}
-                  >
-                    <IoLanguage /> Translation
-                  </button>
-                  <button
-                    className="flex gap-1 items-center text-[#CC9A46]"
-                    onClick={openAuctionGradePopup}
-                  >
-                    <IoMdInformationCircleOutline /> Auction Guide
-                  </button>
-                </div> */}
               </div>
 
               <div className="flex flex-col">
@@ -1702,8 +1864,14 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                   )}
                 </div>
               </div>
-            </div>
+            </div> */}
+
             <ExtraCostsInfo />
+            
+            <div className=" w-full flex flex-col gap-4">
+              <YardTaskBox customClass="w-full"/>
+              <BuyingTaskBox customClass="w-full"/>
+            </div>
           </div>
 
           {/* Column 2 */}
@@ -2049,20 +2217,19 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               }`}
             >
               <div className="flex flex-col gap-2">
-                
-              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center justify-between gap-4">
                   <p className="text-gray-500 text-md font-semibold">
                     Customer:{" "}
                   </p>
-                  
-                <DropDown
-                  options={yards}
-                  selected="0CY Stock"
-                  customClass="fit-width"
-                  optionClass="w-fit h-fit"
-                  optionBoxClass="w-fit h-fit right-0 z-50"
-                  buttonClass="rounded bg-white py-1"
-                /> 
+
+                  <DropDown
+                    options={yards}
+                    selected="0CY Stock"
+                    customClass="fit-width"
+                    optionClass="w-fit h-fit"
+                    optionBoxClass="w-fit h-fit right-0 z-50"
+                    buttonClass="rounded bg-white py-1"
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-gray-500 text-md font-semibold">
