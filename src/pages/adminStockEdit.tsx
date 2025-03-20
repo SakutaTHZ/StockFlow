@@ -1160,7 +1160,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               <thead>
                 <tr className="bg-gray-100">
                   <th className={`${colClass}`}>Type</th>
-                  <th className={`${colClass}`}>Description</th>
+                  <th className={`${colClass} min-w-32`}>Description</th>
                   <th className={`${colClass}`}>Estimate</th>
                   <th className={`${colClass}`}>Actual</th>
                   {editMode && <th className={`${colClass}`}></th>}
@@ -1190,7 +1190,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                       {editMode ? (
                         <input
                           type="text"
-                          className="w-full border px-2 rounded-md"
+                          className="w-full  min-w-32 border px-2 rounded-md"
                           value={extra.Description}
                           onChange={(e) =>
                             handleInputChange(
@@ -1208,7 +1208,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                       {editMode ? (
                         <input
                           type="number"
-                          className="w-full border px-2 rounded-md"
+                          className="w-full border px-2 rounded-md appearance-none"
                           value={extra.Estimate}
                           onChange={(e) =>
                             handleInputChange(
@@ -1352,7 +1352,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     <>
       <CNetAdminNav breadcrumb={true} />
 
-      <div className="flex flex-col gap-6 px-4 md:px-24 py-8">
+      <div className="flex flex-col gap-6 px-4 md:px-32 py-8 text-sm">
         <div className="flex items-center gap-1 font-medium">
           <button
             className="hidden md:block mr-2 text-gray-500"
@@ -1394,19 +1394,25 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           </div>
 
           <div className="flex items-end gap-2">
-            <button className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors" onClick={goBack}>
+            <button
+              className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors"
+              onClick={goBack}
+            >
               Save
             </button>
-            <button className="bg-gray-100 hover:bg-red-100 text-[#ff5858]  p-2 px-12 rounded-md font-bold transition-colors" onClick={goBack}>
+            <button
+              className="bg-gray-100 hover:bg-red-100 text-[#ff5858]  p-2 px-12 rounded-md font-bold transition-colors"
+              onClick={goBack}
+            >
               Delete
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1.5fr_1.5fr] gap-8">
+        <div className="w-full grid grid-cols-1 md:grid-cols-[8fr_1fr_1fr] gap-4">
           {/* Column 1 */}
           <div className="col-1 flex flex-col gap-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-md shadow-sm">
+            <div className="flex gap-2 p-4 border rounded-md shadow-sm">
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">Make</p>
                 <DropDown
@@ -1422,7 +1428,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                 <p className="font-semibold">Model</p>
                 <input
                   type="text"
-                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm"
+                  className="px-2 w-full border border-gray-300 h-full rounded-md shadow-sm"
                   placeholder="Model"
                 />
               </div>
@@ -1430,28 +1436,28 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                 <p className="font-semibold">Grade</p>
                 <input
                   type="text"
-                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm"
+                  className="px-2 w-full border border-gray-300 h-full rounded-md shadow-sm"
                   placeholder="Grade"
                   value={cardData.name}
                 />
               </div>
 
               <div className="flex flex-col gap-2">
-                <p className="font-semibold">Chassis Number</p>
-                <div className="flex gap-2">
-                <input
-                  type="text"
-                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8 w-full"
-                  placeholder="Grade"
-                  value={cardData.vim}
-                />
-                {"-"}
-                <input
-                  type="text"
-                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8 w-full"
-                  placeholder="Grade"
-                  value={cardData.vim}
-                />
+                <p className="font-semibold text-nowrap">Chassis Number</p>
+                <div className="flex gap-1">
+                  <input
+                    type="text"
+                    className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8 w-full"
+                    placeholder="Grade"
+                    value={cardData.vim}
+                  />
+                  {"-"}
+                  <input
+                    type="text"
+                    className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8 w-full"
+                    placeholder="Grade"
+                    value={cardData.vim}
+                  />
                 </div>
               </div>
 
@@ -1459,427 +1465,283 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                 <p className="font-semibold">Stock number</p>
                 <input
                   type="text"
-                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8"
+                  className="px-2 w-full border border-gray-300 h-full rounded-md shadow-sm min-h-8"
                   placeholder="Grade"
                   value={cardData.id}
                 />
               </div>
 
               <div className="flex flex-col gap-2">
-                <p className="font-semibold">Invoice Number</p>
+                <p className="font-semibold text-nowrap">Invoice Number</p>
                 <input
                   type="text"
-                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8"
+                  className="px-2 w-full border border-gray-300 h-full rounded-md shadow-sm min-h-8"
                   placeholder="Grade"
                   value={cardData.auctionNumber}
                 />
               </div>
             </div>
 
-            <div className="imagesContainer h-fit relative flex flex-col md:flex-row gap-4">
-              {}
-              <div className="animate-slideRight mainImage w-full">
-                <img
-                  src={cardData.image}
-                  alt="Main image"
-                  className="rounded-lg h-auto md:h-full object-cover"
-                />
-              </div>
-
-              {}
-              <div className="secondaryImages w-full h-full md:w-8/12 grid grid-cols-3 md:grid-cols-2 gap-2">
-                <img
-                  src={cardData.image}
-                  alt="Secondary image 1"
-                  className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
-                  style={{
-                    animationDelay: `.15s`,
-                    animationFillMode: "forwards",
-                  }}
-                />
-                <img
-                  src={cardData.image}
-                  alt="Secondary image 2"
-                  className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
-                  style={{
-                    animationDelay: `.30s`,
-                    animationFillMode: "forwards",
-                  }}
-                />
-                <img
-                  src={cardData.image}
-                  alt="Secondary image 3"
-                  className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
-                  style={{
-                    animationDelay: `.45s`,
-                    animationFillMode: "forwards",
-                  }}
-                />
-                <img
-                  src={cardData.image}
-                  alt="Secondary image 4"
-                  className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
-                  style={{
-                    animationDelay: `.60s`,
-                    animationFillMode: "forwards",
-                  }}
-                />
-                <img
-                  src={cardData.image}
-                  alt="Secondary image 5"
-                  className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
-                  style={{
-                    animationDelay: `.75s`,
-                    animationFillMode: "forwards",
-                  }}
-                />
-                <img
-                  src={cardData.image}
-                  alt="Secondary image 6"
-                  className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
-                  style={{
-                    animationDelay: `.90s`,
-                    animationFillMode: "forwards",
-                  }}
-                />
-              </div>
-
-              {}
-              {/* <button
-                className="absolute flex gap-2 items-center bg-white bg-opacity-75 hover:bg-opacity-100 shadow-md px-2 py-1 rounded-md right-2 md:right-2 bottom-2 md:bottom-2 transition-all"
-                onClick={toggleGallery}
-              >
-                <MdOutlineRemoveRedEye size={20} />
-                <p className="hidden md:block">See All Photos</p>
-                <p className="count font-semibold">34</p>
-              </button> */}
-            </div>
-
-            {/* Car Details */}
-            <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
-              <div className="flex flex-col">
-                <div className="grid grid-cols-2 gap-4 mt-2 mb-3">
-                  {/* First Registration */}
-                  <div className="w-full flex flex-col gap-2">
-                    <p className="font-semibold">First Registration</p>
-                    <div className="w-full flex items-center gap-1">
-                      <input
-                        className="w-full p-1 border rounded-md border-gray-300"
-                        type="text"
-                      />
-                      {"/"}
-                      <DropDown
-                        options={distanceUnit}
-                        selected="-"
-                        customClass="fit-width"
-                        optionClass="w-fit h-fit"
-                        optionBoxClass="w-fit h-fit right-0 z-50"
-                        buttonClass="rounded bg-white py-1"
-                      />
-                      {"/"}
-                      <input
-                        className="w-full p-1 border rounded-md border-gray-300"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                  {/* Manufactured */}
-                  <div className="w-full flex flex-col gap-2">
-                    <p className="font-semibold">Manufactured</p>
-                    <div className="w-full flex items-center gap-1">
-                      <input
-                        className="w-full p-1 border rounded-md border-gray-300 bg-gray-50"
-                        type="text"
-                      />
-                      {"-"}
-                      <input
-                        className="w-full p-1 border rounded-md border-gray-300 bg-gray-50"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                  {/* Engine */}
-                  <div className="w-full flex flex-col gap-2">
-                    <p className="font-semibold">Engine</p>
-                    <div className="w-full flex items-center gap-1">
-                      <DropDown
-                        options={carEngines}
-                        selected="-"
-                        customClass="fit-width"
-                        optionClass="w-fit h-fit"
-                        optionBoxClass="w-fit h-fit right-0 z-50"
-                        buttonClass="rounded bg-white py-1"
-                      />
-
-                      <input
-                        className="w-full p-1 border rounded-md border-gray-300 "
-                        type="text"
-                      />
-                      {"cc"}
-                      <DropDown
-                        options={carEngines}
-                        selected="-"
-                        customClass="fit-width"
-                        optionClass="w-fit h-fit"
-                        optionBoxClass="w-fit h-fit right-0 z-50"
-                        buttonClass="rounded bg-white py-1"
-                      />
-                    </div>
-                  </div>
-                  {/* Mileage */}
-                  <div className="w-full flex flex-col gap-2">
-                    <p className="font-semibold">Engine</p>
-                    <div className="w-full flex items-center gap-1">
-                      <input
-                        className="w-full p-1 border rounded-md border-gray-300 "
-                        type="text"
-                      />
-                      <DropDown
-                        options={carEngines}
-                        selected="-"
-                        customClass="fit-width"
-                        optionClass="w-fit h-fit"
-                        optionBoxClass="w-fit h-fit right-0 z-50"
-                        buttonClass="rounded bg-white py-1"
-                      />
-                      <DropDown
-                        options={carEngines}
-                        selected="-"
-                        customClass="fit-width"
-                        optionClass="w-fit h-fit"
-                        optionBoxClass="w-fit h-fit right-0 z-50"
-                        buttonClass="rounded bg-white py-1"
-                      />
-                    </div>
-                  </div>
-                  {/* Transmission Color */}
-                  <div className="w-full flex gap-4">
-                    <div className="w-full flex flex-col gap-2">
-                      <p className="font-semibold">Transmission</p>
-                      <div className="w-full flex items-center gap-1">
-                        <DropDown
-                          options={carEngines}
-                          selected="-"
-                          customClass="fit-width"
-                          optionClass="w-fit h-fit"
-                          optionBoxClass="w-fit h-fit right-0 z-50"
-                          buttonClass="rounded bg-white py-1"
-                        />
-                      </div>
-                    </div>
-                    <div className="w-full flex flex-col gap-2">
-                      <p className="font-semibold">Color</p>
-                      <div className="w-full flex items-center gap-1">
-                        <input
-                          className="w-full p-1 border rounded-md border-gray-300 "
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {/* Auction_Grade Plate */}
-                  <div className="w-full flex gap-4">
-                    <div className="w-full flex flex-col gap-2">
-                      <p className="font-semibold">Auction Grade</p>
-                      <div className="w-full flex items-center gap-1">
-                        <input
-                          className="w-full p-1 border rounded-md border-gray-300 "
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                    <div className="w-full flex flex-col gap-2">
-                      <p className="font-semibold">Color</p>
-                      <div className="w-full flex items-center gap-1">
-                        <input
-                          className="w-full p-1 border rounded-md border-gray-300 "
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                  </div>
+            <div className="w-full grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-2">
+              <div className="imagesContainer h-fit relative flex flex-col md:flex-row gap-4">
+                {}
+                <div className="animate-slideRight mainImage w-full">
+                  <img
+                    src={cardData.image}
+                    alt="Main image"
+                    className="rounded-lg h-auto md:h-full object-cover"
+                  />
                 </div>
-              </div>
-            </div>
 
-            {/* Equipments */}
-            <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
-            <p className="font-bold text-lg mt-2">Equipments</p>
-                <div className="grid grid-cols-3 gap-4 mt-3">
-                  {equipments.length > 0 ? (
-                    equipments.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex justify-between cursor-pointer transition-all"
-                      >
-                        <label className="flex items-center gap-2 cursor-pointer">
+                {}
+                <div className="secondaryImages w-full h-full md:w-8/12 grid grid-cols-3 md:grid-cols-2 gap-2">
+                  <img
+                    src={cardData.image}
+                    alt="Secondary image 1"
+                    className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
+                    style={{
+                      animationDelay: `.15s`,
+                      animationFillMode: "forwards",
+                    }}
+                  />
+                  <img
+                    src={cardData.image}
+                    alt="Secondary image 2"
+                    className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
+                    style={{
+                      animationDelay: `.30s`,
+                      animationFillMode: "forwards",
+                    }}
+                  />
+                  <img
+                    src={cardData.image}
+                    alt="Secondary image 3"
+                    className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
+                    style={{
+                      animationDelay: `.45s`,
+                      animationFillMode: "forwards",
+                    }}
+                  />
+                  <img
+                    src={cardData.image}
+                    alt="Secondary image 4"
+                    className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
+                    style={{
+                      animationDelay: `.60s`,
+                      animationFillMode: "forwards",
+                    }}
+                  />
+                  <img
+                    src={cardData.image}
+                    alt="Secondary image 5"
+                    className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
+                    style={{
+                      animationDelay: `.75s`,
+                      animationFillMode: "forwards",
+                    }}
+                  />
+                  <img
+                    src={cardData.image}
+                    alt="Secondary image 6"
+                    className="rounded-lg animate-slideRight opacity-0 h-full w-full object-cover"
+                    style={{
+                      animationDelay: `.90s`,
+                      animationFillMode: "forwards",
+                    }}
+                  />
+                </div>
+
+                {}
+                {/* <button
+    className="absolute flex gap-2 items-center bg-white bg-opacity-75 hover:bg-opacity-100 shadow-md px-2 py-1 rounded-md right-2 md:right-2 bottom-2 md:bottom-2 transition-all"
+    onClick={toggleGallery}
+  >
+    <MdOutlineRemoveRedEye size={20} />
+    <p className="hidden md:block">See All Photos</p>
+    <p className="count font-semibold">34</p>
+  </button> */}
+              </div>
+
+              <div className="flex flex-col gap-2">
+                {/* Car Details */}
+                <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
+                  <div className="flex flex-col">
+                    <div className="grid grid-cols-2 gap-4 mt-2 mb-3">
+                      {/* First Registration */}
+                      <div className="w-full flex flex-col gap-2">
+                        <p className="font-semibold">First Registration</p>
+                        <div className="w-full flex items-center gap-1">
                           <input
-                            type="checkbox"
-                            className="form-checkbox h-3 w-3 cursor-pointer"
+                            className="w-full p-1 border rounded-md border-gray-300"
+                            type="text"
                           />
-                          <span>{item}</span>
-                        </label>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-sm text-red-500">No results found</p>
-                  )}
-                </div>
-            </div>
-
-            {/* Car Details Old*/}
-            {/* <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
-              <div className="flex flex-col md:flex-row gap-2 justify-between">
-                <p className="font-bold text-lg">Car Details</p>
-              </div>
-
-              <div className="flex flex-col">
-                <div className="grid grid-cols-2 gap-4 mt-2 mb-3">
-                  <p className="flex gap-2 items-center border px-2 rounded border-gray-300">
-                    <PiCarProfile
-                      size={20}
-                      className="flex-shrink-0  scale-x-[-1]"
-                    />
-                    <input
-                      className="px-2"
-                      type="text"
-                      value={cardData.exteriorColor.split("#")[0]}
-                    />
-                  </p>
-                  <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                    <img
-                      src={Vin}
-                      alt="engine"
-                      className="brightness-0 flex-shrink-0"
-                    />
-                    <input className="px-2" type="text" value={cardData.vim} />
-                  </p>
-                  <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                    <img src={Engine} alt="engine" className="flex-shrink-0" />
-                    <input
-                      className="px-2"
-                      type="text"
-                      value={cardData.enginePower.toLocaleString()}
-                    />
-                    cc
-                  </p>
-                  <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                    <PiCalendarDots size={20} className="flex-shrink-0" />
-                    <input
-                      className="px-2"
-                      type="text"
-                      value={cardData.registerDate}
-                    />
-                  </p>
-                  <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                    <PiGasCan size={20} className="flex-shrink-0" />
-                    <DropDown
-                      options={fuelType}
-                      selected={cardData.fuelType}
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white border-transparent shadow-none fit-width"
-                    />
-                  </p>
-                  <div className="flex gap-2 items-center">
-                    <p className="flex w-full gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                      <TbRoad size={20} className="flex-shrink-0" />
-                      <input
-                        className="w-full px-2"
-                        type="text"
-                        value={cardData.milleage.toLocaleString()}
-                      />
-                    </p>
-
-                    <DropDown
-                      options={distanceUnit}
-                      selected="km"
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white py-1"
-                    />
-                  </div>
-
-                  <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                    <img
-                      src={Transmission}
-                      alt="engine"
-                      className="flex-shrink-0"
-                    />
-                    <DropDown
-                      options={transmissions}
-                      selected={cardData.transmission}
-                      customClass="fit-width"
-                      optionClass="w-fit h-fit"
-                      optionBoxClass="w-fit h-fit right-0 z-50"
-                      buttonClass="rounded bg-white border-transparent shadow-none"
-                    />
-                  </p>
-                  <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                    <PiStar size={20} className="flex-shrink-0" />
-                    <input
-                      className="px-2"
-                      type="text"
-                      value={cardData.rating}
-                    />
-                  </p>
-                  <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                    <MdAirlineSeatReclineNormal
-                      size={20}
-                      className="flex-shrink-0"
-                    />
-                    <input
-                      className="px-2 w-2/3"
-                      type="text"
-                      value={cardData.seats}
-                    />
-                    Seater
-                  </p>
-                </div>
-                <hr />
-                <div className="grid grid-cols-2 gap-4 my-3">
-                  <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                    <MdInsertPhoto className="flex-shrink-0" />
-                    Base: <span>{cardData.picturesBaseDate}</span>
-                  </p>
-                  <p className="flex gap-2 items-center border py-1 px-2 rounded border-gray-300">
-                    <IoMdPhotos className="flex-shrink-0" />
-                    Extra: <span>{cardData.picturesExtraDate}</span>
-                  </p>
-                </div>
-                <hr />
-
-                <p className="font-bold text-lg mt-2">Equipments</p>
-                <div className="grid grid-cols-3 gap-4 mt-3 border rounded p-3">
-                  {equipments.length > 0 ? (
-                    equipments.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex justify-between cursor-pointer transition-all"
-                      >
-                        <label className="flex items-center gap-2 cursor-pointer">
+                          {"/"}
+                          <DropDown
+                            options={distanceUnit}
+                            selected="-"
+                            customClass="fit-width"
+                            optionClass="w-fit h-fit"
+                            optionBoxClass="w-fit h-fit right-0 z-50"
+                            buttonClass="rounded bg-white py-1"
+                          />
+                          {"/"}
                           <input
-                            type="checkbox"
-                            className="form-checkbox h-3 w-3 cursor-pointer"
+                            className="w-full p-1 border rounded-md border-gray-300"
+                            type="text"
                           />
-                          <span>{item}</span>
-                        </label>
+                        </div>
                       </div>
-                    ))
-                  ) : (
-                    <p className="text-sm text-red-500">No results found</p>
-                  )}
+                      {/* Manufactured */}
+                      <div className="w-full flex flex-col gap-2">
+                        <p className="font-semibold">Manufactured</p>
+                        <div className="w-full flex items-center gap-1">
+                          <input
+                            className="w-full p-1 border rounded-md border-gray-300 bg-gray-50"
+                            type="text"
+                          />
+                          {"-"}
+                          <input
+                            className="w-full p-1 border rounded-md border-gray-300 bg-gray-50"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      {/* Engine */}
+                      <div className="w-full flex flex-col gap-2">
+                        <p className="font-semibold">Engine</p>
+                        <div className="w-full flex items-center gap-1">
+                          <DropDown
+                            options={carEngines}
+                            selected="-"
+                            customClass="fit-width"
+                            optionClass="w-fit h-fit"
+                            optionBoxClass="w-fit h-fit right-0 z-50"
+                            buttonClass="rounded bg-white py-1"
+                          />
+
+                          <input
+                            className="w-full p-1 border rounded-md border-gray-300 "
+                            type="text"
+                          />
+                          {"cc"}
+                          <DropDown
+                            options={carEngines}
+                            selected="-"
+                            customClass="fit-width"
+                            optionClass="w-fit h-fit"
+                            optionBoxClass="w-fit h-fit right-0 z-50"
+                            buttonClass="rounded bg-white py-1"
+                          />
+                        </div>
+                      </div>
+                      {/* Mileage */}
+                      <div className="w-full flex flex-col gap-2">
+                        <p className="font-semibold">Engine</p>
+                        <div className="w-full flex items-center gap-1">
+                          <input
+                            className="w-full p-1 border rounded-md border-gray-300 "
+                            type="text"
+                          />
+                          <DropDown
+                            options={carEngines}
+                            selected="-"
+                            customClass="fit-width"
+                            optionClass="w-fit h-fit"
+                            optionBoxClass="w-fit h-fit right-0 z-50"
+                            buttonClass="rounded bg-white py-1"
+                          />
+                          <DropDown
+                            options={carEngines}
+                            selected="-"
+                            customClass="fit-width"
+                            optionClass="w-fit h-fit"
+                            optionBoxClass="w-fit h-fit right-0 z-50"
+                            buttonClass="rounded bg-white py-1"
+                          />
+                        </div>
+                      </div>
+                      {/* Transmission Color */}
+                      <div className="w-full flex gap-4">
+                        <div className="w-full flex flex-col gap-2">
+                          <p className="font-semibold">Transmission</p>
+                          <div className="w-full flex items-center gap-1">
+                            <DropDown
+                              options={carEngines}
+                              selected="-"
+                              customClass="fit-width"
+                              optionClass="w-fit h-fit"
+                              optionBoxClass="w-fit h-fit right-0 z-50"
+                              buttonClass="rounded bg-white py-1"
+                            />
+                          </div>
+                        </div>
+                        <div className="w-full flex flex-col gap-2">
+                          <p className="font-semibold">Color</p>
+                          <div className="w-full flex items-center gap-1">
+                            <input
+                              className="w-full p-1 border rounded-md border-gray-300 "
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      {/* Auction_Grade Plate */}
+                      <div className="w-full flex gap-4">
+                        <div className="w-full flex flex-col gap-2">
+                          <p className="font-semibold">Auction Grade</p>
+                          <div className="w-full flex items-center gap-1">
+                            <input
+                              className="w-full p-1 border rounded-md border-gray-300 "
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                        <div className="w-full flex flex-col gap-2">
+                          <p className="font-semibold">Color</p>
+                          <div className="w-full flex items-center gap-1">
+                            <input
+                              className="w-full p-1 border rounded-md border-gray-300 "
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Equipments */}
+                <div className="flex flex-col border rounded-md p-4 gap-4 shadow-sm">
+                  <p className="font-bold text-lg mt-2">Equipments</p>
+                  <div className="grid grid-cols-3 gap-4 mt-3 border p-4 rounded-md">
+                    {equipments.length > 0 ? (
+                      equipments.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex justify-between cursor-pointer transition-all"
+                        >
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              className="form-checkbox h-3 w-3 cursor-pointer"
+                            />
+                            <span>{item}</span>
+                          </label>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm text-red-500">No results found</p>
+                    )}
+                  </div>
+                </div>
+
+                <ExtraCostsInfo />
+
+                <div className=" w-full flex flex-col gap-4">
+                  <YardTaskBox customClass="w-full" />
+                  <BuyingTaskBox customClass="w-full" />
                 </div>
               </div>
-            </div> */}
-
-            <ExtraCostsInfo />
-            
-            <div className=" w-full flex flex-col gap-4">
-              <YardTaskBox customClass="w-full"/>
-              <BuyingTaskBox customClass="w-full"/>
             </div>
           </div>
 
