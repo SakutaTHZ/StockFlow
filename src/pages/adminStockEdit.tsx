@@ -3,7 +3,7 @@ import CNetAdminNav from "../components/CNetAdminNav";
 import { CarData } from "../data/types";
 import { FaChevronDown } from "react-icons/fa";
 import {
-  MdOutlineRemoveRedEye,
+  // MdOutlineRemoveRedEye,
   // MdAirlineSeatReclineNormal,
   // MdInsertPhoto,
   MdModeEditOutline,
@@ -72,18 +72,18 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     document.title = `${cardData.id.substring(1)}`;
   }, [cardData.id]);
 
-  const [showGallery, setShowGallery] = useState(false);
+  // const [showGallery, setShowGallery] = useState(false);
 
-  function toggleGallery() {
-    setShowGallery(() => !showGallery);
-  }
+  // function toggleGallery() {
+  //   setShowGallery(() => !showGallery);
+  // }
 
   const navigate = useNavigate();
 
   //   const [cars] = useAtom(carAtom);
 
   const CommentBox = () => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(true);
     const [editableContent, setEditableContent] = useState(
       "Lorem ipsum dolor sit amet consectetur. Maecenas ac purus sed ut proin risus enim. Cras pellentesque gravida rhoncus rhoncus ullamcorper auctor feugiat. Mattis tincidunt non purus risus ullamcorper. Non pulvinar sodales in ornare in congue cursus proin justo."
     );
@@ -136,7 +136,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     );
   };
   const SalesCommentBox = () => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(true);
     const [editableContent, setEditableContent] = useState(
       "Lorem ipsum dolor sit amet consectetur. Maecenas ac purus sed ut proin risus enim. Cras pellentesque gravida rhoncus rhoncus ullamcorper auctor feugiat. Mattis tincidunt non purus risus ullamcorper. Non pulvinar sodales in ornare in congue cursus proin justo."
     );
@@ -189,7 +189,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     );
   };
   const SupplierInfo = () => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(true);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -527,7 +527,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     );
   };
   const PaymentsInfo = () => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(true);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -671,7 +671,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     );
   };
   const CalculatedCostsInfo = () => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(true);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -1092,7 +1092,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     );
   };
   const ExtraCostsInfo = () => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(true);
     const [collapse, setCollapse] = useState(false);
     const [extras, setExtras] = useState(() =>
       extraCost.map((type, index) => ({
@@ -1394,10 +1394,10 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           </div>
 
           <div className="flex items-end gap-2">
-            <button className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors">
+            <button className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors" onClick={goBack}>
               Save
             </button>
-            <button className="bg-gray-100 hover:bg-red-100 text-[#ff5858]  p-2 px-12 rounded-md font-bold transition-colors">
+            <button className="bg-gray-100 hover:bg-red-100 text-[#ff5858]  p-2 px-12 rounded-md font-bold transition-colors" onClick={goBack}>
               Delete
             </button>
           </div>
@@ -1438,12 +1438,21 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
 
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">Chassis Number</p>
+                <div className="flex gap-2">
                 <input
                   type="text"
-                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8"
+                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8 w-full"
                   placeholder="Grade"
                   value={cardData.vim}
                 />
+                {"-"}
+                <input
+                  type="text"
+                  className="px-2 border border-gray-300 h-full rounded-md shadow-sm min-h-8 w-full"
+                  placeholder="Grade"
+                  value={cardData.vim}
+                />
+                </div>
               </div>
 
               <div className="flex flex-col gap-2">
@@ -1536,14 +1545,14 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               </div>
 
               {}
-              <button
+              {/* <button
                 className="absolute flex gap-2 items-center bg-white bg-opacity-75 hover:bg-opacity-100 shadow-md px-2 py-1 rounded-md right-2 md:right-2 bottom-2 md:bottom-2 transition-all"
                 onClick={toggleGallery}
               >
                 <MdOutlineRemoveRedEye size={20} />
                 <p className="hidden md:block">See All Photos</p>
                 <p className="count font-semibold">34</p>
-              </button>
+              </button> */}
             </div>
 
             {/* Car Details */}
