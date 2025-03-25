@@ -79,7 +79,7 @@ const YardTaskBox: React.FC<YardTaskBoxProps> = ({ customClass }) => {
           placeholder="Comment"
         ></textarea>
 
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end mt-4 footer">
           <button className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md">
             Save
           </button>

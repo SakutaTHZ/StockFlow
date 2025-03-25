@@ -14,6 +14,7 @@ import {
 // import { IoMdPhotos } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { CgTrash } from "react-icons/cg";
 
 // import Transmission from "../assets/transmission.png";
 // import Engine from "../assets/EnginePower.svg";
@@ -51,6 +52,7 @@ import {
 import { FaArrowLeftLong } from "react-icons/fa6";
 import YardTaskBox from "../components/adminComponents/YardTaskBox";
 import BuyingTaskBox from "../components/adminComponents/BuyingTaskBox";
+import Gallery from "../components/Gallery";
 
 interface DetailsProps {
   customClass?: string;
@@ -61,7 +63,7 @@ interface LocationState {
   cars: CarData[];
 }
 
-const colClass = `border p-2 px-4 text-left`;
+const colClass = `border p-2 px-2 text-left`;
 const labelClass = `text-gray-500`;
 
 const AdminStockEdit: React.FC<DetailsProps> = () => {
@@ -115,7 +117,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
             )}
           </div>
 
-          {editMode && (
+          {/* {editMode && (
             <div className="foot flex gap-4 justify-end">
               <button
                 className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
@@ -130,7 +132,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                 Cancel
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </>
     );
@@ -168,7 +170,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
             )}
           </div>
 
-          {editMode && (
+          {/* {editMode && (
             <div className="foot flex gap-4 justify-end">
               <button
                 className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
@@ -183,7 +185,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                 Cancel
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </>
     );
@@ -260,7 +262,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
 
                     <div className="flex flex-col gap-3 py-2">
                       <div className="flex justify-between">
-                        <p className={labelClass}>Auction Number/Lot Number:</p>
+                        <p className={labelClass}>Auction Number/<br/> Lot Number:</p>
                         <p className="font-semibold text-blue-950">
                           {cardData.auctionNumber}/{cardData.lotNumber}
                         </p>
@@ -278,7 +280,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                     <div className="flex flex-col gap-3 py-2">
                       <div className="flex justify-between">
                         <p className={labelClass}>Transporter Name:</p>
-                        <p className="font-semibold text-blue-950">
+                        <p className="font-semibold text-blue-950 text-right">
                           {cardData.yardArea} (Standard)
                         </p>
                       </div>
@@ -505,23 +507,6 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               )}
             </div>
           )}
-
-          {editMode && !collapse && (
-            <div className="foot flex gap-4 justify-end">
-              <button
-                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
-                onClick={() => setEditMode((prevMode) => !prevMode)}
-              >
-                Save
-              </button>
-              <button
-                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
-                onClick={() => setEditMode((prevMode) => !prevMode)}
-              >
-                Cancel
-              </button>
-            </div>
-          )}
         </div>
       </>
     );
@@ -650,7 +635,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
             </div>
           )}
 
-          {editMode && !collapse && (
+          {/* {editMode && !collapse && (
             <div className="foot flex gap-4 justify-end">
               <button
                 className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
@@ -665,7 +650,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                 Cancel
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </>
     );
@@ -716,7 +701,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                         Days in UK:
                       </p>
                       <div className="flex items-center justify-start gap-2 w-1/2">
-                        <input type="text" className="border px-2 rounded-md" />
+                        <input type="text" className="border px-2 rounded-md w-full" />
                         <p>{"   "}</p>
                       </div>
                     </div>
@@ -1071,7 +1056,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
             </div>
           )}
 
-          {editMode && !collapse && (
+          {/* {editMode && !collapse && (
             <div className="foot flex gap-4 justify-end">
               <button
                 className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
@@ -1086,7 +1071,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                 Cancel
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </>
     );
@@ -1137,7 +1122,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     };
 
     return (
-      <div className="border p-4 rounded-md bg-white">
+      <div className="border p-4 rounded-md bg-white overflow-auto">
         <div className="head flex justify-between items-center">
           <p className="font-bold text-xl">Extra Costs</p>
           <div className="flex gap-4">
@@ -1155,7 +1140,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
         </div>
 
         {!collapse && (
-          <div className="body mt-4">
+          <div className="body mt-4 w-full">
             <table className="w-full">
               <thead>
                 <tr className="bg-gray-100">
@@ -1324,7 +1309,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           </div>
         )}
 
-        {editMode && !collapse && (
+        {/* {editMode && !collapse && (
           <div className="foot flex gap-4 justify-end mt-4">
             <button
               className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
@@ -1339,7 +1324,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               Cancel
             </button>
           </div>
-        )}
+        )} */}
       </div>
     );
   };
@@ -1347,12 +1332,25 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
   const goBack = () => {
     navigate(-1); // Redirects to the previous page
   };
+  
+  const [showGallery, setShowGallery] = useState(false);
+
+  function toggleGallery() {
+    setShowGallery(() => !showGallery);
+  }
 
   return (
     <>
       <CNetAdminNav breadcrumb={true} />
 
-      <div className="flex flex-col gap-6 px-4 md:px-32 py-8 text-sm">
+      {showGallery && (
+        <Gallery
+          customClass="animate-appear animate-slideUp"
+          closeBox={toggleGallery}
+        />
+      )}
+
+      <div className="flex flex-col gap-6 px-4 md:px-32 py-8 text-sm w-screen">
         <div className="flex items-center gap-1 font-medium">
           <button
             className="hidden md:block mr-2 text-gray-500"
@@ -1366,53 +1364,62 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           <p className="text-blue-950 font-semibold">/ Stock Edit</p>
         </div>
 
-        <div className="flex justify-between">
-          <div className="flex flex-col gap-3">
-            <p className="text-3xl font-bold flex items-center gap-2 text-blue-950">
+        <div className="flex flex-col md:flex-row justify-between gap-4">
+          <div className="w-full flex flex-col gap-3">
+            <p className="text-3xl font-bold flex items-center gap-2 text-blue-950 text-nowrap">
               Audi {cardData.name}
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap w-full items-center justify-between gap-4">
               <p className="font-medium text-blue-950 text-nowrap">
                 {cardData.package} / {cardData.vim}
               </p>
 
-              <DropDown
-                options={visibility}
-                customClass="fit-width"
-                optionClass="w-fit h-fit"
-                optionBoxClass="w-fit h-fit right-0 z-50"
-                buttonClass="py-1 rounded bg-white"
-              />
-              <DropDown
-                options={published}
-                customClass="fit-width"
-                optionClass="w-fit h-fit"
-                optionBoxClass="w-fit h-fit right-0 z-50"
-                buttonClass="py-1 rounded bg-white"
-              />
+              <div className="flex justify-center gap-2">
+                <DropDown
+                  options={visibility}
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="py-1 rounded bg-white"
+                />
+                <DropDown
+                  options={published}
+                  customClass="fit-width"
+                  optionClass="w-fit h-fit"
+                  optionBoxClass="w-fit h-fit right-0 z-50"
+                  buttonClass="py-1 rounded bg-white"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex items-end gap-2">
+          <div className="flex w-full md:w-fit items-end justify-end gap-2">
             <button
-              className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors"
+              className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors w-1/3"
               onClick={goBack}
             >
               Save
             </button>
             <button
-              className="bg-gray-100 hover:bg-red-100 text-[#ff5858]  p-2 px-12 rounded-md font-bold transition-colors"
+              className="bg-gray-100 hover:bg-red-100  p-2 px-12 rounded-md font-bold transition-colors w-1/3"
               onClick={goBack}
             >
+              Back
+            </button>
+            <button
+              className=" hover:bg-red-50 text-[#AE2E24]  p-2 px-1 rounded-md font-bold transition-colors flex items-center gap-1 w-1/3 md:w-fit"
+              onClick={goBack}
+            >
+              <CgTrash size={16}/>
               Delete
             </button>
           </div>
         </div>
 
-        <div className="w-full grid grid-cols-1 md:grid-cols-[8fr_1fr_1fr] gap-4">
+        <div className="w-full grid grid-cols-1 md:grid-cols-[6fr_2fr_2fr] gap-4">
           {/* Column 1 */}
           <div className="col-1 flex flex-col gap-4">
-            <div className="flex gap-2 p-4 border rounded-md shadow-sm">
+            <div className="flex flex-wrap md:flex-nowrap gap-2 p-4 border rounded-md shadow-sm">
               <div className="flex flex-col gap-2">
                 <p className="font-semibold">Make</p>
                 <DropDown
@@ -1482,8 +1489,8 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               </div>
             </div>
 
-            <div className="w-full grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-2">
-              <div className="imagesContainer h-fit relative flex flex-col md:flex-row gap-4">
+            <div className="w-full grid grid-cols-1 md:grid-cols-[35%_64%] gap-2">
+              <div className="imagesContainer w-full h-fit relative flex flex-col md:flex-row gap-2 cursor-pointer" onClick={toggleGallery}>
                 {}
                 <div className="animate-slideRight mainImage w-full">
                   <img
@@ -1562,7 +1569,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
   </button> */}
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 w-full0">
                 {/* Car Details */}
                 <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
                   <div className="flex flex-col">
@@ -1697,7 +1704,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                           </div>
                         </div>
                         <div className="w-full flex flex-col gap-2">
-                          <p className="font-semibold">Color</p>
+                          <p className="font-semibold">Plate</p>
                           <div className="w-full flex items-center gap-1">
                             <input
                               className="w-full p-1 border rounded-md border-gray-300 "
@@ -1738,8 +1745,8 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                 <ExtraCostsInfo />
 
                 <div className=" w-full flex flex-col gap-4">
-                  <YardTaskBox customClass="w-full" />
-                  <BuyingTaskBox customClass="w-full" />
+                  <YardTaskBox customClass="w-full editTaskBox" />
+                  <BuyingTaskBox customClass="w-full editTaskBox" />
                 </div>
               </div>
             </div>
@@ -2081,13 +2088,13 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           {/* Column 3 */}
           <div className="col-3 flex flex-col gap-4">
             <div
-              className={`flex flex-col gap-4 p-4 rounded-md border border-gray-300 ${
+              className={`flex flex-col gap-4 p-1.5 py-4 rounded-md border border-gray-300 ${
                 cardData.highlightStatus === "Sold"
                   ? "bg-gray-100"
                   : "bg-[#E2E8DD]"
               }`}
             >
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 px-2">
                 <div className="flex items-center justify-between gap-4">
                   <p className="text-gray-500 text-md font-semibold">
                     Customer:{" "}
