@@ -2123,7 +2123,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
 
               <div className="flex flex-col">
                 <div className="grid grid-cols-2 gap-4 mt-2 mb-3">
-                  <p className="flex gap-2 items-center">
+                  <p className="flex gap-2 items-center capitalize">
                     <PiCarProfile
                       size={20}
                       className="flex-shrink-0  scale-x-[-1]"
