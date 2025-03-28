@@ -49,7 +49,7 @@ export const getRandomCarEngines = () => {
 };
 
 // yardArea
-export const yardArea: string[] = ["Kasai-K", "Tokyo-T", "KyuShu-Q" , "Osaka-O", "Nagoya-N"];
+export const yardArea: string[] = ["Kasai-K", "Tokyo-T", "KyuShu-Q" , "Nagoya-N"];
 export const getRandomYardArea = () => {
   return yardArea[Math.floor(Math.random() * yardArea.length)];
 };

@@ -116,7 +116,7 @@ const CarCard: React.FC<CarCardProps> = ({
       </span>
     ) : status === "New" ? (
       <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
           car.hold && "hidden"
         }`}
       >

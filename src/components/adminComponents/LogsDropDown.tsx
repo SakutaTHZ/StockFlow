@@ -1,6 +1,6 @@
 // LogsDropDown
 
-import React, { useState } from "react";
+import React, { useState,useRef, useEffect } from "react";
 import Popup from "../Popup";
 import { BsBoxSeam } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa";
@@ -36,10 +36,23 @@ const LogsDropDown: React.FC<LogsDropDownProps> = ({ customClass }) => {
   const closePriceChangesPopup = () => setIsPriceChangesPopupOpen(false);
 
   const tableColumnClass = "text-left p-3 px-4";
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropDownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
-      <div className={`relative inline-block w-full text-left ${customClass}`}>
+      <div className={`relative inline-block w-full text-left ${customClass}`} ref={dropdownRef}>
         <button
           className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
           onClick={toggle}

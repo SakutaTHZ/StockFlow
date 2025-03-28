@@ -30,7 +30,7 @@ import {
 import { BiImages } from "react-icons/bi";
 import { RiCarLine, RiTruckLine } from "react-icons/ri";
 import { HiOutlineChartBar } from "react-icons/hi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoCarOutline, IoClose, IoLanguage } from "react-icons/io5";
 import Gallery from "../components/Gallery";
 import Popup from "../components/Popup";
@@ -111,7 +111,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       </span>
     ) : status === "New" ? (
       <span
-        className={`stat flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
+        className={`stat flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
           cardData.hold && "hidden"
         }`}
       >
@@ -743,7 +743,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     );
   };
   const CalculatedCostsInfo = () => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(true);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -782,18 +782,17 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             <div className="body mt-4">
               {editMode ? (
                 <>
-                  <div className="relative flex flex-col gap-3 py-2">
-                    <div className="flex justify-between">
+                  <div className="relative flex flex-col gap-2 py-2">
+                    <div className="flex justify-between border-b pb-2 ">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Days in UK:
                       </p>
-                      <div className="flex items-center justify-start gap-2 w-1/2">
+                      <div className="flex items-center justify-start gap-2 w-full">
                         <input type="text" className="border px-2 rounded-md" />
-                        <p>{"   "}</p>
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         C-Net Price Est:
                       </p>
@@ -806,7 +805,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Claims:
                       </p>
@@ -819,7 +818,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Discounts:
                       </p>
@@ -832,7 +831,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Actual Freights:
                       </p>
@@ -845,7 +844,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>Duty:</p>
                       <div className="flex items-center justify-end gap-2 w-1/2">
                         <input
@@ -856,7 +855,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>THC:</p>
                       <div className="flex items-center justify-end gap-2 w-1/2">
                         <input
@@ -867,7 +866,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         SLC Docs:
                       </p>
@@ -880,7 +879,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Clearence:
                       </p>
@@ -893,7 +892,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Entry VAT:
                       </p>
@@ -906,7 +905,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Other Costs:
                       </p>
@@ -920,7 +919,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Invoiced Storage:
                       </p>
@@ -933,7 +932,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Actual Storage:
                       </p>
@@ -946,7 +945,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Est Sales Price:
                       </p>
@@ -959,7 +958,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Deal Rate:
                       </p>
@@ -972,7 +971,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         C-Net JPY:
                       </p>
@@ -985,7 +984,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Display Landed:
                       </p>
@@ -1001,53 +1000,53 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 </>
               ) : (
                 <>
-                  <div className="flex flex-col gap-3 py-2">
-                    <div className="flex justify-between">
+                  <div className="flex flex-col gap-1 py-1">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>EUR</p>
                       <p className="font-semibold text-blue-950">121.81</p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>GBP:</p>
                       <p className="font-semibold text-blue-950">186.81</p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>KS:</p>
                       <p className="font-semibold text-blue-950">111.09</p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>THB:</p>
                       <p className="font-semibold text-blue-950">146.45</p>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Arrival Port:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Days in UK:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>C-Net Price:</p>
                       <p className="font-semibold text-blue-950">
                         ¥ {cardData.price.toLocaleString()}
                       </p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>FOB 90:</p>
                       <p className="font-semibold text-blue-950">
                         ¥{" "}
                         {(cardData.price - cardData.discount).toLocaleString()}
                       </p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Margin 90:</p>
                       <p className="font-semibold text-blue-950">
                         ¥ {cardData.extraCost.toLocaleString()}
                       </p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>FOB + MI + Comm:</p>
                       <p className="font-semibold text-blue-950">
                         ¥{" "}
@@ -1060,51 +1059,51 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                         ).toLocaleString()}
                       </p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Estimated Stoage:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Invoiced Stoage:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Actual Stoage:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Used Stoage:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>C-Net Id:</p>
                       <p className="font-semibold text-blue-950">
                         ¥ {cardData.extraCost.toLocaleString()}
                       </p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>C-Net Id/VAT:</p>
                       <p className="font-semibold text-blue-950">
                         ¥ {cardData.extraCost.toLocaleString()}
                       </p>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Total Profit 90:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Profit over 90:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Est Sales Price:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Est Profit:</p>
                       <p className="font-semibold text-blue-950">
                         ¥{" -"}
@@ -1118,7 +1117,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                         ).toLocaleString()}
                       </p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Est Profit over:</p>
                       <p className="font-semibold text-blue-950">
                         ¥{" -"}
@@ -1777,9 +1776,22 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     const toggle = () => {
       setDropDownOpen(!dropDownOpen);
     };
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      function handleClickOutside(event: MouseEvent) {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as HTMLElement)) {
+          setDropDownOpen(false);
+        }
+      }
+  
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
     return (
       <>
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           <button
             className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
             onClick={toggle}
@@ -2223,11 +2235,29 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           <div className="col-2 flex flex-col gap-4">
             <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
               <div className="head flex flex-col gap-1 text-right">
-                <p className="text-[#CC9A46]">
-                  <span className="text-4xl font-bold">
-                    ¥{cardData.price.toLocaleString()}
-                  </span>{" "}
+                <p className="">
+                <span
+                  className={`text-4xl font-bold ${
+                    cardData.discount === 0 ? "text-[#CC9A46]" : "text-red-600"
+                  }`}
+                >
+                  ¥
+                  {cardData.discount === 0
+                    ? cardData.price.toLocaleString()
+                    : (cardData.price - cardData.discount).toLocaleString()}
+                </span>{" "}
+                <span
+                  className={`font-normal ${
+                    cardData.discount === 0 ? "text-[#CC9A46]" : "text-red-600"
+                  }`}
+                >
                   CIF
+                </span>
+                {cardData.discount != 0 && (
+                  <span className="ml-2 line-through text-gray-400">
+                    {cardData.price.toLocaleString()}
+                  </span>
+                )}
                 </p>
                 <p>$9,327 UK VAT Duty Paid!</p>
               </div>
