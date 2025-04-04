@@ -638,8 +638,8 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             <div className="body mt-4">
               {editMode ? (
                 <>
-                  <div className="flex flex-col gap-3 py-2">
-                    <div className="flex justify-between gap-2">
+                  <div className="flex flex-col gap-2 py-2">
+                    <div className="flex justify-between gap-2 border-b pb-2">
                       <p className={`w-1/3 text-blue-500`}>Consignee:</p>
 
                       <DropDown
@@ -650,7 +650,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       />
                     </div>
 
-                    <div className="flex justify-between gap-2">
+                    <div className="flex justify-between gap-2 border-b pb-2">
                       <p className={`w-1/3 ${labelClass}`}>Sze: (L x W x H)</p>
                       <p className="font-semibold text-blue-950">
                         {cardData.size.toLocaleString()} m<sup>2</sup> (
@@ -659,7 +659,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                         {cardData.height.toLocaleString()})
                       </p>
                     </div>
-                    <div className="flex justify-between gap-2">
+                    <div className="flex justify-between gap-2 border-b pb-2">
                       <p className={`w-1/3 ${labelClass}`}>Deposit:</p>
                       <input
                         type="text"
@@ -667,7 +667,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                         className="w-1/3 px-2 border rounded-md shadow-sm"
                       />
                     </div>
-                    <div className="flex justify-between gap-2">
+                    <div className="flex justify-between gap-2 border-b pb-2">
                       <p className={`w-1/3 ${labelClass}`}>Container:</p>
 
                       <DropDown
@@ -690,12 +690,12 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 </>
               ) : (
                 <>
-                  <div className="flex flex-col gap-3 py-2">
-                    <div className="flex justify-between">
+                  <div className="flex flex-col gap-2 py-2">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={`text-blue-600`}>Consignee:</p>
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Sze: (L x W x H)</p>
                       <p className="font-semibold text-blue-950">
                         {cardData.size.toLocaleString()} m<sup>2</sup> (
@@ -704,11 +704,11 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                         {cardData.height.toLocaleString()})
                       </p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Deposit:</p>
                       <p className="font-semibold text-blue-950">¥ 0</p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between border-b pb-2">
                       <p className={labelClass}>Container:</p>
                       <p className="font-semibold text-blue-950"></p>
                     </div>
@@ -743,7 +743,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     );
   };
   const CalculatedCostsInfo = () => {
-    const [editMode, setEditMode] = useState(true);
+    const [editMode, setEditMode] = useState(false);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -984,7 +984,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       </div>
                     </div>
 
-                    <div className="flex justify-between border-b pb-2">
+                    <div className="flex justify-between">
                       <p className={`text-nowrap w-1/2 ` + labelClass}>
                         Display Landed:
                       </p>
@@ -1142,6 +1142,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             </div>
           )}
 
+          {/*
           {editMode && !collapse && (
             <div className="foot flex gap-4 justify-end">
               <button
@@ -1157,7 +1158,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 Cancel
               </button>
             </div>
-          )}
+          )}*/}
         </div>
       </>
     );
