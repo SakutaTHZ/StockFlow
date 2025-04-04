@@ -68,7 +68,7 @@ const labelClass = `text-gray-500`;
 
 const AdminStockEdit: React.FC<DetailsProps> = () => {
   const location = useLocation();
-  const cardData = (location.state as LocationState)?.card;
+  const [cardData,setCarData] = useState((location.state as LocationState)?.card);
 
   useEffect(() => {
     document.title = `${cardData.id.substring(1)}`;
@@ -145,7 +145,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
 
     return (
       <>
-        <div className="border p-4 rounded-md">
+        <div className="border p-4 rounded-md bg-yellow-50">
           <div className="head flex justify-between items-center">
             <p className="font-bold text-xl">Sales Comment</p>
             {!editMode && (
@@ -262,7 +262,10 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
 
                     <div className="flex flex-col gap-3 py-2">
                       <div className="flex justify-between">
-                        <p className={labelClass}>Auction Number/<br/> Lot Number:</p>
+                        <p className={labelClass}>
+                          Auction Number/
+                          <br /> Lot Number:
+                        </p>
                         <p className="font-semibold text-blue-950">
                           {cardData.auctionNumber}/{cardData.lotNumber}
                         </p>
@@ -701,7 +704,10 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                         Days in UK:
                       </p>
                       <div className="flex items-center justify-start gap-2 w-1/2">
-                        <input type="text" className="border px-2 rounded-md w-full" />
+                        <input
+                          type="text"
+                          className="border px-2 rounded-md w-full"
+                        />
                         <p>{"   "}</p>
                       </div>
                     </div>
@@ -1332,7 +1338,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
   const goBack = () => {
     navigate(-1); // Redirects to the previous page
   };
-  
+
   const [showGallery, setShowGallery] = useState(false);
 
   function toggleGallery() {
@@ -1410,7 +1416,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               className=" hover:bg-red-50 text-[#AE2E24]  p-2 px-1 rounded-md font-bold transition-colors flex items-center gap-1 w-1/3 md:w-fit"
               onClick={goBack}
             >
-              <CgTrash size={16}/>
+              <CgTrash size={16} />
               Delete
             </button>
           </div>
@@ -1490,7 +1496,10 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
             </div>
 
             <div className="w-full grid grid-cols-1 md:grid-cols-[35%_64%] gap-2">
-              <div className="imagesContainer w-full h-fit relative flex flex-col md:flex-row gap-2 cursor-pointer" onClick={toggleGallery}>
+              <div
+                className="imagesContainer w-full h-fit relative flex flex-col md:flex-row gap-2 cursor-pointer"
+                onClick={toggleGallery}
+              >
                 {}
                 <div className="animate-slideRight mainImage w-full">
                   <img
@@ -1686,9 +1695,23 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                           <p className="font-semibold">Color</p>
                           <div className="w-full flex items-center gap-1">
                             <input
-                              className="w-full p-1 border rounded-md border-gray-300 "
+                              className="w-full p-1 border rounded-md border-gray-300"
                               type="text"
+                              list="colorOptions"
+                              value={cardData.exteriorColor.split("#")[0]} // Editable color part
+                              onChange={(e) => {
+                                const newColor = e.target.value;
+                                setCarData({
+                                  ...cardData,
+                                  exteriorColor: newColor + "#" + cardData.exteriorColor.split("#")[1], // Maintain the hex part
+                                });
+                              }}
                             />
+                            <datalist id="colorOptions">
+                              {color.map((colour) => (
+                                <option key={colour} value={colour} />
+                              ))}
+                            </datalist>
                           </div>
                         </div>
                       </div>

@@ -215,7 +215,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
 
     return (
       <>
-        <div className="border p-4 rounded-md">
+        <div className="border p-4 rounded-md bg-yellow-50">
           <div className="head flex justify-between items-center">
             <p className="font-bold text-xl">Sales Comment</p>
             {!editMode && (
