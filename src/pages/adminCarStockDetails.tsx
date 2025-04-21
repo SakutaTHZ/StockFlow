@@ -40,6 +40,7 @@ import Engine from "../assets/EnginePower.svg";
 import Certificate from "../assets/images/certificate.png";
 import Vin from "../assets/vin.svg";
 import DropDown from "../components/DropDown";
+import { MultiSelect } from 'primereact/multiselect';
 import {
   carTypes,
   descriptions,
@@ -215,11 +216,11 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
 
     return (
       <>
-        <div className="border p-4 rounded-md bg-yellow-50">
-          <div className="head flex justify-between items-center">
-            <p className="font-bold text-xl">Sales Comment</p>
+        <div className="border rounded-md ">
+          <div className="relative head flex justify-between items-center">
+            <p className="font-bold text-xl bg-[#F8F5EF] w-full p-4">Sales Comment</p>
             {!editMode && (
-              <button className="cursor">
+              <button className="cursor absolute right-4 top-4">
                 <MdModeEditOutline
                   size={18}
                   onClick={() => setEditMode((prevMode) => !prevMode)}
@@ -228,7 +229,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             )}
           </div>
 
-          <div className="body mt-4">
+          <div className="body mt-4 p-4 pt-0">
             {editMode ? (
               <textarea
                 className="w-full h-40 resize-none p-2 border rounded-md"
@@ -241,7 +242,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           </div>
 
           {editMode && (
-            <div className="foot flex gap-4 justify-end">
+            <div className="foot flex gap-4 justify-end p-4 pt-0">
               <button
                 className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
                 onClick={() => setEditMode((prevMode) => !prevMode)}
@@ -599,7 +600,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     );
   };
   const PaymentsInfo = () => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(true);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -651,13 +652,45 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                     </div>
 
                     <div className="flex justify-between gap-2 border-b pb-2">
-                      <p className={`w-1/3 ${labelClass}`}>Sze: (L x W x H)</p>
-                      <p className="font-semibold text-blue-950">
-                        {cardData.size.toLocaleString()} m<sup>2</sup> (
-                        {cardData.length.toLocaleString()} x{" "}
-                        {cardData.width.toLocaleString()} x{" "}
-                        {cardData.height.toLocaleString()})
-                      </p>
+                      <p className={`min-w-1/3 ${labelClass}`}>Sze: (L x W x H)</p>
+                      <div className="w-2/3 font-semibold text-blue-950 flex flex-wrap gap-1 items-center">
+                        <div className="flex gap-1 items-center">
+                          <input
+                          type="text"
+                          placeholder="0"
+                          className="w-full px-2 border rounded-md shadow-sm" 
+                          value={cardData.size.toLocaleString()}
+                          onChange={()=>console.log("changed")}/>
+                          <p className="text-nowrap">m<sup>2</sup> (</p>
+                        </div>
+                        <div className="flex gap-1 items-center">
+                          <input
+                          type="text"
+                          placeholder="0"
+                          className="w-full px-2 border rounded-md shadow-sm" 
+                          value={cardData.length.toLocaleString()}
+                          onChange={()=>console.log("changed")}/>
+                          <p>x</p>
+                        </div>
+                        <div className="flex gap-1 items-center">
+                          <input
+                          type="text"
+                          placeholder="0"
+                          className="w-full px-2 border rounded-md shadow-sm" 
+                          value={cardData.width.toLocaleString()}
+                          onChange={()=>console.log("changed")}/>
+                          <p>x</p>
+                        </div>
+                        <div className="flex gap-1 items-center">
+                          <input
+                          type="text"
+                          placeholder="0"
+                          className="w-full px-2 border rounded-md shadow-sm" 
+                          value={cardData.height.toLocaleString()}
+                          onChange={()=>console.log("changed")}/>
+                          <p>)</p>
+                        </div>
+                      </div>
                     </div>
                     <div className="flex justify-between gap-2 border-b pb-2">
                       <p className={`w-1/3 ${labelClass}`}>Deposit:</p>
@@ -743,7 +776,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     );
   };
   const CalculatedCostsInfo = () => {
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, ] = useState(false);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -752,14 +785,14 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           <div className="head flex justify-between items-center">
             <p className="font-bold text-xl">Calculated Costs</p>
             <div className="flex gap-4">
-              {!editMode && (
+              {/* {!editMode && (
                 <button className="cursor">
                   <MdModeEditOutline
                     size={18}
                     onClick={() => setEditMode((prevMode) => !prevMode)}
                   />
                 </button>
-              )}
+              )} */}
               {collapse ? (
                 <button className="cursor">
                   <FaChevronDown
@@ -1751,6 +1784,8 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   };
   const SalesDropDown = () => {
 
+    const [seletedBanners, setSelectedBanners] = useState<string[]>([]);
+
     const handleCardClick = (carData: CarData) => {
       console.log("clicked" + carData.id);
       navigate(`/detail/${carData.id.slice(1)}`, {
@@ -1899,16 +1934,34 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 </p>
               </div>
 
-              <div className="mt-4 flex flex-col gap-2">
+                <div className="mt-4 flex flex-col gap-2">
                 <p className="font-semibold">Banner</p>
 
-                <DropDown
+                {/* <DropDown
                   options={highlightStatus}
                   optionClass="w-full"
                   optionBoxClass="md:w-full right-0 z-50"
                   buttonClass="py-2"
+                /> */}
+                <MultiSelect
+                  value={seletedBanners}
+                  onChange={(e: { value: string[] }) => {
+                    if (e.value.length <= 3) {
+                      setSelectedBanners(e.value);
+                    } else {
+                      console.warn("You can select up to 3 banners only.");
+                    }
+                  }}
+                  options={highlightStatus.map((item) => ({ label: item || "None", value: item }))}
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Select Banners"
+                  maxSelectedLabels={3}
+                  selectionLimit={3}
+                  className="w-full rounded-md border  border-gray-300 "
+                  showSelectAll={false}
                 />
-              </div>
+                </div>
 
               <div className="mt-4 flex flex-col gap-2">
                 <p className="font-semibold">Previous Price</p>

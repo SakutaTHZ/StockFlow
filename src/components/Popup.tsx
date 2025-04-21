@@ -30,10 +30,17 @@ const Popup: React.FC<PopupProps> = ({
 
   if (!isOpen) return null;
 
-  const handleBackgroundClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const clickedElement = e.target as HTMLElement;
+  
+    // Ignore clicks on dropdowns or ANY PrimeReact overlay
+    const isInOverlay = clickedElement.closest('[class*="p-"]');
+    const isInPopupContent = clickedElement.closest('.popup-content'); // We'll add this below
+  
+    if (isInOverlay || isInPopupContent) return;
+  
     if (e.target === e.currentTarget) {
+      console.log("Closing popup...");
       onClose();
     }
   };
@@ -44,7 +51,7 @@ const Popup: React.FC<PopupProps> = ({
       onClick={handleBackgroundClick}
     >
       <div
-        className={`animate-slideUp bg-white p-8 md:p-12 py-8 rounded-lg shadow-lg relative min-w-96 ${customClass}`}
+        className={`popup-content animate-slideUp bg-white p-8 md:p-12 py-8 rounded-lg shadow-lg relative min-w-96 ${customClass}`}
       >
         <div className="w-full flex items-center justify-between mb-4">
           <p className="text-2xl font-bold">{title}</p>

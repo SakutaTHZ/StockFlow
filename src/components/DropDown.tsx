@@ -75,7 +75,7 @@ const DropDown: React.FC<DropDownProps> = ({
         <div
           className={`${
             noDropDown ? "block" : "absolute mt-2"
-          } animate-dropDown origin-top-right w-full h-64 overflow-hidden overflow-y-auto custom-scrollbar rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
+          } animate-dropDown origin-bottom-left w-full h-64 overflow-hidden overflow-y-auto custom-scrollbar rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
         >
           <div className="py-1">
             {options.map((option) => (

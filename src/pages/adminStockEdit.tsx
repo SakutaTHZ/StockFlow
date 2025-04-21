@@ -145,11 +145,11 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
 
     return (
       <>
-        <div className="border p-4 rounded-md bg-yellow-50">
-          <div className="head flex justify-between items-center">
-            <p className="font-bold text-xl">Sales Comment</p>
+        <div className="border rounded-md ">
+          <div className="relative head flex justify-between items-center">
+            <p className="font-bold text-xl bg-[#F8F5EF] w-full p-4">Sales Comment</p>
             {!editMode && (
-              <button className="cursor">
+              <button className="cursor absolute right-4 top-4">
                 <MdModeEditOutline
                   size={18}
                   onClick={() => setEditMode((prevMode) => !prevMode)}
@@ -158,7 +158,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
             )}
           </div>
 
-          <div className="body mt-4">
+          <div className="body mt-4 p-4 pt-0">
             {editMode ? (
               <textarea
                 className="w-full h-40 resize-none p-2 border rounded-md"
@@ -169,23 +169,6 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
               <p>{editableContent}</p>
             )}
           </div>
-
-          {/* {editMode && (
-            <div className="foot flex gap-4 justify-end">
-              <button
-                className="font-semibold py-2 px-4 bg-[#FFC158] hover:bg-[#FFCD79] rounded-md"
-                onClick={() => setEditMode((prevMode) => !prevMode)}
-              >
-                Save
-              </button>
-              <button
-                className="font-semibold py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-md"
-                onClick={() => setEditMode((prevMode) => !prevMode)}
-              >
-                Cancel
-              </button>
-            </div>
-          )} */}
         </div>
       </>
     );
@@ -566,14 +549,42 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
                       />
                     </div>
 
-                    <div className="flex justify-between gap-2">
-                      <p className={`w-1/3 ${labelClass}`}>Sze: (L x W x H)</p>
-                      <p className="font-semibold text-blue-950">
-                        {cardData.size.toLocaleString()} m<sup>2</sup> (
-                        {cardData.length.toLocaleString()} x{" "}
-                        {cardData.width.toLocaleString()} x{" "}
-                        {cardData.height.toLocaleString()})
-                      </p>
+                    <div className="flex justify-between gap-2 border-b pb-2">
+                      <p className={`min-w-1/3 ${labelClass}`}>Sze: (L x W x H)</p>
+                      <div className="w-2/3 font-semibold text-blue-950 flex flex-wrap gap-1 items-center">
+                        <div className="flex gap-1 items-center">
+                          <input
+                          type="text"
+                          placeholder="0"
+                          className="w-full px-2 border rounded-md shadow-sm" 
+                          value={cardData.size.toLocaleString()}/>
+                          <p className="text-nowrap">m<sup>2</sup> (</p>
+                        </div>
+                        <div className="flex gap-1 items-center">
+                          <input
+                          type="text"
+                          placeholder="0"
+                          className="w-full px-2 border rounded-md shadow-sm" 
+                          value={cardData.length.toLocaleString()}/>
+                          <p>x</p>
+                        </div>
+                        <div className="flex gap-1 items-center">
+                          <input
+                          type="text"
+                          placeholder="0"
+                          className="w-full px-2 border rounded-md shadow-sm" 
+                          value={cardData.width.toLocaleString()}/>
+                          <p>x</p>
+                        </div>
+                        <div className="flex gap-1 items-center">
+                          <input
+                          type="text"
+                          placeholder="0"
+                          className="w-full px-2 border rounded-md shadow-sm" 
+                          value={cardData.height.toLocaleString()}/>
+                          <p>)</p>
+                        </div>
+                      </div>
                     </div>
                     <div className="flex justify-between gap-2">
                       <p className={`w-1/3 ${labelClass}`}>Deposit:</p>
@@ -659,7 +670,7 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
     );
   };
   const CalculatedCostsInfo = () => {
-    const [editMode, setEditMode] = useState(true);
+    const [editMode,] = useState(true);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -668,14 +679,14 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
           <div className="head flex justify-between items-center">
             <p className="font-bold text-xl">Calculated Costs</p>
             <div className="flex gap-4">
-              {!editMode && (
+              {/*{!editMode && (
                 <button className="cursor">
                   <MdModeEditOutline
                     size={18}
                     onClick={() => setEditMode((prevMode) => !prevMode)}
                   />
                 </button>
-              )}
+              )}*/}
               {collapse ? (
                 <button className="cursor">
                   <FaChevronDown
@@ -1401,13 +1412,13 @@ const AdminStockEdit: React.FC<DetailsProps> = () => {
 
           <div className="flex w-full md:w-fit items-end justify-end gap-2">
             <button
-              className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors w-1/3"
+              className="bg-[#FFC158] hover:bg-[#FFCD79] p-2 px-12 rounded-md font-bold transition-colors w-1/3 flex items-center justify-center"
               onClick={goBack}
             >
               Save
             </button>
             <button
-              className="bg-gray-100 hover:bg-red-100  p-2 px-12 rounded-md font-bold transition-colors w-1/3"
+              className="bg-gray-100 hover:bg-red-100  p-2 px-12 rounded-md font-bold transition-colors w-1/3 flex items-center justify-center"
               onClick={goBack}
             >
               Back

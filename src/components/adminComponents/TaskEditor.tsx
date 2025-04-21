@@ -141,7 +141,7 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
                     <DropDown
                       options={tasks}
                       selected={task.task}
-                      optionBoxClass="md:w-full h-fit overflow-y-auto right-0 z-50"
+                      optionBoxClass="md:w-full h-fit overflow-y-auto left-0 z-50"
                       buttonClass="py-1"
                       onSelectionChange={(selected) => {
                         const updatedTaskList = [...taskList];
