@@ -652,7 +652,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                     </div>
 
                     <div className="flex justify-between gap-2 border-b pb-2">
-                      <p className={`min-w-1/3 ${labelClass}`}>Sze: (L x W x H)</p>
+                      <p className={`min-w-1/3 ${labelClass}`}>Size: (L x W x H)</p>
                       <div className="w-2/3 font-semibold text-blue-950 flex flex-wrap gap-1 items-center">
                         <div className="flex gap-1 items-center">
                           <input
@@ -729,7 +729,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                     </div>
 
                     <div className="flex justify-between border-b pb-2">
-                      <p className={labelClass}>Sze: (L x W x H)</p>
+                      <p className={labelClass}>Size: (L x W x H)</p>
                       <p className="font-semibold text-blue-950">
                         {cardData.size.toLocaleString()} m<sup>2</sup> (
                         {cardData.length.toLocaleString()} x{" "}
