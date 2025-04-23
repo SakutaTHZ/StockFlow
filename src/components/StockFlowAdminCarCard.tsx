@@ -46,6 +46,8 @@ import dayjs from "dayjs";
 import { BiPlus } from "react-icons/bi";
 import placeholderImage from "../assets/images/stock/00165048_01.jpg";
 
+import { MultiSelect } from 'primereact/multiselect';
+
 interface CarCardProps {
   customClass?: string;
   extraStatus?: boolean; //for Stock Offer
@@ -303,6 +305,10 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
 
     return date.format("YYYY-MMM-DD");
   };
+  
+
+  const [seletedBanners, setSelectedBanners] = useState<string[]>([]);
+
   return (
     <>
       <div
@@ -639,56 +645,76 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
       />
 
       <Popup
-        isOpen={isBannerPopupOpen}
-        onClose={closeBannerPopup}
-        title="Update Banner"
-        customClass="m-2 w-1/3"
-        content={
-          <>
-            <div className="flex gap-2 items-center text-gray-500">
-              <IoCarOutline size={20} />
-              <p>
-                {car.name} {car.type} {car.package} ({car.id})
-              </p>
-            </div>
+          isOpen={isBannerPopupOpen}
+          onClose={closeBannerPopup}
+          title="Update Banner"
+          customClass="m-2 w-1/3"
+          content={
+            <>
+              <div className="flex gap-2 items-center text-gray-500">
+                <IoCarOutline size={20} />
+                <p>
+                  {car.name} {car.type} {car.package} (
+                  {car.id})
+                </p>
+              </div>
 
-            <div className="mt-4 flex flex-col gap-2">
-              <p className="font-semibold">Banner</p>
+                <div className="mt-4 flex flex-col gap-2">
+                <p className="font-semibold">Banner</p>
 
-              <DropDown
-                options={highlightStatus}
-                optionClass="w-full"
-                optionBoxClass="md:w-full right-0 z-50"
-                buttonClass="py-2"
-              />
-            </div>
+                {/* <DropDown
+                  options={highlightStatus}
+                  optionClass="w-full"
+                  optionBoxClass="md:w-full right-0 z-50"
+                  buttonClass="py-2"
+                /> */}
+                <MultiSelect
+                  value={seletedBanners}
+                  onChange={(e: { value: string[] }) => {
+                    if (e.value.length <= 3) {
+                      setSelectedBanners(e.value);
+                    } else {
+                      console.warn("You can select up to 3 banners only.");
+                    }
+                  }}
+                  options={highlightStatus.map((item) => ({ label: item || "None", value: item }))}
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Select Banners"
+                  maxSelectedLabels={3}
+                  selectionLimit={3}
+                  className="w-full rounded-md border  border-gray-300 bannerSelect"
+                  showSelectAll={true}
+                  selectAllLabel="-"
+                />
+                </div>
 
-            <div className="mt-4 flex flex-col gap-2">
-              <p className="font-semibold">Previous Price</p>
-              <input
-                type="text"
-                className="border p-2 rounded-md border-gray-300"
-                placeholder="Enter previous Price"
-              />
-            </div>
+              <div className="mt-4 flex flex-col gap-2">
+                <p className="font-semibold">Previous Price</p>
+                <input
+                  type="text"
+                  className="border p-2 rounded-md border-gray-300"
+                  placeholder="Enter previous Price"
+                />
+              </div>
 
-            <div className="flex items-center gap-2 mt-8">
-              <button
-                onClick={closeBannerPopup}
-                className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
-              >
-                Add
-              </button>
-              <button
-                onClick={closeBannerPopup}
-                className="py-2 w-full bg-gray-200 font-semibold rounded-md"
-              >
-                Cancel
-              </button>
-            </div>
-          </>
-        }
-      />
+              <div className="flex items-center gap-2 mt-8">
+                <button
+                  onClick={closeBannerPopup}
+                  className="py-2 w-full bg-[#FFC158] font-semibold rounded-md"
+                >
+                  Add
+                </button>
+                <button
+                  onClick={closeBannerPopup}
+                  className="py-2 w-full bg-gray-200 font-semibold rounded-md"
+                >
+                  Cancel
+                </button>
+              </div>
+            </>
+          }
+        />
     </>
   );
 };

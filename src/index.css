@@ -246,6 +246,7 @@ input[type="number"] {
 }
 
 /* Hide the "X" close button in the MultiSelect */
-.p-multiselect-header {
-  display: none !important;
-}
+/* .p-multiselect-header {
+  display: flex;
+  justify-content: flex-end;
+} */

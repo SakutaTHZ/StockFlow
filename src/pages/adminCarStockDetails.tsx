@@ -40,7 +40,7 @@ import Engine from "../assets/EnginePower.svg";
 import Certificate from "../assets/images/certificate.png";
 import Vin from "../assets/vin.svg";
 import DropDown from "../components/DropDown";
-import { MultiSelect } from 'primereact/multiselect';
+import { MultiSelect } from "primereact/multiselect";
 import {
   carTypes,
   descriptions,
@@ -72,10 +72,10 @@ const labelClass = `text-gray-500`;
 const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   const location = useLocation();
   const cardData = (location.state as LocationState)?.card;
-  
+
   useEffect(() => {
-      document.title = `${(cardData.id).substring(1)}`;
-    }, [cardData.id]);
+    document.title = `${cardData.id.substring(1)}`;
+  }, [cardData.id]);
 
   const highlightPill = (status: string) => {
     return status === "Welcab" ? (
@@ -150,7 +150,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
   const [isInnerCargoPopupOpen, setIsInnerCargoPopupOpen] = useState(false);
   const openInnerCargoPopup = () => setIsInnerCargoPopupOpen(true);
   const closeInnerCargoPopup = () => setIsInnerCargoPopupOpen(false);
-  
+
   const navigate = useNavigate();
 
   const [cars] = useAtom(carAtom);
@@ -218,7 +218,9 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
       <>
         <div className="border rounded-md ">
           <div className="relative head flex justify-between items-center">
-            <p className="font-bold text-xl bg-[#F8F5EF] w-full p-4">Sales Comment</p>
+            <p className="font-bold text-xl bg-[#F8F5EF] w-full p-4">
+              Sales Comment
+            </p>
             {!editMode && (
               <button className="cursor absolute right-4 top-4">
                 <MdModeEditOutline
@@ -652,43 +654,57 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                     </div>
 
                     <div className="flex justify-between gap-2 border-b pb-2">
-                      <p className={`min-w-1/3 ${labelClass}`}>Size: (L x W x H)</p>
-                      <div className="w-2/3 font-semibold text-blue-950 flex flex-wrap gap-1 items-center">
-                        <div className="flex gap-1 items-center">
-                          <input
-                          type="text"
-                          placeholder="0"
-                          className="w-full px-2 border rounded-md shadow-sm" 
-                          value={cardData.size.toLocaleString()}
-                          onChange={()=>console.log("changed")}/>
-                          <p className="text-nowrap">m<sup>2</sup> (</p>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex justify-between gap-2">
+                          <p className={`w-1/3 text-gray-500`}>Size</p>
+                          <div className="flex gap-1 items-center relative">
+                            <input
+                              type="text"
+                              placeholder="0"
+                              className="w-full px-2 border rounded-md shadow-sm border-gray-300"
+                              value={cardData.size.toLocaleString()}
+                              onChange={() => console.log("changed")}
+                            />
+                            <p className="text-gray-400 absolute right-2 text-nowrap">
+                              m<sup>2</sup>
+                            </p>
+                          </div>
                         </div>
-                        <div className="flex gap-1 items-center">
-                          <input
-                          type="text"
-                          placeholder="0"
-                          className="w-full px-2 border rounded-md shadow-sm" 
-                          value={cardData.length.toLocaleString()}
-                          onChange={()=>console.log("changed")}/>
-                          <p>x</p>
+                        <div className="flex justify-between gap-2">
+                          <p className={`w-1/3 text-gray-500`}>Length</p>
+                          <div className="flex gap-1 items-center">
+                            <input
+                              type="text"
+                              placeholder="0"
+                              className="w-full px-2 border rounded-md shadow-sm border-gray-300"
+                              value={cardData.length.toLocaleString()}
+                              onChange={() => console.log("changed")}
+                            />
+                          </div>
                         </div>
-                        <div className="flex gap-1 items-center">
-                          <input
-                          type="text"
-                          placeholder="0"
-                          className="w-full px-2 border rounded-md shadow-sm" 
-                          value={cardData.width.toLocaleString()}
-                          onChange={()=>console.log("changed")}/>
-                          <p>x</p>
+                        <div className="flex justify-between gap-2">
+                          <p className={`w-1/3 text-gray-500`}>Width</p>
+                          <div className="flex gap-1 items-center">
+                            <input
+                              type="text"
+                              placeholder="0"
+                              className="w-full px-2 border rounded-md shadow-sm border-gray-300"
+                              value={cardData.width.toLocaleString()}
+                              onChange={() => console.log("changed")}
+                            />
+                          </div>
                         </div>
-                        <div className="flex gap-1 items-center">
-                          <input
-                          type="text"
-                          placeholder="0"
-                          className="w-full px-2 border rounded-md shadow-sm" 
-                          value={cardData.height.toLocaleString()}
-                          onChange={()=>console.log("changed")}/>
-                          <p>)</p>
+                        <div className="flex justify-between gap-2">
+                          <p className={`w-1/3 text-gray-500`}>Height</p>
+                          <div className="flex gap-1 items-center">
+                            <input
+                              type="text"
+                              placeholder="0"
+                              className="w-full px-2 border rounded-md shadow-sm border-gray-300"
+                              value={cardData.height.toLocaleString()}
+                              onChange={() => console.log("changed")}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -697,7 +713,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       <input
                         type="text"
                         placeholder="¥ 0"
-                        className="w-1/3 px-2 border rounded-md shadow-sm"
+                        className="w-2/3 px-2 border rounded-md shadow-sm border-gray-300"
                       />
                     </div>
                     <div className="flex justify-between gap-2 border-b pb-2">
@@ -776,7 +792,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     );
   };
   const CalculatedCostsInfo = () => {
-    const [editMode, ] = useState(false);
+    const [editMode] = useState(false);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -1783,7 +1799,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     );
   };
   const SalesDropDown = () => {
-
     const [seletedBanners, setSelectedBanners] = useState<string[]>([]);
 
     const handleCardClick = (carData: CarData) => {
@@ -1816,13 +1831,17 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
 
     useEffect(() => {
       function handleClickOutside(event: MouseEvent) {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target as HTMLElement)) {
+        if (
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target as HTMLElement)
+        ) {
           setDropDownOpen(false);
         }
       }
-  
+
       document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     return (
@@ -1934,7 +1953,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                 </p>
               </div>
 
-                <div className="mt-4 flex flex-col gap-2">
+              <div className="mt-4 flex flex-col gap-2">
                 <p className="font-semibold">Banner</p>
 
                 {/* <DropDown
@@ -1943,6 +1962,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                   optionBoxClass="md:w-full right-0 z-50"
                   buttonClass="py-2"
                 /> */}
+
                 <MultiSelect
                   value={seletedBanners}
                   onChange={(e: { value: string[] }) => {
@@ -1952,16 +1972,20 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                       console.warn("You can select up to 3 banners only.");
                     }
                   }}
-                  options={highlightStatus.map((item) => ({ label: item || "None", value: item }))}
+                  options={highlightStatus.map((item) => ({
+                    label: item || "None",
+                    value: item,
+                  }))}
                   optionLabel="label"
                   optionValue="value"
                   placeholder="Select Banners"
                   maxSelectedLabels={3}
                   selectionLimit={3}
-                  className="w-full rounded-md border  border-gray-300 "
-                  showSelectAll={false}
+                  className="w-full rounded-md border  border-gray-300 bannerSelect"
+                  showSelectAll={true}
+                  selectAllLabel="-"
                 />
-                </div>
+              </div>
 
               <div className="mt-4 flex flex-col gap-2">
                 <p className="font-semibold">Previous Price</p>
@@ -1998,7 +2022,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     });
   };
   const goToEdit = (carData: CarData) => {
-    console.log('Go to Edit Page')
+    console.log("Go to Edit Page");
     navigate(`/StockEdit/${carData.id.slice(1)}`, {
       state: { card: carData, cars: cars },
     });
@@ -2048,11 +2072,17 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
           </div>
 
           <div className="flex items-end gap-2">
-            <button className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md" onClick={()=>goToEdit(cardData)}>
+            <button
+              className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
+              onClick={() => goToEdit(cardData)}
+            >
               <MdEdit size={20} />
               <p className="font-semibold">Edit</p>
             </button>
-            <button onClick={()=>goToImages(cardData)} className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md">
+            <button
+              onClick={() => goToImages(cardData)}
+              className="flex flex-col items-center justify-center gap-1 bg-gray-100 hover:bg-gray-200 h-16 px-4 rounded-md"
+            >
               <BiImages size={20} />
               <p className="font-semibold">Images</p>
             </button>
@@ -2290,28 +2320,32 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
             <div className="flex flex-col border rounded-md py-6 px-4 gap-4 shadow-sm">
               <div className="head flex flex-col gap-1 text-right">
                 <p className="">
-                <span
-                  className={`text-4xl font-bold ${
-                    cardData.discount === 0 ? "text-[#CC9A46]" : "text-red-600"
-                  }`}
-                >
-                  ¥
-                  {cardData.discount === 0
-                    ? cardData.price.toLocaleString()
-                    : (cardData.price - cardData.discount).toLocaleString()}
-                </span>{" "}
-                <span
-                  className={`font-normal ${
-                    cardData.discount === 0 ? "text-[#CC9A46]" : "text-red-600"
-                  }`}
-                >
-                  CIF
-                </span>
-                {cardData.discount != 0 && (
-                  <span className="ml-2 line-through text-gray-400">
-                    {cardData.price.toLocaleString()}
+                  <span
+                    className={`text-4xl font-bold ${
+                      cardData.discount === 0
+                        ? "text-[#CC9A46]"
+                        : "text-red-600"
+                    }`}
+                  >
+                    ¥
+                    {cardData.discount === 0
+                      ? cardData.price.toLocaleString()
+                      : (cardData.price - cardData.discount).toLocaleString()}
+                  </span>{" "}
+                  <span
+                    className={`font-normal ${
+                      cardData.discount === 0
+                        ? "text-[#CC9A46]"
+                        : "text-red-600"
+                    }`}
+                  >
+                    CIF
                   </span>
-                )}
+                  {cardData.discount != 0 && (
+                    <span className="ml-2 line-through text-gray-400">
+                      {cardData.price.toLocaleString()}
+                    </span>
+                  )}
                 </p>
                 <p>$9,327 UK VAT Duty Paid!</p>
               </div>
@@ -2835,4 +2869,3 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
 };
 
 export default AdminCarStockDetails;
-
