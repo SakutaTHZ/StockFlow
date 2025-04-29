@@ -602,7 +602,7 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
     );
   };
   const PaymentsInfo = () => {
-    const [editMode, setEditMode] = useState(true);
+    const [editMode, setEditMode] = useState(false);
     const [collapse, setCollapse] = useState(false);
 
     return (
@@ -656,21 +656,6 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                     <div className="flex justify-between gap-2 border-b pb-2">
                       <div className="flex flex-col gap-2">
                         <div className="flex justify-between gap-2">
-                          <p className={`w-1/3 text-gray-500`}>Size</p>
-                          <div className="flex gap-1 items-center relative">
-                            <input
-                              type="text"
-                              placeholder="0"
-                              className="w-full px-2 border rounded-md shadow-sm border-gray-300"
-                              value={cardData.size.toLocaleString()}
-                              onChange={() => console.log("changed")}
-                            />
-                            <p className="text-gray-400 absolute right-2 text-nowrap">
-                              m<sup>2</sup>
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex justify-between gap-2">
                           <p className={`w-1/3 text-gray-500`}>Length</p>
                           <div className="flex gap-1 items-center">
                             <input
@@ -704,6 +689,21 @@ const AdminCarStockDetails: React.FC<DetailsProps> = () => {
                               value={cardData.height.toLocaleString()}
                               onChange={() => console.log("changed")}
                             />
+                          </div>
+                        </div>
+                        <div className="flex justify-between gap-2">
+                          <p className={`w-1/3 text-gray-500`}>Size <input type="checkbox" className="ml-2"/></p>
+                          <div className="flex gap-1 items-center relative">
+                            <input
+                              type="text"
+                              placeholder="0"
+                              className="w-full px-2 border rounded-md shadow-sm border-gray-300"
+                              value={cardData.size.toLocaleString()}
+                              onChange={() => console.log("changed")}
+                            />
+                            <p className="text-gray-400 absolute right-2 text-nowrap">
+                              m<sup>2</sup>
+                            </p>
                           </div>
                         </div>
                       </div>
