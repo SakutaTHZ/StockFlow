@@ -226,66 +226,6 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   const openBannerPopup = () => setIsBannerPopupOpen(true);
   const closeBannerPopup = () => setIsBannerPopupOpen(false);
 
-  const highlightPill = (status: string) => {
-    return status === "Welcab" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          (car.hold || car.highlightStatus === "Sold") && "hidden"
-        }`}
-      >
-        <FaWheelchair /> {car.highlightStatus}
-      </span>
-    ) : status === "Coming soon" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          (car.hold || car.highlightStatus === "Sold") && "hidden"
-        }`}
-      >
-        <MdOutlineTimer /> {car.highlightStatus}
-      </span>
-    ) : status === "Hybrid" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          (car.hold || car.highlightStatus === "Sold") && "hidden"
-        }`}
-      >
-        <img src={Hybrid} alt="Hybrid" /> {car.highlightStatus}
-      </span>
-    ) : status === "Sold" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-200 ${
-          (car.hold || car.highlightStatus === "Sold") && "hidden"
-        }`}
-      >
-        <FaMoneyBillTrendUp /> {car.highlightStatus}
-      </span>
-    ) : status === "Reduced" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-red-600 bg-red-200 ${
-          (car.hold || car.highlightStatus === "Sold") && "hidden"
-        }`}
-      >
-        <PiChartLineDownBold /> {car.highlightStatus}
-      </span>
-    ) : status === "New" ? (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-100 ${
-          (car.hold || car.highlightStatus === "Sold") && "hidden"
-        }`}
-      >
-        <MdOutlineNewReleases /> {car.highlightStatus}
-      </span>
-    ) : (
-      <span
-        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
-          (car.hold || car.highlightStatus === "Sold") && "hidden"
-        }`}
-      >
-        <TbFaceIdError /> {car.highlightStatus}
-      </span>
-    );
-  };
-
   const navigate = useNavigate();
 
   const [cars] = useAtom(carAtom);
@@ -307,7 +247,76 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
   };
   
 
-  const [seletedBanners, setSelectedBanners] = useState<string[]>([]);
+  const [seletedBanners, setSelectedBanners] = useState<string[]>([car.highlightStatus]);
+
+  
+
+  const highlightPill = (status: string) => {
+    return status === "Welcab" ? (
+      <span
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
+        }`}
+      >
+        <FaWheelchair /> {status}
+        {seletedBanners.length > 1 && <span className="bg-[#ffffff] text-gray-900 px-1.5 rounded-full">{seletedBanners.length}</span>}
+      </span>
+    ) : status === "Coming soon" ? (
+      <span
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
+        }`}
+      >
+        <MdOutlineTimer /> {status}
+        {seletedBanners.length > 1 && <span className="bg-[#ffffff] text-gray-900 px-1.5 rounded-full">{seletedBanners.length}</span>}
+      </span>
+    ) : status === "Hybrid" ? (
+      <span
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
+        }`}
+      >
+        <img src={Hybrid} alt="Hybrid" /> {status}
+        {seletedBanners.length > 1 && <span className="bg-[#ffffff] text-gray-900 px-1.5 rounded-full">{seletedBanners.length}</span>}
+      </span>
+    ) : status === "Sold" ? (
+      <span
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-green-800 bg-green-200 ${
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
+        }`}
+      >
+        <FaMoneyBillTrendUp /> {status}
+        {seletedBanners.length > 1 && <span className="bg-[#ffffff] text-green-800 px-1.5 rounded-full">{seletedBanners.length}</span>}
+      </span>
+    ) : status === "Reduced" ? (
+      <span
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm font-semibold rounded-full px-3 py-1 text-red-600 bg-red-200 ${
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
+        }`}
+      >
+        <PiChartLineDownBold /> {status}
+        {seletedBanners.length > 1 && <span className="bg-[#ffffff] text-red-600 px-1.5 rounded-full">{seletedBanners.length}</span>}
+      </span>
+    ) : status === "New" ? (
+      <span
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-yellow-800 bg-yellow-100 ${
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
+        }`}
+      >
+        <MdOutlineNewReleases /> {status}
+        {seletedBanners.length > 1 && <span className="bg-[#ffffff] text-yellow-800 px-1.5 rounded-full">{seletedBanners.length}</span>}
+      </span>
+    ) : (
+      <span
+        className={`stat absolute top-2 left-2 flex items-center gap-2 text-sm  font-semibold rounded-full px-3 py-1 text-white bg-black bg-opacity-40 ${
+          (car.hold || car.highlightStatus === "Sold") && "hidden"
+        }`}
+      >
+        <TbFaceIdError /> {status}
+        {seletedBanners.length > 1 && <span className="bg-[#ffffff] text-gray-900 px-1.5 rounded-full">{seletedBanners.length}</span>}
+      </span>
+    );
+  };
 
   return (
     <>
@@ -354,8 +363,8 @@ const StockFlowAdminCarCard: React.FC<CarCardProps> = ({
               </div>
             )
           )}
-          {car.highlightStatus != "" && (
-            <>{highlightPill(car.highlightStatus)}</>
+          {seletedBanners.length >0 && (
+            <>{highlightPill(seletedBanners[0])}</>
           )}
           {extraStatus && (
             <span

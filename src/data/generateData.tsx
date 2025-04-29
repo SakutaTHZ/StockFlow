@@ -95,7 +95,6 @@ export const highlightStatus: string[] = [
   "Hybrid",
   "Reduced",
   "New",
-  "",
 ];
 export const getRandomHighlightStatus = () => {
   return highlightStatus[Math.floor(Math.random() * highlightStatus.length)];
