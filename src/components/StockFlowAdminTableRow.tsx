@@ -99,7 +99,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           car.hold && "hidden"
         }`}
       >
-        <FaWheelchair /> {car.highlightStatus}
+        <FaWheelchair /> {status}
       </span>
     ) : status === "Coming soon" ? (
       <span
@@ -107,13 +107,13 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           car.hold && "hidden"
         }`}
       >
-        <MdOutlineTimer /> {car.highlightStatus}
+        <MdOutlineTimer /> {status}
       </span>
     ) : status === "On Hold" ? (
       <span
         className={`stat flex items-center gap-2 text-sm font-semibold  rounded-full px-3 py-1 text-white bg-black bg-opacity-40`}
       >
-        {car.highlightStatus}
+        {status}
       </span>
     ) : status === "Hybrid" ? (
       <span
@@ -121,7 +121,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           car.hold && "hidden"
         }`}
       >
-        <img src={Hybrid} alt="Hybrid" /> {car.highlightStatus}
+        <img src={Hybrid} alt="Hybrid" /> {status}
       </span>
     ) : status === "Reduced" ? (
       <span
@@ -129,7 +129,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           car.hold && "hidden"
         }`}
       >
-        <PiChartLineDownBold /> {car.highlightStatus}
+        <PiChartLineDownBold /> {status}
       </span>
     ) : status === "Sold" ? (
       <span
@@ -137,7 +137,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           car.hold && "hidden"
         }`}
       >
-        {car.highlightStatus}
+        {status}
       </span>
     ) : status === "New" ? (
       <span
@@ -145,7 +145,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           car.hold && "hidden"
         }`}
       >
-        <MdOutlineNewReleases /> {car.highlightStatus}
+        <MdOutlineNewReleases /> {status}
       </span>
     ) : (
       <span
@@ -153,7 +153,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
           car.hold && "hidden"
         }`}
       >
-        <TbFaceIdError /> {car.highlightStatus}
+        <TbFaceIdError /> {status}
       </span>
     );
   };
@@ -325,7 +325,7 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
     return date.format("YYYY-MMM-DD");
   };
   
-    const [seletedBanners, setSelectedBanners] = useState<string[]>([]);
+    const [seletedBanners, setSelectedBanners] = useState<string[]>([car.highlightStatus]);
 
   return (
     <>
@@ -397,9 +397,17 @@ const StockFlowAdminTableRow: React.FC<StockFlowAdminTableRowProps> = ({
             </p>
             <p>{car.package}</p>
             <div className="flex gap-2 mt-2">
-              {car.highlightStatus != "" && (
-                <>{highlightPill(car.highlightStatus)}</>
-              )}
+              <div className="flex flex-wrap gap-1">
+                {seletedBanners.length > 0 && (
+                  <>
+                    {seletedBanners.map((element, ) => (
+                      <>
+                        {highlightPill(element)}
+                      </>
+                    ))}
+                  </>
+                )}
+              </div>
               {car.showExtraStatus && (
                 <span
                   className={`status flex items-center gap-2 text-sm font-semibold rounded-md bg-[#FFC158] px-3 py-1  ${
